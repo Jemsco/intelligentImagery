@@ -13,16 +13,16 @@ const Wrapper = styled.section`
   background: papayawhip;
 `;
 
-function About() {
+const Step3 = () => {
   return (
     <main>
       <Wrapper>
         <Title>
-          <h1>This is the about page</h1>
+          <h1>This is the Step3 page</h1>
         </Title>
       </Wrapper>
     </main>
   );
-}
+};
 
-export default About;
+export default Step3;

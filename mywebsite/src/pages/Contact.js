@@ -1,12 +1,28 @@
 /** @format */
 
-import React from "react";
+import styled from "styled-components";
 
-function Contact() {
+const Title = styled.h2`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+`;
+
+const Contact =() => {
   return (
-    <div>
-      <h1>This is the contact page</h1>
-    </div>
+    <main>
+      <Wrapper>
+        <Title>
+          <h1>This is the contact page</h1>
+        </Title>{" "}
+        <button>Button</button>
+      </Wrapper>
+    </main>
   );
 }
 
