@@ -1,26 +1,102 @@
 /** @format */
 
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-
+import IntelligentLogo from "./assets/IntelligentLogo.png";
+// import { createUseStyles, useTheme } from "react-jss";
+// const useStyles = createUseStyles((theme) => ({
+//   arrowContainer: {
+//     position: "absolute",
+//     top: -19,
+//     right: 15,
+//   },
+//   dropdownButton: {
+//     alignItems: "center",
+//     background: "transparent",
+//     border: "none",
+//     cursor: "pointer",
+//     display: "flex",
+//     padding: 0,
+//     outline: "none",
+//   },
+//   dropdownContainer: {
+//     position: "relative",
+//   },
+//   dropdownItemsContainer: {
+//     background: "white",
+//     border: `1px solid ${theme.color.lightGrayishBlue2}`,
+//     borderRadius: 5,
+//     minWidth: 170,
+//     padding: 0,
+//     position: "absolute",
+//     width: "100%",
+//     top: ({ position }) => position.top,
+//     right: ({ position }) => position.right,
+//     bottom: ({ position }) => position.bottom,
+//     left: ({ position }) => position.left,
+//     "& button:first-of-type:hover div > svg > path": {
+//       fill: theme.color.paleBlue,
+//     },
+//   },
+//   dropdownItem: {
+//     cursor: "pointer",
+//     background: "transparent",
+//     border: "none",
+//     fontSize: 16,
+//     outline: "none",
+//     padding: "10px 10px",
+//     "&:hover": {
+//       background: theme.color.paleBlue,
+//     },
+//     "&:after": {
+//       content: '" "',
+//       display: "block",
+//       position: "relative",
+//       bottom: -10,
+//       width: "100%",
+//       height: 1,
+//       background: theme.color.paleBlue,
+//     },
+//     "&:last-child:after": {
+//       content: "",
+//       display: "none",
+//     },
+//   },
+//   title: {
+//     marginLeft: '1em',
+//   },
+// }));
 
 const Title = styled.span`
 margin-left: 1em;
+color: white;
 `;
-
+const Img = styled.img`
+  float: left;
+  margin: 5px;
+  max-width: 8%;
+`;
 const Dropdown = styled.span`
   color: white;
 `;
 
-const NavBar = () => {
+function NavBar ()  {
+  // const theme = useTheme();
+  // const classes = useStyles({ theme});
   const closeNav = useCallback(() => {
     document.getElementById("toggleButton").click();
   },[]);
 
+   useEffect(() => {
+     // Update the document title using the browser API
+     document.title = `Intelligent Navigation`;
+   });
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-style">
+      {/* <Img src={IntelligentLogo} alt="Logo" /> */}
       <Title>Intelligent Imagery</Title>
+      {/* <div classname={classes.title}>Intelligent Imagery</div> */}
       <button
         className="navbar-toggler"
         type="button"
