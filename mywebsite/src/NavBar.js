@@ -90,7 +90,7 @@ function NavBar ()  {
 
    useEffect(() => {
      // Update the document title using the browser API
-     document.title = `Intelligent Navigation`;
+     document.title = `Intelligent Imagery`;
    });
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-style">
