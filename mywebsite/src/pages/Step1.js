@@ -63,7 +63,7 @@ const Text2 = styled(Text)`
 `;
 const Italic = styled(Text)`
   font-style: italic;
-  color: red;
+  color: #e00000;
   font-size: 1em;
 `;
 
