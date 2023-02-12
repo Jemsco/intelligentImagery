@@ -1,12 +1,14 @@
 /** @format */
-
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import IntelligentLogo from "../assets/IntelligentLogo.jpg";
 import TheExposureTriangle from "../assets/TheExposureTriangle.png";
 import KodakCanister from "../assets/kodakcanister.png";
 import ISOScale1 from "../assets/ISOscale1.jpg";
 import FStops from "../assets/fStops.png";
-import ScrollButton from '../utils/ScrollButton';
+import ScrollButton from "../utils/ScrollButton";
+import ReactModal from "react-modal";
+import { MODAL_CONTENT } from "../utils/constants/ModalConent";
+
 const Title = styled.h2`
   font-size: 1.5em;
   text-align: center;
@@ -19,12 +21,6 @@ const Wrapper = styled.section`
   // background: papayawhip;
   max-width: 100%;
 `;
-
-// const Col = styled.section`
-//   display: flex;
-//   flex-direction: column;
-//   flex: 5;
-// `;
 
 const Content = styled.section`
   display: flex;
@@ -46,7 +42,7 @@ const Footer = styled.footer`
 `;
 
 const Text = styled.text`
- font-size: 1.15em;
+  font-size: 1.15em;
   margin-left: 15px;
   margin-right: 25px;
 `;
@@ -58,9 +54,7 @@ const TextBold = styled(Text)`
 const Text1 = styled(Text)`
   margin-top: 20px;
 `;
-const Text2 = styled(Text)`
-  margin-top: 20px;
-`;
+
 const Italic = styled(Text)`
   font-style: italic;
   color: #e00000;
@@ -75,7 +69,7 @@ const Img = styled.img`
   }
   }
 `;
-const ISOImg = styled(Img)`
+const ImgC = styled(Img)`
   max-width: 100%;
   @media (min-width: 650px) {
   max-width: 75%;
@@ -91,7 +85,6 @@ const ImgSmall = styled(Img)`
 const ImgR = styled(Img)`
   float: right;
   max-width: 25%;
- 
 `;
 const ImgL = styled(Img)`
   float: left;
@@ -101,23 +94,53 @@ const ImgL = styled(Img)`
     max-width: 5%;
   }
 `;
-const P = styled.p`
-`;
+const P = styled.p``;
 const Div = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `;
 const DivL = styled(Div)`
- float: left;
- width: 100%;
+  float: left;
+  width: 100%;
 `;
 const DivC = styled(Div)`
   text-align: center;
 `;
 
+const Button = styled.div`
+  cursor: pointer;
+  background-color: transparent;
+  color: #3498db;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
 
+const Section = styled.section`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  // maxSize: 50%;
+`;
 
 const Step1 = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState();
+
+  const handleOpenModal = (content) => {
+    setModalContent(content);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+   useEffect(() => {
+     showModal && (document.body.style.overflow = "hidden");
+     !showModal && (document.body.style.overflow = "unset");
+   }, [showModal]);
+
   return (
     <main>
       <Wrapper>
@@ -197,10 +220,49 @@ const Step1 = () => {
                   digital cameras the sensitivity control is actually increasing
                   or decreasing the electrical amplification.
                 </P>{" "}
-                ISO IN DIGITAL CAMERAS ASA IN FILM CAMERAS{" "}
-                <P>Here is the ISO scale</P>
+                <Section>
+                  <div>
+                    <Button onClick={() => handleOpenModal("ISO")}>
+                      ISO IN DIGITAL CAMERAS
+                    </Button>
+                  </div>
+                  <div>
+                    <Button onClick={() => handleOpenModal("ASA")}>
+                      ASA IN FILM CAMERAS
+                    </Button>
+                  </div>
+                  <ReactModal
+                    isOpen={showModal}
+                    contentLabel="onRequestClose Example"
+                    onRequestClose={handleCloseModal}
+                    shouldCloseOnOverlayClick={true}
+                    style={{
+                      content: {
+                        position: "absolute",
+                        top: "25%",
+                        left: "40px",
+                        right: "40px",
+                        bottom: "40px",
+                        border: "1px solid #ccc",
+                        // background: "#fff",
+                        overflow: "auto",
+                        // WebkitOverflowScrolling: "touch",
+                        borderRadius: "4px",
+                        outline: "none",
+                        // padding: "20px",
+                        maxWidth: "75%",
+                        maxHeight: "50%",
+                      },
+                    }}
+                  >
+                    <button onClick={handleCloseModal}>X</button>
+                    <P>{MODAL_CONTENT[modalContent]}</P>
+                    <button onClick={handleCloseModal}>X</button>
+                  </ReactModal>
+                </Section>
+                <DivC>Here is the ISO scale</DivC>
                 <DivC>
-                  <ISOImg src={ISOScale1} alt="ISO Triangle" />
+                  <ImgC src={ISOScale1} alt="ISO Triangle" />
                 </DivC>
                 <P>
                   If you think of ISO in terms of compensating for darkness or
@@ -239,7 +301,7 @@ const Step1 = () => {
                   the opening in the lens.
                 </P>
                 <DivC>
-                  <ISOImg src={FStops} alt="ISO Triangle" />{" "}
+                  <ImgC src={FStops} alt="ISO Triangle" />
                 </DivC>
                 <P>
                   There are very specific reasons why you would want to change

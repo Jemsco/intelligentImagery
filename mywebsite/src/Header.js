@@ -3,7 +3,6 @@ import React, {useRef, useEffect} from 'react';
 import styled from "styled-components";
 import { useLocation } from "react-router";
 import { PAGE_LOCATIONS } from './utils/constants/PageLocations';
-import ScrollButton  from './utils/ScrollButton';
 
 const Title = styled.h1`
   font-size: .75em;
@@ -22,7 +21,6 @@ const Wrapper = styled.section`
 
   useEffect(() => {
     ref.current.focus();
-    console.log('useEffect ',ref);
   },[ref]);
 
    return (
