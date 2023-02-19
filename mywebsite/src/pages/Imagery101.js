@@ -68,13 +68,13 @@ const Imagery101 = () => {
         <Step1 tabIndex={0} onClick={() => navigate("/step1")} name="step1">
           <Card title="Step 1" text="IMAGE 101 THE BASICS" />
         </Step1>
-        <Step2 tabIndex={0} onClick={() => navigate("/step2")}>
+        <Step2 tabIndex={0} onClick={() => navigate("/step2")} name="step2">
           <Card title="Step 2" text="About Your Camera" />
         </Step2>
-        <Step3 tabIndex={0} onClick={() => navigate("/step3")}>
+        <Step3 tabIndex={0} onClick={() => navigate("/step3")} name="step3">
           <Card title="Step 3" text="Prisms Of Light" />
         </Step3>
-        <Step4 tabIndex={0} onClick={() => navigate("/step4")}>
+        <Step4 tabIndex={0} onClick={() => navigate("/step4")} name="step4">
           <Card title="Step 4" text="The Subject IS the Subject" />
         </Step4>
       </Wrapper>

@@ -11,7 +11,7 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.section`
-  margin-top: 4em;
+  margin-top: .5em;
   // background: papayawhip;
 `;
  const Header = () => {

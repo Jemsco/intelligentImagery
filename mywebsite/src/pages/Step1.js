@@ -82,18 +82,7 @@ const ImgSmall = styled(Img)`
     max-width: 5%;
   }
 `;
-const ImgR = styled(Img)`
-  float: right;
-  max-width: 25%;
-`;
-const ImgL = styled(Img)`
-  float: left;
-  shape-outside: circle(75% at center center);
-  max-width: 25%;
-  @media (min-width: 650px) {
-    max-width: 5%;
-  }
-`;
+
 const P = styled.p``;
 const Div = styled.div`
   margin-top: 20px;

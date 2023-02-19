@@ -24,19 +24,6 @@ const Card = (props) => {
   return (
     <CardContainer>
       <Title>{props.title}</Title>
-      {/* <div className="cardButtons">
-        <button type="button" className="tertiary">
-          show back
-        </button>
-        <div>
-          <button type="button" className="secondary">
-            edit
-          </button>
-          <button type="button" className="secondary danger">
-            delete
-          </button>
-        </div> 
-      </div>*/}
       <Text>{props.text}</Text>
     </CardContainer>
   );
