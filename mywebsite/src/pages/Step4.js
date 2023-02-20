@@ -5,16 +5,16 @@ import ROT1 from "../assets/_DSC9072.jpg";
 import ROT2 from "../assets/_DSC9072ROT.jpg";
 import ROT3 from "../assets/_DSC6779.jpg";
 import ROT4 from "../assets/_DSC6779ROT.jpg";
-import Foreground1 from "../assets/_DSC8708.JPG";
+import Foreground1 from "../assets/20170423-_DSC8710-Edit.jpg";
 import Foreground2 from "../assets/20190504_10086DSC_5956.jpg";
-import FrameinFrame from "../assets/frameinframe.jpg";
+import FrameinFrame from "../assets/20160417-_DSC4419.jpg";
 import LeadingLines from "../assets/20190322_9005DSC_4880_1.jpg";
-import fillFrame1 from "../assets/FillFrame1.jpg";
-import fillFrame2 from "../assets/FillFrame2.jpg";
-import Isolate from "../assets/isolate.jpg";
-import Negativespace from "../assets/negativespace.jpg";
-import Ruleofspace from "../assets/ruleofspace.jpg";
-import Pointofview from "../assets/pointofview.jpg";
+import fillFrame1 from "../assets/_DSC8879.jpg";
+import fillFrame2 from "../assets/DSC_8076.jpg";
+import Isolate from "../assets/20170722-_DSC9588.jpg";
+import Negativespace from "../assets/20210403_1213_DSC_9516.jpg";
+import Ruleofspace from "../assets/_DSC2333.jpg";
+import Pointofview from "../assets/20190421_9784DSC_5659.jpg";
 import Seanmotion from "../assets/seanmotion.jpg";
 import Goldenratio1 from "../assets/goldenratio.jpg";
 import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
@@ -238,28 +238,28 @@ const Step4 = () => {
             </Div>
             <Div>
               <DivL>
-                <TextBold>Leave Negative Space </TextBold>
-              </DivL>
-              <ImgL src={Isolate} alt="bird on branch" />
-              <br /> <br />
-              <P>
-                <Text>
-                  Leaving a lot of empty or 'negative' space around your subject
-                  creates a sense of simplicity and minimalism.
-                </Text>
-              </P>
-            </Div>
-            <Div>
-              <DivL>
                 <TextBold>Isolate the Subject </TextBold>
               </DivL>
-              <ImgL src={Negativespace} alt="bird in sky" />
+              <ImgL src={Isolate} alt="bird on branch" />
               <br /> <br />
               <P>
                 <Text>
                   Using a shallow depth of field to isolate your subject will
                   focus attention on the subject.This image of a cat bird uses a
                   shallow depth of field to isolate it from the background.
+                </Text>
+              </P>
+            </Div>
+            <Div>
+              <DivL>
+                <TextBold>Leave Negative Space</TextBold>
+              </DivL>
+              <ImgL src={Negativespace} alt="bird in sky" />
+              <br /> <br />
+              <P>
+                <Text>
+                  Leaving a lot of empty or 'negative' space around your subject
+                  creates a sense of simplicity and minimalism.
                 </Text>
               </P>
             </Div>
