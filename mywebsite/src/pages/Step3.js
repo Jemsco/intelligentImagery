@@ -286,7 +286,7 @@ const Step3 = () => {
                 Good for transparent objects or to outline a subject think
                 silhouettes. These two images are both backlit.
               </Text>
-              <ImgR src={Backlit1} alt="silhouette of monument" />
+              <ImgR src={Backlit1} alt="snowy owl in sand" />
               <ImgL src={Backlit3} alt="silhouette of monument" />
               <br /> <br /> <br />
               <P>
@@ -306,7 +306,7 @@ const Step3 = () => {
                     where the light is directly behind you. This will not show
                     shadows as they will fall behind the subject.
                   </Text>
-                  <ImgL src={frontLit} alt="silhouette of monument" />
+                  <ImgL src={frontLit} alt="statue at night" />
                   <br /> <br /> <br />
                   <P>
                     <Text>
@@ -328,8 +328,8 @@ const Step3 = () => {
                     subject in your image to occupy.
                   </Text>
                 </DivL>
-                <ImgR src={SideLit1} alt="silhouette of monument" />
-                <ImgL src={SideLit2} alt="silhouette of monument" />
+                <ImgR src={SideLit1} alt="photographer on paved path" />
+                <ImgL src={SideLit2} alt="child running around fountain" />
                 <br /> <br /> <br />
                 <P>
                   <Text>

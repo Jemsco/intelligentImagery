@@ -96,7 +96,7 @@ const DivL = styled(Div)`
 
 const Step4 = () => {
 
-   const ImageToggleOnMouseOver = ({ primaryImg, secondaryImg }) => {
+   const ImageToggleOnMouseOver = ({ primaryImg, secondaryImg, alt }) => {
      const imageRef = useRef(null);
      return (
        <ImgL
@@ -107,7 +107,7 @@ const Step4 = () => {
            imageRef.current.src = primaryImg;
          }}
          src={primaryImg}
-         alt=""
+         alt={alt}
          ref={imageRef}
        />
      );
@@ -148,7 +148,7 @@ const Step4 = () => {
               <ImageToggleOnMouseOver
                 primaryImg={ROT1}
                 secondaryImg={ROT2}
-                alt=""
+                alt="bird on the beach"
               />
               <Text>
                 Divide the frame into 9 equal rectangles, 3 across and 3 down
@@ -169,7 +169,7 @@ const Step4 = () => {
               <ImageToggleOnMouseOver
                 primaryImg={ROT3}
                 secondaryImg={ROT4}
-                alt=""
+                alt="mansion and reflection"
               />
               <Text>
                 Symmetrical scenes are perfect for a centered composition.
@@ -186,8 +186,8 @@ const Step4 = () => {
                 <TextBold>Foreground Interest and Depth </TextBold>
                 <Text>(left or right)</Text>
               </DivL>
-              <ImgR src={Foreground1} alt="silhouette of monument" />
-              <ImgL src={Foreground2} alt="silhouette of monument" />
+              <ImgR src={Foreground1} alt="lighthouse" />
+              <ImgL src={Foreground2} alt="waterfall" />
               <br /> <br /> <br />
               <Text>
                 Good for showing and creating space for the subject in your
@@ -200,7 +200,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Frame Within the Frame </TextBold>
               </DivL>
-              <ImgL src={FrameinFrame} alt="silhouette of monument" />
+              <ImgL src={FrameinFrame} alt="arches of building" />
               <br /> <br />
               <P>
                 <Text>
@@ -214,7 +214,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Leading Lines</TextBold>
               </DivL>
-              <ImgL src={LeadingLines} alt="silhouette of monument" />
+              <ImgL src={LeadingLines} alt="monument with moon" />
               <br /> <br />
               <Text>
                 Leading lines help focus attention on important elements. Paths,
@@ -227,8 +227,8 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Fill the Frame </TextBold>
               </DivL>
-              <ImgR src={fillFrame1} alt="silhouette of monument" />
-              <ImgL src={fillFrame2} alt="silhouette of monument" />
+              <ImgR src={fillFrame1} alt="statue closeup" />
+              <ImgL src={fillFrame2} alt="owl face" />
               <br /> <br /> <br />
               <Text>
                 Filling the frame with your subject, leaving little or no space
@@ -240,7 +240,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Leave Negative Space </TextBold>
               </DivL>
-              <ImgL src={Isolate} alt="silhouette of monument" />
+              <ImgL src={Isolate} alt="bird on branch" />
               <br /> <br />
               <P>
                 <Text>
@@ -253,7 +253,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Isolate the Subject </TextBold>
               </DivL>
-              <ImgL src={Negativespace} alt="silhouette of monument" />
+              <ImgL src={Negativespace} alt="bird in sky" />
               <br /> <br />
               <P>
                 <Text>
@@ -267,7 +267,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Change your Point of View </TextBold>
               </DivL>
-              <ImgL src={Pointofview} alt="silhouette of monument" />
+              <ImgL src={Pointofview} alt="baby swans in water" />
               <br /> <br />
               <P>
                 <Text>
@@ -282,7 +282,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Rule of Space </TextBold>
               </DivL>
-              <ImgL src={Ruleofspace} alt="silhouette of monument" />
+              <ImgL src={Ruleofspace} alt="bird flying" />
               <br /> <br />
               <P>
                 <Text>
@@ -296,7 +296,7 @@ const Step4 = () => {
               <DivL>
                 <TextBold>Left to Right Rule </TextBold>
               </DivL>
-              <ImgL src={Seanmotion} alt="silhouette of monument" />
+              <ImgL src={Seanmotion} alt="child running" />
               <br /> <br />
               <P>
                 <Text>
@@ -314,7 +314,7 @@ const Step4 = () => {
               <ImageToggleOnMouseOver
                 primaryImg={Goldenratio1}
                 secondaryImg={Goldenratio2}
-                alt=""
+                alt="red fox in grass"
               />
               <Text>
                 Two quantities are in the golden ratio if their ratio is the

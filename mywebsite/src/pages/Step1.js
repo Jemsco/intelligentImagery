@@ -290,7 +290,7 @@ const Step1 = () => {
                   the opening in the lens.
                 </P>
                 <DivC>
-                  <ImgC src={FStops} alt="ISO Triangle" />
+                  <ImgC src={FStops} alt="Aperture images" />
                 </DivC>
                 <P>
                   There are very specific reasons why you would want to change
