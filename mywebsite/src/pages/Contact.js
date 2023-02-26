@@ -11,18 +11,18 @@ const Wrapper = styled.section`
   padding: 4em;
 `;
 
-const FormGroup = styled.div`
+const FormGroup = styled.form`
   display: block;
   width: 300px;
   margin-right: 40px;
   margin-left -40px;
 `;
 const Input = styled.input`
-	padding: 0.5em;
-	border: 1;
-	border-radius: 3px;
-	width: 100%;
-	margin-bottom: 0.5em;
+  padding: 0.5em;
+  border: 1;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 0.5em;
 `;
 const TextArea = styled.textarea`
   padding: 0.5em;
@@ -31,8 +31,7 @@ const TextArea = styled.textarea`
   width: 100%;
   margin-bottom: 0.5em;
 `;
-const Button = styled.button`
-`;
+const Button = styled.button``;
 const Label = styled.label`
   margin-top: 20px;
 `;
@@ -41,43 +40,53 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  function submitToAPI() {
-    const endpoint = `https://sjuhk1jny2.execute-api.us-east-1.amazonaws.com/prod/`;
-    // We use JSON.stringify here so the data can be sent as a string via HTTP
-    const body = JSON.stringify({
-      name: name,
-      email: email,
-      desc: message,
-    });
-    const requestOptions = {
-      method: "POST",
-      body,
-    };
+  const [status, setStatus] = useState("Submit");
+  const submitToAPI = async (e) => {
+    e.preventDefault();
+    setStatus("Sending...");
+    const { name, email, message } = e.target.elements;
+    let details = {
+      name: name.value,
 
-    fetch(endpoint, requestOptions)
-      .then((response) => {
-        if (!response.ok) throw new Error("Error in fetch");
-        return response.json();
-      })
-      .then((response) => {
-        document.getElementById("emailConfirm").innerText =
-          "Email sent successfully!";
-        document.getElementById("contact-form").reset();
-      })
-      .catch((error) => {
-        document.getElementById("emailConfirm").innerText =
-          "An unkown error occured.";
-      });
-  }
+      email: email.value,
+      desc: message.value,
+    };
+    const nameTest = /[A-Za-z]{1}[A-Za-z]/;
+    if(!nameTest.test(name.value)) {
+      alert("Please enter a name");
+      return;
+    }
+    let response = await fetch(
+      "https://sjuhk1jny2.execute-api.us-east-1.amazonaws.com/prod/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(details),
+      }
+    );
+    setStatus("Submit");
+    // let result = await response.json();
+    // alert(response.status);
+    if (response.status === 200) {
+      document.getElementById("emailConfirm").innerText =
+          "Thank you!. Your email was sent successfully!";
+      }
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("message").value = "";
+    
+  };
   return (
     <main>
       <Wrapper>
         <Title>
           <h1>Contact Form</h1>
         </Title>{" "}
-        <FormGroup id="contact-form" method="post">
+        <FormGroup onSubmit={submitToAPI}>
           <Label for="name">
-            <h4>Name: </h4> 
+            <h4>Name: </h4>
           </Label>
           <br />
           <Input
@@ -128,12 +137,10 @@ const Contact = () => {
             class="g-recaptcha"
             data-sitekey="6Lc7cVMUAAAAAM1yxf64wrmO8gvi8A1oQ_ead1ys"
           />
-          <Button type="button" onClick={submitToAPI} class="btn btn-lg">
-            Submit
-          </Button>
-          <div class="modal" id="emailConfirm">
-            <p>Thank You. Your email has been sent.</p>
+          <div id="emailConfirm">
+            <p></p>
           </div>
+          <Button type="submit">{status}</Button>
         </FormGroup>
       </Wrapper>
     </main>
