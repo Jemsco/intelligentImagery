@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Title = styled.h2`
+const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
 `;
@@ -47,7 +47,6 @@ const Contact = () => {
     const { name, email, message } = e.target.elements;
     let details = {
       name: name.value,
-
       email: email.value,
       desc: message.value,
     };
@@ -86,7 +85,7 @@ const Contact = () => {
         </Title>{" "}
         <FormGroup onSubmit={submitToAPI}>
           <Label for="name">
-            <h4>Name: </h4>
+            <h2>Name: </h2>
           </Label>
           <br />
           <Input
@@ -102,7 +101,7 @@ const Contact = () => {
           />
           <br />
           <Label for="email">
-            <h4>Email: </h4>
+            <h3>Email: </h3>
           </Label>
           <Input
             type="email"
@@ -133,10 +132,6 @@ const Contact = () => {
             }}
           />
           <br />
-          <TextArea
-            class="g-recaptcha"
-            data-sitekey="6Lc7cVMUAAAAAM1yxf64wrmO8gvi8A1oQ_ead1ys"
-          />
           <div id="emailConfirm">
             <p></p>
           </div>

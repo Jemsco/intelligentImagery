@@ -105,6 +105,10 @@ const Button = styled.div`
   vertical-align: middle;
 `;
 
+const ModalButton = styled(Button)`
+  color: #0905f5;
+`;
+
 const Section = styled.section`
   display: flex;
   justify-content: space-between;
@@ -211,14 +215,14 @@ const Step1 = () => {
                 </P>{" "}
                 <Section>
                   <div>
-                    <Button onClick={() => handleOpenModal("ISO")}>
+                    <ModalButton onClick={() => handleOpenModal("ISO")}>
                       ISO IN DIGITAL CAMERAS
-                    </Button>
+                    </ModalButton>
                   </div>
                   <div>
-                    <Button onClick={() => handleOpenModal("ASA")}>
+                    <ModalButton onClick={() => handleOpenModal("ASA")}>
                       ASA IN FILM CAMERAS
-                    </Button>
+                    </ModalButton>
                   </div>
                   <ReactModal
                     isOpen={showModal}
