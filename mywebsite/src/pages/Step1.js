@@ -7,7 +7,7 @@ import ISOScale1 from "../assets/ISOscale1.jpg";
 import FStops from "../assets/fStops.png";
 import ScrollButton from "../utils/ScrollButton";
 import ReactModal from "react-modal";
-import { MODAL_CONTENT } from "../utils/constants/ModalConent";
+import { MODAL_CONTENT } from "../utils/constants/ModalContent";
 
 const Title = styled.h2`
   font-size: 1.5em;
