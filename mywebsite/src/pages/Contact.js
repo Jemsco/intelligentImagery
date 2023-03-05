@@ -20,6 +20,10 @@ const ContactContainer = styled.div`
   // align-items: center;
   // height: 100vh;
   // width: 100%;
+  @media (max-width: 1023px) {
+    flex-direction: column;
+    gap: 0;
+  }
 `;
 
 const ContactMessageSection = styled.div`
@@ -197,7 +201,7 @@ const Contact = () => {
     const nameTest = /[A-Za-z]{1}[A-Za-z]/;
     if (!nameTest.test(value) || value.length < 1) {
       setFormErrors(true);
-      setNameErrorMessage("Please enter a name longer than 1 character");
+      setNameErrorMessage("Please enter a name");
       e.target.style.borderColor = "red";
     } else {
       setFormErrors(false);
@@ -229,7 +233,7 @@ const Contact = () => {
             <ContactMessage>Let's talk</ContactMessage>
           </ContactMessageSection>
           <Form onSubmit={submitToAPI}>
-            <InputContainer aria-live="polite" autofocus>
+            <InputContainer aria-live="assertive" autofocus>
               <Input
                 autoComplete="none"
                 type="text"
@@ -245,11 +249,11 @@ const Contact = () => {
                 }}
               />
               <Label htmlFor="name">Name:</Label>
-              <ErrorMessage aria-hidden="true">{nameErrorMessage}</ErrorMessage>
+              <ErrorMessage>{nameErrorMessage}</ErrorMessage>
             </InputContainer>
 
             <br />
-            <InputContainer aria-live="polite">
+            <InputContainer aria-live="assertive">
               <Input
                 autoComplete="none"
                 type="email"
@@ -265,9 +269,7 @@ const Contact = () => {
                 }}
               />
               <Label htmlFor="email">Email:</Label>
-              <ErrorMessage aria-hidden="true">
-                {emailErrorMessage}
-              </ErrorMessage>
+              <ErrorMessage>{emailErrorMessage}</ErrorMessage>
             </InputContainer>
 
             <br />
