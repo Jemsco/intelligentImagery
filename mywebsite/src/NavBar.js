@@ -21,12 +21,8 @@ function NavBar() {
     document.title = `Intelligent Imagery`;
   });
   return (
-    <Navbar
-      bg="dark"
-      expand="lg"
-      variant="dark"
-    >
-      <Container >
+    <Navbar bg="dark" expand="lg" variant="dark">
+      <Container>
         <Navbar.Brand href="/">Intelligent Imagery</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -35,8 +31,8 @@ function NavBar() {
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/contact">Contact</Nav.Link>
             <NavDropdownMenu title="Image Academy" id="collasible-nav-dropdown">
-              <DropdownSubmenu href="/imagery101" title="Imagery 101" >
-                <NavDropdown.Item href="/step1">Step 1</NavDropdown.Item >
+              <DropdownSubmenu href="/imagery101" title="Imagery 101">
+                <NavDropdown.Item href="/step1">Step 1</NavDropdown.Item>
                 <NavDropdown.Item href="/step2">Step 2</NavDropdown.Item>
                 <NavDropdown.Item href="/step3">Step 3</NavDropdown.Item>
                 <NavDropdown.Item href="/step4">Step 4</NavDropdown.Item>
@@ -48,6 +44,7 @@ function NavBar() {
                 <NavDropdown.Item href="#action/3.3">Step 4</NavDropdown.Item>
               </DropdownSubmenu>
             </NavDropdownMenu>
+            <Nav.Link href="/blog">Blog</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
