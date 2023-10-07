@@ -37,12 +37,12 @@ function NavBar() {
                 <NavDropdown.Item href="/step3">Step 3</NavDropdown.Item>
                 <NavDropdown.Item href="/step4">Step 4</NavDropdown.Item>
               </DropdownSubmenu>
-              <DropdownSubmenu href="#action/3.7" title="Imagery 102">
+              {/* <DropdownSubmenu href="#action/3.7" title="Imagery 102">
                 <NavDropdown.Item href="#action/3.1">Step 1</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Step 2</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Step 3</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Step 4</NavDropdown.Item>
-              </DropdownSubmenu>
+              </DropdownSubmenu> */}
             </NavDropdownMenu>
             <Nav.Link href="/blog">Blog</Nav.Link>
           </Nav>

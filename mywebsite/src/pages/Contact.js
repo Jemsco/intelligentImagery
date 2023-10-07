@@ -289,7 +289,7 @@ const Contact = () => {
               />
             </InputContainer>
             <InputContainer>
-              <Button type="submit" disabled={formErrors}>
+              <Button type="submit" disabled={formErrors} onClick={submitToAPI}>
                 {status}
               </Button>
             </InputContainer>
