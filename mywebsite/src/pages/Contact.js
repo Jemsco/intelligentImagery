@@ -6,7 +6,7 @@ const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
   color: purple;
-  // margin-bottom 50px;
+  max-width: 900px;
 `;
 
 const Wrapper = styled.section`
@@ -47,7 +47,8 @@ const InputContainer = styled.div`
   position: relative;
   height: 45px;
   width: 90%;
-  margin-bottom: 1em;
+  max-width: 500px;
+  margin-bottom: 2em;
 `;
 const Input = styled.input`
  autoComplete="none"
@@ -108,9 +109,7 @@ const Label = styled.label`
 
 const Button = styled.button`
 display: block;
-margin-top: 30px;
-margin-left: auto;
-padding 15px 30px;
+width: fit-content;
 border: none;
 background-color: purple;
 color: white;
@@ -118,6 +117,7 @@ border-radius: 6px;
 cursor: pointer;
 font-size: 16px;
 margin-top: 50px;
+margin-bottom: 30px;
 &:hover {
   background-color: #9867C5;
   transform: translateY(-2px);
@@ -141,37 +141,37 @@ const Contact = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [status, setStatus] = useState("Submit");
-  // const initialvalues = { name, email, message };
-  // const [formValues, setFormValues] = useState(initialvalues);
-  const [formErrors, setFormErrors] = useState();
+  const [formErrors, setFormErrors] = useState(true);
+   const nameTest = /[A-Za-z]{1}[A-Za-z]/;
+   const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   const submitToAPI = async (e) => {
     e.preventDefault();
 
-    const { name, email, message } = e.target.elements;
-    let details = {
-      name: name.value,
-      email: email.value,
-      desc: message.value,
+       let details = {
+      name: name,
+      email: email,
+      desc: message,
     };
-    const nameTest = /[A-Za-z]{1}[A-Za-z]/;
-    if (!nameTest.test(name.value) || name.length < 1) {
+   
+    if (!nameTest.test(name) || name.length < 1) {
       setFormErrors(true);
       setNameErrorMessage("Please enter a name");
-      e.target.style.borderColor = "red";
-    } else {
-      setFormErrors(false);
-      setNameErrorMessage("");
-      e.target.style.borderColor = "black";
-    }
-    const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!emailTest.test(email.value) || email.length < 1) {
+       document.getElementById('name').style.borderColor = "red";
+    } 
+    if (!emailTest.test(email) || email.length < 1) {
       setFormErrors(true);
       setEmailErrorMessage("Please enter a valid email address");
-      e.target.style.borderColor = "red";
-    } else {
+       document.getElementById('email').style.borderColor = "red";
+    } 
+    if(message.length < 1){
+      document.getElementById('message').innerText = "Enter your message";
+    }
+    else {
       setFormErrors(false);
+      setNameErrorMessage("");
       setEmailErrorMessage("");
-      e.target.style.borderColor = "black";
+      document.getElementById('name').style.borderColor = "black";
+      document.getElementById("email").style.borderColor = "black";
     }
     if (!formErrors) {
       setStatus("Sending...");
@@ -189,16 +189,18 @@ const Contact = () => {
       if (response.status === 200) {
         document.getElementById("emailConfirm").innerText =
           "Thank you!. Your email was sent successfully!";
+           setName("");
+           setEmail("");
+           setMessage("");
       }
-      setName("");
-      setEmail("");
-      setMessage("");
+    }
+    else {
+       document.getElementById("emailConfirm").innerText = "Please correct the errors"
     }
   };
 
   const handelBlurText = (e) => {
     const { value } = e.target;
-    const nameTest = /[A-Za-z]{1}[A-Za-z]/;
     if (!nameTest.test(value) || value.length < 1) {
       setFormErrors(true);
       setNameErrorMessage("Please enter a name");
@@ -212,7 +214,6 @@ const Contact = () => {
 
   const handleBlurEmail = (e) => {
     const { value } = e.target;
-    const nameTest = /\S+@\S+\.\S+/;
     if (!nameTest.test(value) || value.length < 1) {
       setFormErrors(true);
       setEmailErrorMessage("Please enter a valid email address");
@@ -233,26 +234,24 @@ const Contact = () => {
             <ContactMessage>Let's talk</ContactMessage>
           </ContactMessageSection>
           <Form onSubmit={submitToAPI}>
-            <InputContainer aria-live="assertive" autofocus>
+            <InputContainer aria-live="assertive" autoFocus>
               <Input
                 autoComplete="none"
                 type="text"
                 name="name"
                 id="name"
                 placeholder={
-                  nameErrorMessage ? nameErrorMessage : "Enter name here"
+                  nameErrorMessage || "Enter name here"
                 }
                 value={name}
                 onBlur={handelBlurText}
-                onChange={(event) => {
-                  setName(event.target.value);
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
               />
               <Label htmlFor="name">Name:</Label>
               <ErrorMessage>{nameErrorMessage}</ErrorMessage>
             </InputContainer>
-
-            <br />
             <InputContainer aria-live="assertive">
               <Input
                 autoComplete="none"
@@ -260,21 +259,17 @@ const Contact = () => {
                 name="email"
                 id="email"
                 placeholder={
-                  emailErrorMessage ? emailErrorMessage : "Enter email here"
+                  emailErrorMessage || "Enter email here"
                 }
                 value={email}
                 onBlur={handleBlurEmail}
-                onChange={(event) => {
-                  setEmail(event.target.value);
+                onChange={(e) => {
+                  setEmail(e.target.value);
                 }}
               />
               <Label htmlFor="email">Email:</Label>
               <ErrorMessage>{emailErrorMessage}</ErrorMessage>
             </InputContainer>
-
-            <br />
-
-            <br />
             <InputContainer>
               <TextArea
                 id="message"
@@ -283,16 +278,17 @@ const Contact = () => {
                 placeholder="Enter your message"
                 style={{ border: "2px solid black" }}
                 value={message}
-                onChange={(event) => {
-                  setMessage(event.target.value);
+                onChange={(e) => {
+                  setMessage(e.target.value);
                 }}
               />
             </InputContainer>
-            <InputContainer>
-              <Button type="submit" disabled={formErrors} onClick={submitToAPI}>
+              <Button
+                type="submit"
+                role="button"
+              >
                 {status}
               </Button>
-            </InputContainer>
             <InputContainer>
               <Title id="emailConfirm">
                 <p></p>
