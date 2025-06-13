@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import ScrollButton from "../utils/ScrollButton";
+import { useNavigate } from "react-router";
 
 const Title = styled.h2`
   font-size: 1.5em;
@@ -68,9 +69,33 @@ const DivC = styled(Div)`
   text-align: center;
   margin-bottom: 20px;
 `;
+const Button = styled.div`
+  cursor: pointer;
+  background-color: transparent;
+  color: #3498db;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
 
+const StepButton = styled(Button)`
+  width: 100%;
+  bottom: 40px;
+  height: 20px;
+  font-size: 1rem;
+  z-index: 1;
+`;
 
 const Step2 = () => {
+  const navigate = useNavigate();
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+      /* you can also use 'auto' behaviour
+         in place of 'smooth' */
+    });
+  };
 
   return (
     <main>
@@ -377,6 +402,22 @@ const Step2 = () => {
               </Text>
               <Footer>
                 <ScrollButton />
+                <StepButton
+                  onClick={() => {
+                    scrollToTop();
+                    navigate("/step1");
+                  }}
+                >
+                  Previous Step
+                </StepButton>
+                <StepButton
+                  onClick={() => {
+                    scrollToTop();
+                    navigate("/step3");
+                  }}
+                >
+                  Next Step
+                </StepButton>
                 <br />© 2020 · Jay Brass Intelligent Imagery
               </Footer>
             </P>

@@ -19,6 +19,7 @@ import Seanmotion from "../assets/seanmotion.jpg";
 import Goldenratio1 from "../assets/goldenratio.jpg";
 import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
 import ScrollButton from "../utils/ScrollButton";
+import { useNavigate } from "react-router";
 
 const Title = styled.h2`
   font-size: 1.5em;
@@ -93,8 +94,33 @@ const DivL = styled(Div)`
   float: left;
   width: 100%;
 `;
+const Button = styled.div`
+  cursor: pointer;
+  background-color: transparent;
+  color: #3498db;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+const StepButton = styled(Button)`
+  width: 100%;
+  bottom: 40px;
+  height: 20px;
+  font-size: 1rem;
+  z-index: 1;
+`;
 
 const Step4 = () => {
+    const navigate = useNavigate();
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+        /* you can also use 'auto' behaviour
+         in place of 'smooth' */
+      });
+    };
 
    const ImageToggleOnMouseOver = ({ primaryImg, secondaryImg, alt }) => {
      const imageRef = useRef(null);
@@ -245,8 +271,7 @@ const Step4 = () => {
               <P>
                 <Text>
                   Using a shallow depth of field to isolate your subject will
-                  focus attention on the subject.This image of a cat bird uses a
-                  shallow depth of field to isolate it from the background.
+                  focus attention on the subject.
                 </Text>
               </P>
             </Div>
@@ -324,13 +349,21 @@ const Step4 = () => {
                 "Phi Grid". Use the squares to draw a spiral called a "Fibonacci
                 Spiral". It is believed that the golden spiral method of
                 composition has been in existence for over 2,400 years having
-                been devised in Ancient Greece.Notice how the eyes of the
+                been devised in Ancient Greece.  Notice how the eyes of the
                 subject fall right in the smallest box and tightest area of the
                 spiral.
               </Text>
             </Div>
             <Footer>
-              <ScrollButton />
+              <ScrollButton />{' '}
+              <StepButton
+                onClick={() => {
+                  scrollToTop();
+                  navigate("/step3");
+                }}
+              >
+                Previous Step
+              </StepButton>
               <br />© 2020 · Jay Brass Intelligent Imagery
             </Footer>
           </Article>

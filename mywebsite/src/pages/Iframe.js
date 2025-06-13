@@ -7,11 +7,11 @@ const IframeStyle = styled.iframe`
  border: 0;
  align-self: center;
  position: absolute;
- top: 0;
+//  top: -44px;
  left: 0;
  width: 100%;
  height: 100%;
- margin-top: 50px;
+ margin-top: -70px;
  z-index: -1;
 `;
 
@@ -26,11 +26,12 @@ const Iframe = ({ source }) => {
 
   return (
     <main>
-      {/* <div className="col-md-1"> */}
-      <div className="emdeb-responsive">
-        <IframeStyle src={src} title="blog"></IframeStyle>
+      <div className="embed-responsive">
+        <IframeStyle
+          src={src}
+          title="gallery"
+        ></IframeStyle>
       </div>
-      {/* </div> */}
     </main>
   );
 };

@@ -142,37 +142,45 @@ const Contact = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [status, setStatus] = useState("Submit");
   const [formErrors, setFormErrors] = useState(true);
-   const nameTest = /[A-Za-z]{1}[A-Za-z]/;
-   const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  const nameTest = /[A-Za-z]{1}[A-Za-z]/;
+  const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  const handleFormValidation = (e) =>{
+  e.preventDefault();
+  if (message.length < 1) {
+    setMessage("Enter your message");
+  }
+  if (!nameTest.test(name) || !emailTest.test(email)) {
+    if (!nameTest.test(name)) {
+      setFormErrors(true);
+      setNameErrorMessage("Please enter a name");
+      document.getElementById("name").style.borderColor = "red";
+    } 
+    if (!emailTest.test(email)) {
+      setFormErrors(true);
+      setEmailErrorMessage("Please enter a valid email address");
+      document.getElementById("email").style.borderColor = "red";
+    }
+     document.getElementById("emailConfirm").innerText =
+       "Please correct the errors";
+  } else {
+    setFormErrors(false);
+    setNameErrorMessage("");
+    setEmailErrorMessage("");
+    document.getElementById("name").style.borderColor = "black";
+    document.getElementById("email").style.borderColor = "black";
+    submitToAPI();
+  }
+    }
   const submitToAPI = async (e) => {
-    e.preventDefault();
-
+    console.log(
+      'submitToApi form Errors ',formErrors
+    );
        let details = {
       name: name,
       email: email,
       desc: message,
     };
    
-    if (!nameTest.test(name) || name.length < 1) {
-      setFormErrors(true);
-      setNameErrorMessage("Please enter a name");
-       document.getElementById('name').style.borderColor = "red";
-    } 
-    if (!emailTest.test(email) || email.length < 1) {
-      setFormErrors(true);
-      setEmailErrorMessage("Please enter a valid email address");
-       document.getElementById('email').style.borderColor = "red";
-    } 
-    if(message.length < 1){
-      document.getElementById('message').innerText = "Enter your message";
-    }
-    else {
-      setFormErrors(false);
-      setNameErrorMessage("");
-      setEmailErrorMessage("");
-      document.getElementById('name').style.borderColor = "black";
-      document.getElementById("email").style.borderColor = "black";
-    }
     if (!formErrors) {
       setStatus("Sending...");
       let response = await fetch(
@@ -233,7 +241,7 @@ const Contact = () => {
           <ContactMessageSection>
             <ContactMessage>Let's talk</ContactMessage>
           </ContactMessageSection>
-          <Form onSubmit={submitToAPI}>
+          <Form onSubmit={handleFormValidation}>
             <InputContainer aria-live="assertive" autoFocus>
               <Input
                 autoComplete="none"
