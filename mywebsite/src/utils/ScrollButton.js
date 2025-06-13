@@ -1,8 +1,6 @@
 /** @format */
-
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { FaArrowCircleUp } from "react-icons/fa";
 
  const Button = styled.div`
   width: 100%;

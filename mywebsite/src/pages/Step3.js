@@ -7,6 +7,7 @@ import frontLit from "../assets/_DSC7078.jpg";
 import SideLit1 from "../assets/20171210_1379_DSC0864.jpg";
 import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 import ScrollButton from "../utils/ScrollButton";
+import { useNavigate } from "react-router";
 
 const Title = styled.h2`
   font-size: 1.5em;
@@ -54,11 +55,6 @@ const Text1 = styled(Text)`
   margin-top: 20px;
 `;
 
-// const Italic = styled(Text)`
-//   font-style: italic;
-//   color: #e00000;
-//   font-size: 1em;
-// `;
 
 const Img = styled.img`
   margin: 5px;
@@ -68,19 +64,7 @@ const Img = styled.img`
   }
   }
 `;
-// const ImgC = styled(Img)`
-//   max-width: 100%;
-//   @media (min-width: 650px) {
-//   max-width: 75%;
-//   }
-//   }
-// `;
-// const ImgSmall = styled(Img)`
-//   max-width: 25%;
-//   @media (min-width: 650px) {
-//     max-width: 5%;
-//   }
-// `;
+
 const ImgR = styled(Img)`
   float: right;
   max-width: 25%;
@@ -112,8 +96,33 @@ const DivC = styled(Div)`
   text-align: center;
   margin-bottom: 20px;
 `;
+const Button = styled.div`
+  cursor: pointer;
+  background-color: transparent;
+  color: #3498db;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+const StepButton = styled(Button)`
+  width: 100%;
+  bottom: 40px;
+  height: 20px;
+  font-size: 1rem;
+  z-index: 1;
+`;
 
 const Step3 = () => {
+  const navigate = useNavigate();
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+      /* you can also use 'auto' behaviour
+         in place of 'smooth' */
+    });
+  };
 
   return (
     <main>
@@ -375,6 +384,22 @@ const Step3 = () => {
             </Text>
             <Footer>
               <ScrollButton />
+              <StepButton
+                onClick={() => {
+                  scrollToTop();
+                  navigate("/step2");
+                }}
+              >
+                Previous Step
+              </StepButton>
+              <StepButton
+                onClick={() => {
+                  scrollToTop();
+                  navigate("/step4");
+                }}
+              >
+                Next Step
+              </StepButton>
               <br />© 2020 · Jay Brass Intelligent Imagery
             </Footer>
           </Article>

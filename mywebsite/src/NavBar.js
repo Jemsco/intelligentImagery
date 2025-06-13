@@ -6,10 +6,10 @@ import {  useEffect } from "react";
 import {
   Navbar,
   Nav,
-  NavDropdown,
+  // NavDropdown,
   Container,
 } from "react-bootstrap";
-import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
+// import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
 
 function NavBar() {
   // const closeNav = useCallback(() => {
@@ -21,12 +21,8 @@ function NavBar() {
     document.title = `Intelligent Imagery`;
   });
   return (
-    <Navbar
-      bg="dark"
-      expand="lg"
-      variant="dark"
-    >
-      <Container >
+    <Navbar bg="dark" expand="lg" variant="dark">
+      <Container>
         <Navbar.Brand href="/">Intelligent Imagery</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -34,20 +30,26 @@ function NavBar() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/contact">Contact</Nav.Link>
-            <NavDropdownMenu title="Image Academy" id="collasible-nav-dropdown">
-              <DropdownSubmenu href="/imagery101" title="Imagery 101" >
-                <NavDropdown.Item href="/step1">Step 1</NavDropdown.Item >
+            <Nav.Link href="/imagery101">Image Academy</Nav.Link>
+
+            {/* Save for future use when there is an Imagery 102 */}
+            {/* <NavDropdownMenu title="Image Academy" id="collasible-nav-dropdown">
+              <DropdownSubmenu href="/imagery101" title="Imagery 101">
+                <NavDropdown.Item href="/imagery101">Imagery 101</NavDropdown.Item>
+                <NavDropdown.Item href="/step1">Step 1</NavDropdown.Item>
                 <NavDropdown.Item href="/step2">Step 2</NavDropdown.Item>
                 <NavDropdown.Item href="/step3">Step 3</NavDropdown.Item>
                 <NavDropdown.Item href="/step4">Step 4</NavDropdown.Item>
-              </DropdownSubmenu>
-              <DropdownSubmenu href="#action/3.7" title="Imagery 102">
+              </DropdownSubmenu> */}
+            {/* <DropdownSubmenu href="#action/3.7" title="Imagery 102">
                 <NavDropdown.Item href="#action/3.1">Step 1</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Step 2</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Step 3</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Step 4</NavDropdown.Item>
-              </DropdownSubmenu>
-            </NavDropdownMenu>
+              </DropdownSubmenu> */}
+            {/* </NavDropdownMenu> */}
+            <Nav.Link href="/blog">Blog</Nav.Link>
+            <Nav.Link href="/gallery">Gallery</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
