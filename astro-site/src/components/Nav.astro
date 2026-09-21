@@ -1,0 +1,165 @@
+---
+/**
+ * Site navigation — replaces the old react-bootstrap NavBar.js.
+ * Plain semantic HTML + CSS; the only JS is a tiny accessible toggle
+ * for the mobile menu (no react-bootstrap / jQuery / popper / Bootstrap JS).
+ */
+const links = [
+	{ href: "/", label: "Home" },
+	{ href: "/about", label: "About" },
+	{ href: "/contact", label: "Contact" },
+	{ href: "/imagery101", label: "Image Academy" },
+	{ href: "/blog", label: "Blog" },
+	{ href: "/gallery", label: "Gallery" },
+];
+
+// Normalize current path (strip trailing slash) for aria-current matching.
+const current = Astro.url.pathname.replace(/\/+$/, "") || "/";
+---
+
+<nav class="site-nav" aria-label="Main">
+	<div class="nav-inner">
+		<a class="brand" href="/">Intelligent Imagery</a>
+		<button
+			class="nav-toggle"
+			type="button"
+			aria-expanded="false"
+			aria-controls="nav-menu"
+			aria-label="Toggle navigation menu"
+		>
+			<span class="nav-toggle-bars" aria-hidden="true"></span>
+		</button>
+		<ul class="nav-menu" id="nav-menu">
+			{
+				links.map((link) => {
+					const href = link.href.replace(/\/+$/, "") || "/";
+					const isCurrent = href === current;
+					return (
+						<li>
+							<a href={link.href} aria-current={isCurrent ? "page" : undefined}>
+								{link.label}
+							</a>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</div>
+</nav>
+
+<style>
+	.site-nav {
+		background: var(--nav-bg);
+		color: var(--nav-fg);
+	}
+	.nav-inner {
+		max-width: 1140px;
+		margin: 0 auto;
+		padding: 0.5rem 1rem;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+	}
+	.brand {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--nav-fg-strong);
+		text-decoration: none;
+		margin-right: auto;
+	}
+	.brand:hover,
+	.brand:focus-visible {
+		color: var(--nav-fg-strong);
+		text-decoration: none;
+	}
+
+	.nav-menu {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+	}
+	.nav-menu a {
+		display: block;
+		padding: 0.4rem 0.25rem;
+		color: var(--nav-fg);
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+	}
+	.nav-menu a:hover,
+	.nav-menu a:focus-visible {
+		color: var(--nav-fg-strong);
+	}
+	.nav-menu a[aria-current="page"] {
+		color: var(--nav-fg-strong);
+		border-bottom-color: var(--nav-fg-strong);
+	}
+
+	/* Mobile toggle (hidden on desktop) */
+	.nav-toggle {
+		display: none;
+		width: 2.75rem;
+		height: 2.5rem;
+		padding: 0;
+		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.4);
+		border-radius: 6px;
+		cursor: pointer;
+	}
+	.nav-toggle-bars,
+	.nav-toggle-bars::before,
+	.nav-toggle-bars::after {
+		display: block;
+		width: 1.4rem;
+		height: 2px;
+		margin: 0 auto;
+		background: rgba(255, 255, 255, 0.85);
+		position: relative;
+	}
+	.nav-toggle-bars::before,
+	.nav-toggle-bars::after {
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+	.nav-toggle-bars::before {
+		top: -6px;
+	}
+	.nav-toggle-bars::after {
+		top: 6px;
+	}
+
+	/* Below Bootstrap's lg breakpoint: collapse to a hamburger menu */
+	@media (max-width: 991.98px) {
+		.nav-toggle {
+			display: block;
+		}
+		.nav-menu {
+			display: none;
+			flex-basis: 100%;
+			flex-direction: column;
+			gap: 0;
+			padding-top: 0.5rem;
+		}
+		.nav-menu.is-open {
+			display: flex;
+		}
+		.nav-menu a {
+			padding: 0.6rem 0.25rem;
+		}
+	}
+</style>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+	const menu = document.getElementById("nav-menu");
+
+	toggle?.addEventListener("click", () => {
+		const open = toggle.getAttribute("aria-expanded") === "true";
+		toggle.setAttribute("aria-expanded", String(!open));
+		menu?.classList.toggle("is-open", !open);
+	});
+</script>

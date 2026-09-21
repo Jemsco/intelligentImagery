@@ -1,0 +1,56 @@
+---
+/**
+ * Previous / Next navigation for the Step pages.
+ *
+ * Replaces the old `<StepButton onClick={() => { scrollToTop(); navigate() }}>`
+ * buttons with real <a> links (keyboard/middle-click/crawlable). Pass whichever
+ * of `prev` / `next` applies to the page.
+ *
+ * (The floating scroll-to-top button is handled separately in Night 15.)
+ */
+export interface Props {
+	prev?: { href: string; label?: string };
+	next?: { href: string; label?: string };
+}
+const { prev, next } = Astro.props;
+---
+
+<nav class="step-nav" aria-label="Step navigation">
+	{
+		prev && (
+			<a class="step-btn" href={prev.href}>
+				← {prev.label ?? "Previous Step"}
+			</a>
+		)
+	}
+	{
+		next && (
+			<a class="step-btn" href={next.href}>
+				{next.label ?? "Next Step"} →
+			</a>
+		)
+	}
+</nav>
+
+<style>
+	.step-nav {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin: 2rem 0 1rem;
+	}
+	.step-btn {
+		display: inline-block;
+		padding: 0.6rem 1.1rem;
+		background: var(--nav-bg);
+		color: #fff;
+		text-decoration: none;
+		border-radius: 6px;
+	}
+	.step-btn:hover,
+	.step-btn:focus-visible {
+		color: #fff;
+		filter: brightness(1.15);
+	}
+</style>

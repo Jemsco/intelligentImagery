@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StepCards from "../components/StepCards.astro";
+import monument from "../assets/monument.jpg";
+---
+
+<BaseLayout
+	title="Image Academy"
+	description="The Image Academy — a step-by-step guide to creating better images with any camera, from DSLR to phone."
+>
+	<section class="academy">
+		<h1 class="page-title">The Image Academy is designed around creating images.</h1>
+
+		<div class="hero">
+			<Image
+				src={monument}
+				alt="A stone monument standing against an open sky"
+				class="hero-img"
+			/>
+		</div>
+
+		<article class="academy-copy">
+			<p>
+				Whether you own a high end DSLR or a mobile phone camera, the
+				Image Academy will help you create better images. There is
+				information targeted toward DSLR users, but the purpose of the
+				Image Academy is to provide information useful for creating
+				images from any device that has a camera. Fiction or non
+				fiction, Professional, Amateur or snapshots, there is
+				something here for you.
+			</p>
+			<p>
+				The step program is designed to address specific topics in a
+				logical order but the steps can be taken in any order you
+				choose. This is to accommodate anyone from the beginner to the
+				experienced, and allow for the steps to be referred back to at
+				any time.
+			</p>
+			<p class="lead-italic">
+				Use the Menu Cards to move through the steps when you're ready
+			</p>
+		</article>
+	</section>
+
+	<StepCards />
+</BaseLayout>
+
+<style>
+	.academy {
+		display: flex;
+		flex-direction: column;
+	}
+	.hero {
+		margin: 20px 15px;
+		text-align: center;
+	}
+	.hero-img {
+		display: inline-block;
+		margin: 5px auto;
+	}
+	.academy-copy {
+		font-size: 1em;
+		max-width: 75ch;
+		margin: 2em auto 0;
+	}
+	.academy-copy p {
+		margin-left: 15px;
+		margin-right: 15px;
+		font-size: 1.15em;
+		text-align: center;
+	}
+	.academy-copy .lead-italic {
+		color: #000000;
+		font-size: 1.1em;
+	}
+</style>

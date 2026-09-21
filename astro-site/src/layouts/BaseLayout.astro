@@ -1,0 +1,99 @@
+---
+/**
+ * BaseLayout — the shared shell every page slots into.
+ *
+ * Replaces the old CRA public/index.html <head> and the per-component
+ * `document.title` hacks: each page passes its own `title`/`description`.
+ */
+export interface Props {
+	title: string;
+	description?: string;
+}
+
+const SITE_NAME = "Intelligent Imagery";
+const DEFAULT_DESCRIPTION =
+	"Intelligent Imagery — landscape and nature photography by Jay Brass, plus a beginner-friendly guide to the fundamentals of photography.";
+
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+
+// Full page title: page name + site name, except on pages already named the site.
+const pageTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
+
+const GA_MEASUREMENT_ID = "G-154CQR4BQR";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+
+		<!-- Favicons / icons (ported from the CRA public/ set) -->
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+
+		<!-- Google Analytics (production only) -->
+		{
+			import.meta.env.PROD && (
+				<>
+					<script
+						is:inline
+						async
+						src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+					/>
+					<script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+						window.dataLayer = window.dataLayer || [];
+						function gtag() {
+							dataLayer.push(arguments);
+						}
+						gtag("js", new Date());
+						gtag("config", GA_MEASUREMENT_ID);
+					</script>
+				</>
+			)
+		}
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Skip to content</a>
+		<Nav />
+		<main id="main-content">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	/* Skip link: visually hidden until it receives keyboard focus. */
+	.skip-link {
+		position: absolute;
+		left: 0.5rem;
+		top: -3rem;
+		z-index: 100;
+		padding: 0.5rem 0.9rem;
+		background: #212529;
+		color: #fff;
+		border-radius: 0 0 6px 6px;
+		text-decoration: none;
+		transition: top 0.15s ease;
+	}
+	.skip-link:focus {
+		top: 0;
+	}
+</style>

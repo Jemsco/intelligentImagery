@@ -1,0 +1,403 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StepNav from "../components/StepNav.astro";
+
+// Rule of Thirds — hover/tap swaps the photo for a grid overlay
+import ROT1 from "../assets/_DSC9072.jpg";
+import ROT2 from "../assets/_DSC9072ROT.jpg";
+// Centered Composition & Symmetry — hover/tap swaps for a grid overlay
+import ROT3 from "../assets/_DSC6779.jpg";
+import ROT4 from "../assets/_DSC6779ROT.jpg";
+// Foreground Interest and Depth
+import Foreground1 from "../assets/20170423-_DSC8710-Edit.jpg";
+import Foreground2 from "../assets/20190504_10086DSC_5956.jpg";
+// Frame within the Frame
+import FrameinFrame from "../assets/20160417-_DSC4419.jpg";
+// Leading Lines
+import LeadingLines from "../assets/20190322_9005DSC_4880_1.jpg";
+// Fill the Frame
+import fillFrame1 from "../assets/_DSC8879.jpg";
+import fillFrame2 from "../assets/DSC_8076.jpg";
+// Isolate the Subject
+import Isolate from "../assets/20170722-_DSC9588.jpg";
+// Leave Negative Space
+import Negativespace from "../assets/20210403_1213_DSC_9516.jpg";
+// Rule of Space
+import Ruleofspace from "../assets/_DSC2333.jpg";
+// Change your Point of View
+import Pointofview from "../assets/20190421_9784DSC_5659.jpg";
+// Left to Right Rule
+import Seanmotion from "../assets/seanmotion.jpg";
+// Golden Ratio — hover/tap swaps the photo for a Phi grid overlay
+import Goldenratio1 from "../assets/goldenratio.jpg";
+import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
+---
+
+<BaseLayout
+	title="Step 4: The Subject IS the Subject"
+	description="Composition and subject — making the subject the subject of your photograph."
+>
+	<section class="wrapper">
+		<h1 class="page-title">THE SUBJECT IS THE SUBJECT</h1>
+
+		<article class="article">
+			<p class="text">
+				The subject of this subject is the subject. Images can depict
+				anything and there is a way to compose them that will be pleasing
+				for others too. Composition is the structure of an image. Even if
+				the exposure is spot on, if the composition is off or unpleasing,
+				your image will be weak. At it's most basic points, lines, and
+				shapes are the elements of composition. Composition should be
+				deliberate. Elements and lines should be intentionally placed in
+				an image. I'm a big fan of the saying "Plan your work and work
+				your plan". This means that you should know what you want to
+				create an image of before you create the image. You will have an
+				opportunity to think about how to compose your imaage and what you
+				want the image to convey. Time of day and environmental setting
+				are important factors to consider. The type of light, and
+				equipment you will have available, and how long it will take you
+				to set up or prepare to create the image. Deciding about all of
+				the prep work will also help in deciding how and where to place
+				items in your image to make a strong composition. Below is a list
+				of things to consider about composing your image. They aren't hard
+				and fast rules, they are guidelines and are meant to help make a
+				strong composition.
+			</p>
+
+			<section class="comp">
+				<h2 class="comp-heading">Rule of Thirds</h2>
+				<button
+					class="swap img-left"
+					type="button"
+					aria-pressed="false"
+					aria-label="Rule of Thirds example — activate to overlay the grid lines on the photo"
+				>
+					<Image
+						class="swap-base"
+						src={ROT1}
+						alt="An oystercatcher wading bird standing on a sandy beach with the ocean and sky behind it"
+					/>
+					<Image
+						class="swap-overlay"
+						src={ROT2}
+						alt="The same beach photo with a rule-of-thirds grid overlaid, the bird placed on the right vertical line"
+					/>
+				</button>
+				<p class="text">
+					Divide the frame into 9 equal rectangles, 3 across and 3 down
+					place the important element(s) of the image along one or more of
+					the lines or where the lines intersect. Move your mouse cursor
+					over the image and you will see the lines appear. For cell
+					phones, tap on the image (double tap to see it larger) This
+					image actually uses the Rule of Thirds both horizontally with
+					the sand, ocean and sky and vertically placing the bird (Oyster
+					Catcher) on a vertical line on the right. It also uses the Rule
+					of Space and breaks the Left to Right rule.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Centered Composition and Symmetry</h2>
+				<button
+					class="swap img-left"
+					type="button"
+					aria-pressed="false"
+					aria-label="Centered composition example — activate to overlay the grid lines on the photo"
+				>
+					<Image
+						class="swap-base"
+						src={ROT3}
+						alt="Hopetoun House mansion in Queensferry, Scotland, mirrored in the still water in front of it"
+					/>
+					<Image
+						class="swap-overlay"
+						src={ROT4}
+						alt="The Hopetoun House photo with a rule-of-thirds grid overlaid, showing its symmetry"
+					/>
+				</button>
+				<p class="text">
+					Symmetrical scenes are perfect for a centered composition.
+					Scenes containing reflections are also an opportunity to use
+					symmetry in the composition. Try a mix of the rule of thirds and
+					symmetry to compose the image. The image of the Hopetoun House
+					in Queensferry Scotland uses the Rule of Thirds well and it is
+					also perfectly symmetrical. Mouse over or tap to see the grid
+					lines.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">
+					Foreground Interest and Depth <span class="comp-note">(left or right)</span>
+				</h2>
+				<Image
+					class="img-right"
+					src={Foreground1}
+					alt="A lighthouse with rocks in the foreground adding depth and leading the eye to the subject"
+				/>
+				<Image
+					class="img-left"
+					src={Foreground2}
+					alt="A waterfall with foreground rocks that add depth and lead toward the main subject"
+				/>
+				<p class="text">
+					Good for showing and creating space for the subject in your
+					image to occupy. Including foreground interest is a way of
+					adding depth to the scene.In these images the rocks in the
+					foreground add depth and lead the viewer to the main subject.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Frame Within the Frame</h2>
+				<Image
+					class="img-left"
+					src={FrameinFrame}
+					alt="Arches of a building forming a frame within the frame around the scene beyond"
+				/>
+				<p class="text">
+					Including a frame within the frame is a way of portraying
+					depth. Look for elements such as windows, arches or
+					overhanging tree branches to frame the image with.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Leading Lines</h2>
+				<Image
+					class="img-left"
+					src={LeadingLines}
+					alt="A monument with the moon above it, its walls and lines leading attention toward the subject"
+				/>
+				<p class="text">
+					Leading lines help focus attention on important elements. Paths,
+					walls or patterns can be leading lines and they do not have to
+					be straight.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Fill the Frame</h2>
+				<Image
+					class="img-right"
+					src={fillFrame1}
+					alt="A close-up of a statue filling the frame with no space around it"
+				/>
+				<Image
+					class="img-left"
+					src={fillFrame2}
+					alt="An owl's face filling the frame, focusing attention on the subject with no distractions"
+				/>
+				<p class="text">
+					Filling the frame with your subject, leaving little or no space
+					around it can be effective. It helps focus the viewer completely
+					on the main subject without any distractions.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Isolate the Subject</h2>
+				<Image
+					class="img-left"
+					src={Isolate}
+					alt="A bird on a branch isolated against a blurred background using a shallow depth of field"
+				/>
+				<p class="text">
+					Using a shallow depth of field to isolate your subject will
+					focus attention on the subject.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Leave Negative Space</h2>
+				<Image
+					class="img-left"
+					src={Negativespace}
+					alt="A single bird surrounded by empty sky, using negative space for a simple, minimal composition"
+				/>
+				<p class="text">
+					Leaving a lot of empty or 'negative' space around your subject
+					creates a sense of simplicity and minimalism.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Change your Point of View</h2>
+				<Image
+					class="img-left"
+					src={Pointofview}
+					alt="Baby swans (cygnets) in the water photographed from a low point of view at their level"
+				/>
+				<p class="text">
+					Try getting high up or low down or shot from a different angle
+					to compose your image. Study your subject to find what is
+					pleasing and interesting. Sometimes getting on the same level
+					is the best angle.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Rule of Space</h2>
+				<Image
+					class="img-left"
+					src={Ruleofspace}
+					alt="A bird flying with more space left in front of it so it can move into the frame"
+				/>
+				<p class="text">
+					The rule of space relates to the direction the subject(s) in
+					your photo are facing. Leave more space in front of the
+					subject so that it can "move" into it.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Left to Right Rule</h2>
+				<Image
+					class="img-left"
+					src={Seanmotion}
+					alt="A child running from left to right while another child and a tree anchor the left side of the frame"
+				/>
+				<p class="text">
+					There is a theory that says we read an image from left to
+					right in the same way we would read a book. Here my bionic son
+					is running from left to right while my daughter and the tree
+					anchor the left side of the image.
+				</p>
+			</section>
+
+			<section class="comp">
+				<h2 class="comp-heading">Golden Ratio</h2>
+				<button
+					class="swap img-left"
+					type="button"
+					aria-pressed="false"
+					aria-label="Golden Ratio example — activate to overlay the Phi grid and Fibonacci spiral on the photo"
+				>
+					<Image
+						class="swap-base"
+						src={Goldenratio1}
+						alt="A red fox sitting in the grass"
+					/>
+					<Image
+						class="swap-overlay"
+						src={Goldenratio2}
+						alt="The red fox photo overlaid with a golden-ratio Phi grid and Fibonacci spiral, the fox's eye at the tightest point of the spiral"
+					/>
+				</button>
+				<p class="text">
+					Two quantities are in the golden ratio if their ratio is the
+					same as the ratio of their sum to the larger of the two
+					quantities. Move your mouse cursor over the image or tap on the
+					image. The frame is divided into a series of squares known as a
+					"Phi Grid". Use the squares to draw a spiral called a "Fibonacci
+					Spiral". It is believed that the golden spiral method of
+					composition has been in existence for over 2,400 years having
+					been devised in Ancient Greece.  Notice how the eyes of the
+					subject fall right in the smallest box and tightest area of the
+					spiral.
+				</p>
+			</section>
+
+			<StepNav prev={{ href: "/step3" }} />
+		</article>
+	</section>
+</BaseLayout>
+
+<script>
+	// Accessible image-swap: each .swap is a <button>, so Enter/Space fire
+	// click natively (keyboard) and tap fires it on touch. Hover is a pure-CSS
+	// enhancement on top. Clicking toggles a "pinned" overlay state.
+	document.querySelectorAll(".swap").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const active = btn.classList.toggle("is-active");
+			btn.setAttribute("aria-pressed", String(active));
+		});
+	});
+</script>
+
+<style>
+	.wrapper {
+		padding: 0.5em;
+		max-width: 100%;
+	}
+
+	.article {
+		font-size: 1em;
+		margin-top: 2em;
+	}
+
+	.text {
+		font-size: 1.15em;
+	}
+
+	/* Each composition guideline; overflow:auto contains the floated image. */
+	.comp {
+		margin-top: 20px;
+		overflow: auto;
+	}
+
+	.comp-heading {
+		float: left;
+		width: 100%;
+		margin: 0 0 0.25em;
+		font-size: 1em;
+		font-weight: bold;
+	}
+	.comp-note {
+		font-weight: normal;
+	}
+
+	/* Floated images: full-ish width on phones, a quarter column on wider
+	   screens (mirrors the old Img base + ImgL/ImgR float). */
+	.img-left,
+	.img-right {
+		margin: 5px;
+		max-width: 75%;
+		height: auto;
+	}
+	.img-left {
+		float: left;
+	}
+	.img-right {
+		float: right;
+	}
+	@media (min-width: 650px) {
+		.img-left,
+		.img-right {
+			max-width: 25%;
+		}
+	}
+
+	/* Hover/tap image-swap control. The base image is in normal flow and sets
+	   the box size; the overlay is layered on top and fades in. */
+	.swap {
+		position: relative;
+		display: block;
+		padding: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+		line-height: 0;
+	}
+	.swap :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.swap-overlay {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		transition: opacity 0.15s ease;
+	}
+	.swap:hover .swap-overlay,
+	.swap:focus-visible .swap-overlay,
+	.swap.is-active .swap-overlay {
+		opacity: 1;
+	}
+	.swap:focus-visible {
+		outline: 3px solid var(--link);
+		outline-offset: 2px;
+	}
+</style>

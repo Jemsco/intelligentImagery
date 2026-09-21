@@ -1,0 +1,68 @@
+/*
+ * Global styles — site-wide type, colors, and the layout container that
+ * every page shares. Replaces the biggest source of duplication in the old
+ * CRA code (the repeated Title / Wrapper / Text / Content styled-components
+ * and the App-level container-fluid).
+ *
+ * Page-specific one-offs stay in each page's scoped <style> block.
+ */
+
+:root {
+	/* Colors */
+	--ink: #212529;
+	--link: #2a67ad; /* brand blue (from the old .navbar-style) */
+	--nav-bg: #212529;
+	--nav-fg: rgba(255, 255, 255, 0.85);
+	--nav-fg-strong: #ffffff;
+
+	/* Layout */
+	--max-width: 1140px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
+	color: var(--ink);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: var(--link);
+}
+
+/* Images never overflow their column. */
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* The shared page container: centers content and replaces the old
+   per-page Wrapper padding + App-level container-fluid. */
+#main-content {
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 1rem 1.5rem 2rem;
+}
+
+/* Shared text primitives carried over from the styled-components that
+   repeated on nearly every page. Pages may use these or their own scoped
+   styles. */
+.page-title {
+	font-size: 1.5em;
+	text-align: center;
+}
+.lead-italic {
+	font-style: italic;
+	text-align: center;
+	font-size: 1.1em;
+}

@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import JayStJohnsBay from "../assets/JayStJohnsBay.jpg";
+import jaybrownsfalls from "../assets/jaybrownsfalls.jpg";
+import jayupstate from "../assets/jayupstate.jpg";
+import jayovergators from "../assets/jayovergators.jpg";
+import jaycolorado from "../assets/jaycolorado.jpg";
+---
+
+<BaseLayout
+  title="About"
+  description="About Jay Brass — the photographer behind Intelligent Imagery."
+>
+  <section class="wrapper">
+    <h1 class="page-title">Jay's Biography</h1>
+
+    <article class="bio">
+      <Image
+        class="img-left"
+        src={JayStJohnsBay}
+        alt="Jay Brass standing at St. Johns Bay, wearing a photographer's vest with a camera bag slung across his chest."
+      />
+      <Image
+        class="img-right"
+        src={jaybrownsfalls}
+        alt="Jay Brass photographing beside Browns Falls, his camera mounted on a tripod near the rushing water."
+      />
+      <p class="text">
+        Jay Brass has loved the outdoors and photography since he was a
+        young boy growing up in the foothills of the Adirondacks. In
+        fact, much of his young life was spent hiking, kayaking and
+        camping all over the Adirondack Park.{" "}
+      </p>
+
+      <p class="text">
+        Back in the day, Jay was a fan of George Eastman and it earned
+        him the nickname "The Kodak Kid", a name he continues to use
+        today.
+      </p>
+
+      <Image
+        class="img-left"
+        src={jayupstate}
+        alt="Jay Brass holding a camera fitted with a long telephoto lens in a green field upstate."
+      />
+      <p class="text">
+        He learned the finer points of photography in college -
+        developing film by hand, creating prints from negatives and
+        hanging them to dry. This earned him a Bachelors' degree in
+        photography in 1990, and he soon began to find opportunities to
+        enter juried shows and have his work printed in various
+        publications. Jay worked at photo developing shops to support
+        his habit, and witnessed firsthand the arrival of the digital
+        age.
+      </p>
+
+      <Image
+        class="img-left"
+        src={jayovergators}
+        alt="Jay Brass crossing a rope-and-plank footbridge over a river, carrying his camera gear, with alligators resting below."
+      />
+      <p class="text">
+        This was an important crossroad in his life. Would he maintain
+        the truism of using film, or cross to the dark side and embrace
+        digital renderings. To quote the rock band Rush, "If you choose
+        not to decide, you still have made a choice." As for his
+        decision, Jay primarily uses digital equipment today, but he
+        maintains all of his original 35mm equipment and the ability to
+        use it. As guitar players collect guitars, Jay has a collection
+        of cameras, from Olympus, to Minolta, and Nikon, but his
+        favorite has to be his medium format twin lens reflex
+        Rolleiflex. It is the camera he used for his thesis, and it
+        holds an esteemed position within his collection. Jay holds a
+        Masters degree in Engineering, and when he is not doing
+        photography, he works as a software engineer by day and
+        sometimes by night.{" "}
+      </p>
+
+      <Image
+        class="img-left"
+        src={jaycolorado}
+        alt="Jay Brass on horseback, camera in hand, riding a trail through the pines in Colorado."
+      />
+      <p class="text">
+        He enjoys hiking, biking and horsebackriding on the trails of
+        Long Island, and spending time with his family. In any free time
+        he has left, he enjoys writing about himself in the third
+        person.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .wrapper {
+    padding: 0.5em 4em;
+  }
+
+  .page-title {
+    text-align: center;
+  }
+
+  .bio {
+    font-size: 1em;
+    margin-top: 2em;
+    min-height: 60vh;
+  }
+
+  .text {
+    margin-left: 15px;
+    margin-right: 25px;
+  }
+
+  .img-left {
+    float: left;
+    margin: 5px;
+  }
+
+  .img-right {
+    float: right;
+    margin: 5px;
+  }
+
+  /* Clear the floats so the closing content isn't overlapped */
+  .bio::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  @media (max-width: 600px) {
+    .wrapper {
+      padding: 0.5em 1em;
+    }
+  }
+</style>

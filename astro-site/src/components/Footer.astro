@@ -1,0 +1,30 @@
+---
+/**
+ * Site footer — pulled out of the per-page styled-components footers
+ * (Home/About/Imagery101 said "© 2023", the Step pages said "© 2020").
+ * Now lives in one place with a build-time current year.
+ */
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<p>
+		© {year} ·
+		<a href="/" rel="home">Jay Brass Intelligent Imagery</a>
+	</p>
+</footer>
+
+<style>
+	.site-footer {
+		text-align: center;
+		padding: 2rem 1rem;
+		margin-top: 2rem;
+	}
+	.site-footer p {
+		margin: 0;
+		font-size: 1.15em;
+	}
+	.site-footer a {
+		color: inherit;
+	}
+</style>

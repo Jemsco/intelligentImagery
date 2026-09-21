@@ -1,0 +1,65 @@
+---
+/**
+ * The Image Academy menu cards (Steps 1–4).
+ *
+ * In the old CRA code these were `<div tabIndex={0} onClick={navigate()}>`
+ * cards — not real links, so no keyboard activation, no middle-click, no
+ * crawlable href. Here they are proper <a> elements.
+ *
+ * Colors are darkened from the old named purple/blue/green/red so white
+ * text clears WCAG AA contrast.
+ */
+const steps = [
+	{ href: "/step1", title: "Step 1", text: "Image 101: The Basics", bg: "#6b21a8" },
+	{ href: "/step2", title: "Step 2", text: "About Your Camera", bg: "#1d4ed8" },
+	{ href: "/step3", title: "Step 3", text: "Prisms of Light", bg: "#15803d" },
+	{ href: "/step4", title: "Step 4", text: "The Subject IS the Subject", bg: "#b91c1c" },
+];
+---
+
+<nav class="step-cards" aria-label="Image Academy steps">
+	{
+		steps.map((s) => (
+			<a class="step-card" href={s.href} style={`--card-bg:${s.bg}`}>
+				<span class="step-card-title">{s.title}</span>
+				<span class="step-card-text">{s.text}</span>
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	.step-cards {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		flex-wrap: wrap;
+		gap: 1rem;
+		padding: 1em;
+		margin-bottom: 2em;
+	}
+	.step-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		width: 250px;
+		padding: 1em;
+		background: var(--card-bg);
+		color: #fff;
+		text-decoration: none;
+		border-radius: 6px;
+	}
+	.step-card:hover,
+	.step-card:focus-visible {
+		color: #fff;
+		filter: brightness(1.08);
+	}
+	.step-card-title {
+		font-size: 1.5em;
+		text-align: center;
+	}
+	.step-card-text {
+		font-size: 1em;
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import snowyowl from "../assets/snowyowl.jpg";
+import stairs from "../assets/stairs.jpg";
+import academy from "../assets/hopetonhouse.jpg";
+---
+
+<BaseLayout
+	title="Intelligent Imagery"
+	description="Nature and landscape photography by Jay Brass, plus the Image Academy — a step-by-step guide to creating better images with any camera."
+>
+	<section class="home">
+		<h1 class="page-title">Intelligent Imagery - Something for Everyone</h1>
+
+		<div class="hero">
+			<Image
+				class="hero-img"
+				src={snowyowl}
+				alt="A snowy owl perched and looking toward the camera against a soft winter background"
+			/>
+		</div>
+
+		<p class="tagline">Unlock your future into creating beautiful images.</p>
+
+		<p class="lead-italic">
+			Regardless of your skill level or experience, Intelligent Imagery has
+			something for everyone.
+		</p>
+
+		<div class="columns">
+			<div class="col">
+				<a href="/imagery101" rel="imageacademy">
+					<Image
+						class="col-img"
+						src={academy}
+						alt="The historic Hopeton House, a stone mansion, on a clear day"
+					/>
+				</a>
+				<p class="body-text">
+					So, checkout the Image Academy and use the Menu Cards to move to
+					other steps when you're ready.
+				</p>
+			</div>
+
+			<div class="col">
+				<a href="/imagery101" rel="imageacademy">
+					<Image
+						class="col-img"
+						src={stairs}
+						alt="A curving staircase spiraling upward, viewed from below"
+					/>
+				</a>
+				<p class="body-text">
+					The step by step guide in the Image Academy has useful information to
+					help you create your best images.
+				</p>
+			</div>
+		</div>
+
+		<p class="lead-italic">
+			Be sure to click on Events and the Blog for the latest updates and
+			information on creating intelligent images.
+		</p>
+	</section>
+</BaseLayout>
+
+<style>
+	.home {
+		padding: 0.5em 1em;
+	}
+
+	.hero {
+		text-align: center;
+		margin: 20px 0;
+	}
+
+	.hero-img {
+		display: inline-block;
+		width: 75%;
+		height: auto;
+		margin: 5px;
+	}
+
+	.tagline {
+		text-align: center;
+		font-size: 1.25em;
+		font-weight: bold;
+		margin: 20px 0;
+	}
+
+	.columns {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 2em;
+		margin: 20px 0;
+	}
+
+	.col {
+		flex: 1 1 40%;
+		min-width: 280px;
+		text-align: center;
+	}
+
+	.col-img {
+		width: 75%;
+		height: auto;
+		margin: 5px auto;
+	}
+
+	.body-text {
+		font-size: 1.15em;
+		margin: 1em 15px 1em;
+	}
+
+	@media only screen and (max-width: 768px) {
+		.hero-img,
+		.col-img {
+			width: 100%;
+		}
+
+		.col {
+			flex-basis: 100%;
+		}
+	}
+</style>
