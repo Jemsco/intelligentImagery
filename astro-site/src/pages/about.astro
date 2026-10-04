@@ -1,16 +1,51 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import JayStJohnsBay from "../assets/JayStJohnsBay.jpg";
 import jaybrownsfalls from "../assets/jaybrownsfalls.jpg";
 import jayupstate from "../assets/jayupstate.jpg";
 import jayovergators from "../assets/jayovergators.jpg";
 import jaycolorado from "../assets/jaycolorado.jpg";
+
+// Absolute portrait URL for the Person structured data (JSON-LD needs a
+// fully-qualified image URL, same as Open Graph).
+const portrait = await getImage({ src: JayStJohnsBay, width: 800, format: "jpg" });
+const portraitUrl = new URL(portrait.src, Astro.site).href;
+
+// JSON-LD: identify Jay as the photographer behind the site. sameAs points at
+// his existing off-site presences (the blog and photo gallery).
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jay Brass",
+  alternateName: "The Kodak Kid",
+  jobTitle: "Photographer",
+  description:
+    "Nature and landscape photographer, educator, and software engineer — the photographer behind Intelligent Imagery.",
+  url: new URL("about/", Astro.site).href,
+  image: portraitUrl,
+  knowsAbout: [
+    "Photography",
+    "Nature photography",
+    "Landscape photography",
+    "Film photography",
+  ],
+  sameAs: [
+    "https://intelligentimagery.blogspot.com/",
+    "https://kodakid.wixsite.com/intelligentimageries",
+  ],
+  worksFor: {
+    "@type": "Organization",
+    name: "Intelligent Imagery",
+    url: "https://intelligentimagery.com/",
+  },
+};
 ---
 
 <BaseLayout
   title="About"
   description="About Jay Brass — the photographer behind Intelligent Imagery."
+  jsonLd={personLd}
 >
   <section class="wrapper">
     <h1 class="page-title">Jay's Biography</h1>

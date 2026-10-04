@@ -1,14 +1,52 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import snowyowl from "../assets/snowyowl.jpg";
 import stairs from "../assets/stairs.jpg";
 import academy from "../assets/hopetonhouse.jpg";
+
+// Absolute URLs for the featured photos so they can appear in the ImageGallery
+// structured data (JSON-LD requires fully-qualified image URLs).
+const [owlImg, academyImg, stairsImg] = await Promise.all([
+	getImage({ src: snowyowl, width: 1200, format: "jpg" }),
+	getImage({ src: academy, width: 1200, format: "jpg" }),
+	getImage({ src: stairs, width: 1200, format: "jpg" }),
+]);
+const abs = (src: string) => new URL(src, Astro.site).href;
+
+// JSON-LD: the home page showcases a few of Jay's photographs on our own
+// domain (the full gallery still lives off-site on Wix).
+const galleryLd = {
+	"@context": "https://schema.org",
+	"@type": "ImageGallery",
+	name: "Intelligent Imagery — Featured Photographs",
+	description: "A selection of nature and landscape photographs by Jay Brass.",
+	url: "https://intelligentimagery.com/",
+	image: [
+		{
+			"@type": "ImageObject",
+			contentUrl: abs(owlImg.src),
+			caption:
+				"A snowy owl perched and looking toward the camera against a soft winter background.",
+		},
+		{
+			"@type": "ImageObject",
+			contentUrl: abs(academyImg.src),
+			caption: "The historic Hopeton House, a stone mansion, on a clear day.",
+		},
+		{
+			"@type": "ImageObject",
+			contentUrl: abs(stairsImg.src),
+			caption: "A curving staircase spiraling upward, viewed from below.",
+		},
+	],
+};
 ---
 
 <BaseLayout
 	title="Intelligent Imagery"
 	description="Nature and landscape photography by Jay Brass, plus the Image Academy — a step-by-step guide to creating better images with any camera."
+	jsonLd={galleryLd}
 >
 	<section class="home">
 		<h1 class="page-title">Intelligent Imagery - Something for Everyone</h1>
@@ -18,6 +56,8 @@ import academy from "../assets/hopetonhouse.jpg";
 				class="hero-img"
 				src={snowyowl}
 				alt="A snowy owl perched and looking toward the camera against a soft winter background"
+				loading="eager"
+				fetchpriority="high"
 			/>
 		</div>
 
