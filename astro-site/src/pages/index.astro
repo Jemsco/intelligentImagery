@@ -1,128 +1,214 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import snowyowl from "../assets/snowyowl.jpg";
 import stairs from "../assets/stairs.jpg";
-import academy from "../assets/hopetonhouse.jpg";
+
+// Absolute URLs allow the photographs to appear in ImageGallery
+// structured data.
+const [owlImg, stairsImg] = await Promise.all([
+	getImage({ src: snowyowl, width: 1200, format: "jpg" }),
+	getImage({ src: stairs, width: 1200, format: "jpg" }),
+]);
+
+const abs = (src: string) => new URL(src, Astro.site).href;
+
+const galleryLd = {
+	"@context": "https://schema.org",
+	"@type": "ImageGallery",
+	name: "Intelligent Imagery — Featured Photographs",
+	description: "A selection of nature and landscape photographs by Jay Brass.",
+	url: "https://intelligentimagery.com/",
+	image: [
+		{
+			"@type": "ImageObject",
+			contentUrl: abs(owlImg.src),
+			caption:
+				"A snowy owl perched and looking toward the camera against a soft winter background.",
+		},
+		{
+			"@type": "ImageObject",
+			contentUrl: abs(stairsImg.src),
+			caption:
+				"A curving staircase at Watkins Glen State Park, viewed from below.",
+		},
+	],
+};
 ---
 
 <BaseLayout
 	title="Intelligent Imagery"
-	description="Nature and landscape photography by Jay Brass, plus the Image Academy — a step-by-step guide to creating better images with any camera."
+	description="Photography education, nature and landscape photography by Jay Brass, and step-by-step guides for creating stronger images."
+	jsonLd={galleryLd}
 >
 	<section class="home">
-		<h1 class="page-title">Intelligent Imagery - Something for Everyone</h1>
+		<h1 class="page-title">
+			<span>Learn to see. Master the light.</span>
+			<span>Capture <em>your</em> world.</span>
+		</h1>
+
+		<p class="home-intro">
+			Photography is more than taking pictures. It’s understanding light,
+			making intentional choices, and knowing why an image works.
+		</p>
 
 		<div class="hero">
 			<Image
 				class="hero-img"
 				src={snowyowl}
 				alt="A snowy owl perched and looking toward the camera against a soft winter background"
+				loading="eager"
+				fetchpriority="high"
 			/>
 		</div>
 
-		<p class="tagline">Unlock your future into creating beautiful images.</p>
-
-		<p class="lead-italic">
-			Regardless of your skill level or experience, Intelligent Imagery has
-			something for everyone.
-		</p>
-
-		<div class="columns">
-			<div class="col">
-				<a href="/imagery101" rel="imageacademy">
-					<Image
-						class="col-img"
-						src={academy}
-						alt="The historic Hopeton House, a stone mansion, on a clear day"
-					/>
-				</a>
-				<p class="body-text">
-					So, checkout the Image Academy and use the Menu Cards to move to
-					other steps when you're ready.
-				</p>
+		<div class="feature">
+			<div class="feature-image">
+				<Image
+					class="stairs-img"
+					src={stairs}
+					alt="A curving staircase at Watkins Glen State Park, viewed from below"
+				/>
 			</div>
 
-			<div class="col">
-				<a href="/imagery101" rel="imageacademy">
-					<Image
-						class="col-img"
-						src={stairs}
-						alt="A curving staircase spiraling upward, viewed from below"
-					/>
-				</a>
-				<p class="body-text">
-					The step by step guide in the Image Academy has useful information to
-					help you create your best images.
+			<div class="feature-content">
+				<p>
+					Whether you are advancing from a foundational setup or mastering
+					modern camera systems, our focus is on the deliberate process behind
+					the lens. You will find resources to help you manage challenging
+					lighting environments, track unpredictable wildlife, and translate
+					technical choices into compelling visual stories.
+				</p>
+
+				<p>
+					Visit the{" "}
+					<a href="/imagery101">Image Academy</a>{" "}
+					for step-by-step guides, check the{" "}
+					<a href="/blog">Blog</a>{" "}
+					for the latest field updates, or explore the{" "}
+					<a href="/gallery">Gallery</a>{" "}
+					to see these principles in action.
 				</p>
 			</div>
 		</div>
-
-		<p class="lead-italic">
-			Be sure to click on Events and the Blog for the latest updates and
-			information on creating intelligent images.
-		</p>
 	</section>
 </BaseLayout>
 
 <style>
 	.home {
-		padding: 0.5em 1em;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 1rem;
+	}
+
+	.page-title {
+		margin: 1rem auto;
+		text-align: center;
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		line-height: 1.15;
+	}
+
+	.page-title span {
+		display: block;
+	}
+
+	.page-title em {
+		font-weight: 600;
+	}
+
+	.home-intro {
+		max-width: 850px;
+		margin: 1.5rem auto 2rem;
+		text-align: center;
+		font-size: clamp(1.1rem, 2vw, 1.3rem);
+		line-height: 1.6;
 	}
 
 	.hero {
+		margin: 2rem 0 3rem;
 		text-align: center;
-		margin: 20px 0;
 	}
 
 	.hero-img {
 		display: inline-block;
-		width: 75%;
+		width: min(75%, 900px);
 		height: auto;
-		margin: 5px;
 	}
 
-	.tagline {
-		text-align: center;
-		font-size: 1.25em;
-		font-weight: bold;
-		margin: 20px 0;
+	.feature {
+		display: grid;
+		grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+		align-items: center;
+		gap: clamp(2rem, 5vw, 4rem);
+		margin: 2rem auto;
 	}
 
-	.columns {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 2em;
-		margin: 20px 0;
+	.feature {
+	display: flex;
+	align-items: center;
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	max-width: 1100px;
+	margin: 2rem auto;
+}
+
+.feature-image {
+	flex: 0 1 42%;
+	min-width: 0;
+	text-align: center;
+}
+
+.stairs-img {
+	display: block;
+	width: 100%;
+	max-width: 475px;
+	height: auto;
+	margin: 0 auto;
+}
+
+.feature-content {
+	flex: 1 1 58%;
+	min-width: 0;
+	font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+	line-height: 1.7;
+}
+
+	.feature-content p {
+		margin: 0 0 1.25rem;
 	}
 
-	.col {
-		flex: 1 1 40%;
-		min-width: 280px;
-		text-align: center;
+	.feature-content p:last-child {
+		margin-bottom: 0;
 	}
 
-	.col-img {
-		width: 75%;
-		height: auto;
-		margin: 5px auto;
+	.feature-content a {
+		font-weight: inherit;
 	}
 
-	.body-text {
-		font-size: 1.15em;
-		margin: 1em 15px 1em;
+	@media (max-width: 600px) {
+	.page-title {
+		font-size: clamp(1.8rem, 8vw, 2.6rem);
 	}
 
-	@media only screen and (max-width: 768px) {
-		.hero-img,
-		.col-img {
-			width: 100%;
-		}
-
-		.col {
-			flex-basis: 100%;
-		}
+	.hero-img {
+		width: 100%;
 	}
+
+	.feature {
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.feature-image {
+		width: 100%;
+	}
+
+	.stairs-img {
+		max-width: 425px;
+	}
+
+	.feature-content {
+		width: 100%;
+		text-align: left;
+	}
+}
 </style>

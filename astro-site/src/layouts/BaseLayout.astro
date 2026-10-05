@@ -8,23 +8,48 @@
 export interface Props {
 	title: string;
 	description?: string;
+	/** Social-share (Open Graph / Twitter) image. Defaults to the snowy-owl hero. */
+	ogImage?: ImageMetadata;
+	/** Alt text / accessible description for the share image. */
+	ogImageAlt?: string;
+	/** Open Graph type — "website" for most pages. */
+	ogType?: string;
 }
 
 const SITE_NAME = "Intelligent Imagery";
 const DEFAULT_DESCRIPTION =
 	"Intelligent Imagery — landscape and nature photography by Jay Brass, plus a beginner-friendly guide to the fundamentals of photography.";
+const DEFAULT_OG_ALT =
+	"A snowy owl, one of Jay Brass's nature photographs for Intelligent Imagery.";
 
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
+import { getImage } from "astro:assets";
+import defaultOgImage from "../assets/snowyowl.jpg";
 import "../styles/global.css";
 
-const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+const {
+	title,
+	description = DEFAULT_DESCRIPTION,
+	ogImage = defaultOgImage,
+	ogImageAlt = DEFAULT_OG_ALT,
+	ogType = "website",
+} = Astro.props;
 
 // Full page title: page name + site name, except on pages already named the site.
 const pageTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
 
 const GA_MEASUREMENT_ID = "G-154CQR4BQR";
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Render the share image to a fixed-width JPEG (broadest scraper support) and
+// make its URL absolute — Open Graph / Twitter require fully-qualified image URLs.
+const OG_WIDTH = 1200;
+const og = await getImage({ src: ogImage, width: OG_WIDTH, format: "jpg" });
+const ogImageUrl = new URL(og.src, Astro.site);
+// Height follows the source aspect ratio (resize preserves it).
+const ogHeight = Math.round((ogImage.height / ogImage.width) * OG_WIDTH);
 ---
 
 <!doctype html>
@@ -37,6 +62,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
+
+		<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack previews…) -->
+		<meta property="og:type" content={ogType} />
+		<meta property="og:site_name" content={SITE_NAME} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content={String(OG_WIDTH)} />
+		<meta property="og:image:height" content={String(ogHeight)} />
+		<meta property="og:image:alt" content={ogImageAlt} />
+
+		<!-- Twitter / X card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+		<meta name="twitter:image:alt" content={ogImageAlt} />
 
 		<!-- Favicons / icons (ported from the CRA public/ set) -->
 		<link rel="icon" href="/favicon.ico" sizes="any" />
@@ -76,6 +119,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 			<slot />
 		</main>
 		<Footer />
+		<ScrollToTop />
 	</body>
 </html>
 

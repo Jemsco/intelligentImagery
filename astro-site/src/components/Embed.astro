@@ -1,0 +1,47 @@
+---
+/**
+ * Embed — a shared responsive <iframe> frame for the off-site Blog (Blogspot)
+ * and Gallery (Wix) content.
+ *
+ * Replaces the old CRA `Iframe.js`, which had three problems this fixes:
+ *   1. title was hardcoded "gallery" for BOTH pages — the Blog iframe was
+ *      mislabeled. Here `title` is a required prop set per page.
+ *   2. no lazy-loading — now `loading="lazy"` so the heavy external page
+ *      only loads when scrolled near.
+ *   3. a `position:absolute; margin-top:-70px; z-index:-1` hack pulled the
+ *      iframe full-bleed behind the header. Dropped for a normal in-flow
+ *      responsive frame that sits inside the page container.
+ *
+ * NOTE (from the plan): this content still lives on Wix/Blogspot, so it does
+ * not help intelligentimagery.com's own SEO — bringing it on-site is a future
+ * project.
+ */
+export interface Props {
+	src: string;
+	title: string;
+}
+
+const { src, title } = Astro.props;
+---
+
+<div class="embed">
+	<iframe
+		src={src}
+		title={title}
+		loading="lazy"
+		referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+<style>
+	.embed {
+		width: 100%;
+		height: 80vh;
+		min-height: 600px;
+	}
+	.embed iframe {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+</style>

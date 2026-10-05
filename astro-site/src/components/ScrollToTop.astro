@@ -1,0 +1,117 @@
+---
+/**
+ * ScrollToTop — a floating "back to top" button.
+ *
+ * Replaces the old CRA `utils/ScrollButton.js`, which added a fresh
+ * `window.addEventListener("scroll", …)` in its render body — so every render
+ * leaked another listener, and it leaked on all four Step pages. Here the
+ * listener is bound exactly once per page load (correct for Astro's MPA model)
+ * and the button is `position: fixed`, so one instance in BaseLayout covers the
+ * whole site: it only reveals itself after 300px of scroll, so short pages never
+ * show it.
+ */
+---
+
+<button type="button" class="scroll-top" aria-label="Scroll back to top" hidden>
+	<svg
+		width="20"
+		height="20"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 19V5M5 12l7-7 7 7"></path>
+	</svg>
+</button>
+
+<style>
+	.scroll-top {
+		position: fixed;
+		right: 1.25rem;
+		bottom: 1.25rem;
+		z-index: 40;
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: var(--nav-bg, #212529);
+		color: #fff;
+		cursor: pointer;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+		/* Hidden state: faded out and nudged down, non-interactive. */
+		opacity: 0;
+		transform: translateY(0.75rem);
+		pointer-events: none;
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease;
+	}
+	.scroll-top.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+	.scroll-top:hover,
+	.scroll-top:focus-visible {
+		background: var(--link, #2a67ad);
+	}
+	.scroll-top:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 2px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.scroll-top {
+			transition: none;
+			transform: none;
+		}
+		.scroll-top.is-visible {
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	const btn = document.querySelector<HTMLButtonElement>(".scroll-top");
+
+	if (btn) {
+		const SHOW_AFTER = 300; // px scrolled before the button appears
+		const reduceMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+
+		// Reveal the button once we've scrolled past the threshold. The handler is
+		// rAF-throttled so a burst of scroll events collapses into one update, and
+		// the listener is bound exactly once (no per-render leak like the old one).
+		let ticking = false;
+		const update = () => {
+			const scrolled = window.scrollY || document.documentElement.scrollTop;
+			btn.classList.toggle("is-visible", scrolled > SHOW_AFTER);
+			ticking = false;
+		};
+		const onScroll = () => {
+			if (!ticking) {
+				ticking = true;
+				window.requestAnimationFrame(update);
+			}
+		};
+
+		// The button starts `hidden` so it never flashes before this script runs;
+		// drop that now and set the correct initial state (handles a reload partway
+		// down the page).
+		btn.hidden = false;
+		update();
+
+		window.addEventListener("scroll", onScroll, { passive: true });
+		btn.addEventListener("click", () => {
+			window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+		});
+	}
+</script>

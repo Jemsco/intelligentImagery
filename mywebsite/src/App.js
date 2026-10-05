@@ -1,5 +1,5 @@
 /** @format */
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Home from "./pages/Home";
@@ -12,9 +12,8 @@ import Step2 from "./pages/Step2";
 import Step3 from "./pages/Step3";
 import Step4 from "./pages/Step4";
 import Blog from "./pages/Blog";
-import Header from './Header';
-import Gallery from './pages/Gallery';
-import "./App.css";
+import Header from "./Header";
+import Gallery from "./pages/Gallery";
 
 function App() {
   return (

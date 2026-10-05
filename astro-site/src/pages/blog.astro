@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Embed from "../components/Embed.astro";
+
+/*
+ * Blog is an <iframe> embed of the external Blogspot site (same as the old CRA
+ * site). This works for real visitors on normal networks; it will NOT load on
+ * networks that block blogspot.com (e.g. the PwC corporate network, where this
+ * was tested — the frame shows a "can't be reached" error there, which is an
+ * environment block, not a code bug).
+ *
+ * FUTURE UPGRADE (if Blogger ever blocks framing via X-Frame-Options /
+ * CSP frame-ancestors, or we want the posts on-site for SEO):
+ *
+ * BEST OPTION — build the blog natively with Astro content collections
+ * (recommended). Since we're on Astro anyway, use its first-class blog support:
+ *   - Write each post as a markdown (.md / .mdx) file in src/content/posts/
+ *     with frontmatter (title, pubDate, description, optional hero image).
+ *   - Define the collection schema in src/content/config.ts.
+ *   - Replace this page with a listing that uses getCollection('posts'), and
+ *     add a dynamic route src/pages/blog/[...slug].astro that renders each post
+ *     — posts live at /blog/<post-title>/, on our own domain.
+ *   - Fully self-hosted: no external service, no iframe, we control everything,
+ *     and it's real crawlable HTML (the "bring it on-site" SEO win from the plan).
+ *   Docs: https://docs.astro.build/en/guides/content-collections/
+ *   One-time migration: hand-copy existing Blogspot posts into markdown (or do a
+ *   one-off import from the Blogger feed
+ *   https://intelligentimagery.blogspot.com/feeds/posts/default?alt=json), then
+ *   author all new posts in-repo and retire the Blogspot blog.
+ *
+ * INTERIM OPTION — if we want to keep posting on Blogspot but drop the iframe,
+ * fetch that same feed at build time and render post cards here, wrapped in
+ * try/catch with a "Visit the blog" fallback. (Note: the feed is on the same
+ * blogspot.com domain, so it's only reachable to build on a non-blocking network.)
+ */
+---
+
+<BaseLayout
+	title="Blog"
+	description="The Intelligent Imagery blog — field notes, photo stories, and updates from Jay Brass."
+>
+	<h1 class="page-title">Blog</h1>
+	<Embed
+		src="https://intelligentimagery.blogspot.com/"
+		title="Intelligent Imagery blog"
+	/>
+</BaseLayout>
