@@ -107,7 +107,7 @@ const Step2 = () => {
             <br />
             <Text1>
               This step will "Focus" on focusing. Where and when to focus, how
-              to focus and recompose your image, what focus area and meetering
+              to focus and recompose your image, what focus area and metering
               mode to use. Paired with this are discussions on white balance,
               exposure compensation, bracketing and something called a
               histogram. Lets discuss focusing first. Your camera will likely
@@ -258,13 +258,13 @@ const Step2 = () => {
               </Text1>
               <P>
                 <DivL>
-                  <TextBold>Meetering</TextBold>
+                  <TextBold>Metering</TextBold>
                 </DivL>
               </P>
               <P>
                 <Text>
                   Today's cameras have a few different options for finding the
-                  correct exposure. In the past, the meetering was largely
+                  correct exposure. In the past, the meeering was largely
                   taking the entire scene into account. Today, cameras can
                   predominately focus on certain areas of the scene. Check your
                   camera for the options available, but many will offer the
@@ -274,28 +274,28 @@ const Step2 = () => {
               <P>
                 <DivC>
                   <TextBold>
-                    Matrix Mode - Center Weighted - Spot Meetering
+                    Matrix Mode - Center Weighted - Spot Metering
                   </TextBold>
                 </DivC>
               </P>
               <P>
                 <Text>
                   Matrix Mode will pull exposure information from many areas of
-                  the scene. This is general use meetering.
+                  the scene. This is general use metering.
                 </Text>
                 <br />
                 <Text>
                   {" "}
-                  Center weighted meetering will give more preference to what is
+                  Center weighted metering will give more preference to what is
                   in the center of the scene while still accepting values from
                   the other areas.
                 </Text>
                 <br />
                 <Text>
                   {" "}
-                  Spot meetering will only use information from the very center
+                  Spot metering will only use information from the very center
                   of the scene. Choosing a bright or dark item to focus on when
-                  using spot meetering will give very different results.
+                  using spot metering will give very different results.
                 </Text>
               </P>
               <P>

@@ -121,7 +121,15 @@ function Home() {
     <Col>
       <main>
         <Wrapper>
-          <Title>Intelligent Imagery - Something for Everyone </Title>
+          <Title>
+            <p class="tagline">
+              Learn to see. Master the light. Capture <em>your</em> world.
+            </p>
+            <p>
+              Photography is more than taking pictures. It’s understanding
+              light, making intentional choices, and knowing why an image works.
+            </p>
+          </Title>
           <DivC>
             <Img src={snowyowl} alt="snowyowl" />
           </DivC>
@@ -143,7 +151,7 @@ function Home() {
                   <Img src={academy} alt="mansion" />
                 </a>
                 <Text>
-                  So, checkout the Image Academy and use the Menu Cards to move
+                  So, check out the Image Academy and use the Menu Cards to move
                   to other steps when you're ready.
                 </Text>
               </DivL>
