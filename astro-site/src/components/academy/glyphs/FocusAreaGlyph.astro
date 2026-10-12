@@ -1,0 +1,36 @@
+---
+/** Focus Area — a 3×3 grid of focus points with the centre one active. */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+const cols = [8, 20, 32];
+const rows = [8, 20, 32];
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="A three-by-three grid of focus points with the centre point selected"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linejoin="round"
+>
+	<title>Focus area</title>
+	{
+		rows.map((y) =>
+			cols.map((x) => (
+				<rect
+					x={x}
+					y={y}
+					width="8"
+					height="8"
+					rx="1.5"
+					fill={x === 20 && y === 20 ? "currentColor" : "none"}
+				/>
+			))
+		)
+	}
+</svg>

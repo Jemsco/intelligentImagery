@@ -2,27 +2,106 @@
 /**
  * The Image Academy menu cards (Steps 1–4).
  *
- * In the old CRA code these were `<div tabIndex={0} onClick={navigate()}>`
- * cards — not real links, so no keyboard activation, no middle-click, no
- * crawlable href. Here they are proper <a> elements.
- *
- * Colors are darkened from the old named purple/blue/green/red so white
- * text clears WCAG AA contrast.
+ * Each card is a real <a> (keyboard/middle-click/crawlable) rendered as a
+ * hollow outlined shape — the color is only a border, the inside is see-through
+ * (fill: none) so the page shows through. One shape per step:
+ *   1 hexagon (green, thick)  2 square (blue)  3 triangle (red/orange)  4 circle (purple)
  */
 const steps = [
-	{ href: "/step1", title: "Step 1", text: "Image 101: The Basics", bg: "#6b21a8" },
-	{ href: "/step2", title: "Step 2", text: "About Your Camera", bg: "#1d4ed8" },
-	{ href: "/step3", title: "Step 3", text: "Prisms of Light", bg: "#15803d" },
-	{ href: "/step4", title: "Step 4", text: "The Subject IS the Subject", bg: "#b91c1c" },
+	{
+		href: "/step1",
+		title: "Step 1",
+		text: "Image 101: The Basics",
+		shape: "hex",
+		color: "#15803d",
+		stroke: 2,
+	},
+	{
+		href: "/step2",
+		title: "Step 2",
+		text: "About Your Camera",
+		shape: "square",
+		color: "#1d4ed8",
+		stroke: 2,
+		ink: "var(--link)", // match the step-page glyph color
+	},
+	{
+		href: "/step3",
+		title: "Step 3",
+		text: "Prisms of Light",
+		shape: "triangle",
+		color: "#e2571e",
+		stroke: 2,
+	},
+	{
+		href: "/step4",
+		title: "Step 4",
+		text: "The Subject IS the Subject",
+		shape: "circle",
+		color: "#6b21a8",
+		stroke: 2,
+	},
 ];
 ---
 
 <nav class="step-cards" aria-label="Image Academy steps">
 	{
 		steps.map((s) => (
-			<a class="step-card" href={s.href} style={`--card-bg:${s.bg}`}>
-				<span class="step-card-title">{s.title}</span>
-				<span class="step-card-text">{s.text}</span>
+			<a
+				class:list={["shape-card", `shape-card--${s.shape}`]}
+				href={s.href}
+				style={`--card-color:${s.color}${s.ink ? `;--card-ink:${s.ink}` : ""}`}
+			>
+				<svg
+					class="shape-svg"
+					viewBox={s.shape === "hex" ? "-6 6 132 118" : "0 0 120 120"}
+					aria-hidden="true"
+					preserveAspectRatio="xMidYMid meet"
+				>
+					{s.shape === "hex" && (
+						<polygon
+							points="24,12 96,12 120,65 96,118 24,118 0,65"
+							fill="var(--shape-fill, none)"
+							stroke="var(--card-color)"
+							stroke-width={s.stroke}
+							stroke-linejoin="round"
+						/>
+					)}
+					{s.shape === "square" && (
+						<rect
+							x="6"
+							y="6"
+							width="108"
+							height="108"
+							fill="var(--shape-fill, none)"
+							stroke="var(--card-color)"
+							stroke-width={s.stroke}
+						/>
+					)}
+					{s.shape === "triangle" && (
+						<polygon
+							points="60,8 112,110 8,110"
+							fill="var(--shape-fill, none)"
+							stroke="var(--card-color)"
+							stroke-width={s.stroke}
+							stroke-linejoin="round"
+						/>
+					)}
+					{s.shape === "circle" && (
+						<circle
+							cx="60"
+							cy="60"
+							r="54"
+							fill="var(--shape-fill, none)"
+							stroke="var(--card-color)"
+							stroke-width={s.stroke}
+						/>
+					)}
+				</svg>
+				<span class="shape-content">
+					<span class="step-card-title">{s.title}</span>
+					<span class="step-card-text">{s.text}</span>
+				</span>
 			</a>
 		))
 	}
@@ -33,33 +112,78 @@ const steps = [
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
+		align-items: flex-start;
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding: 1em;
 		margin-bottom: 2em;
 	}
-	.step-card {
+
+	/* Each card is an outlined shape with the step text centered on top of it.
+	   Explicit heights (not aspect-ratio) so the shape can never collapse behind
+	   the text. */
+	.shape-card {
+		position: relative;
+		display: block;
+		text-decoration: none;
+		color: var(--card-color);
+	}
+	/* Hexagon a bit larger; the other three slightly smaller, so the row balances. */
+	.shape-card--hex {
+		width: 250px;
+		height: 223px;
+	}
+	.shape-card--square,
+	.shape-card--circle,
+	.shape-card--triangle {
+		width: 220px;
+		height: 220px;
+	}
+
+	.shape-svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	/* Text sits absolutely centered over the shape. */
+	.shape-content {
+		position: absolute;
+		inset: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.35rem;
-		width: 250px;
-		padding: 1em;
-		background: var(--card-bg);
-		color: #fff;
-		text-decoration: none;
-		border-radius: 6px;
+		align-items: center;
+		justify-content: center;
+		gap: 0.25rem;
+		padding: 0 20%;
+		text-align: center;
 	}
-	.step-card:hover,
-	.step-card:focus-visible {
-		color: #fff;
-		filter: brightness(1.08);
+	/* A triangle is widest at its base, so drop the text toward the bottom. */
+	.shape-card--triangle .shape-content {
+		justify-content: flex-end;
+		padding: 0 36% 24%;
 	}
+
+	/* Subtle fill tint on hover/focus (otherwise fully hollow). */
+	.shape-card:hover,
+	.shape-card:focus-visible {
+		--shape-fill: color-mix(in srgb, var(--card-color) 10%, transparent);
+		outline: none;
+	}
+	.shape-card:focus-visible {
+		outline: 2px solid var(--card-color);
+		outline-offset: 4px;
+	}
+
 	.step-card-title {
-		font-size: 1.5em;
+		font-size: 1.2em;
 		text-align: center;
 	}
 	.step-card-text {
-		font-size: 1em;
+		font-size: 0.9em;
+		line-height: 1.25;
 		text-align: center;
 	}
 </style>

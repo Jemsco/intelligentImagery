@@ -1,0 +1,22 @@
+---
+/** White Balance — a circle split warm/cool (one half filled). */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="A circle with one half filled, standing for warm and cool light"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2.5"
+	stroke-linejoin="round"
+>
+	<title>White balance</title>
+	<circle cx="24" cy="24" r="15"></circle>
+	<path d="M24 9 A15 15 0 0 0 24 39 Z" fill="currentColor" stroke="none"></path>
+</svg>

@@ -1,0 +1,53 @@
+---
+/**
+ * ISO glyph — three equal-size frames, each with more dots than the last.
+ *
+ * The frames are identical (the sensor is the same); only the dot count grows,
+ * standing in for the grain / noise that climbs as ISO is raised. Draws with
+ * `currentColor` so it inherits the card's text color.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 48"
+	role="img"
+	aria-label="Three identical frames holding progressively more speckles, showing noise rising with ISO"
+	fill="none"
+	stroke="currentColor"
+>
+	<title>Higher ISO, more noise</title>
+	<!-- Frame 1: clean -->
+	<rect x="3" y="5" width="32" height="38" rx="3" stroke-width="2"></rect>
+	<g fill="currentColor" stroke="none">
+		<circle cx="15" cy="18" r="1.6"></circle>
+		<circle cx="24" cy="31" r="1.6"></circle>
+	</g>
+	<!-- Frame 2: some noise -->
+	<rect x="44" y="5" width="32" height="38" rx="3" stroke-width="2"></rect>
+	<g fill="currentColor" stroke="none">
+		<circle cx="52" cy="14" r="1.6"></circle>
+		<circle cx="66" cy="18" r="1.6"></circle>
+		<circle cx="57" cy="26" r="1.6"></circle>
+		<circle cx="69" cy="33" r="1.6"></circle>
+		<circle cx="54" cy="36" r="1.6"></circle>
+	</g>
+	<!-- Frame 3: heavy noise -->
+	<rect x="85" y="5" width="32" height="38" rx="3" stroke-width="2"></rect>
+	<g fill="currentColor" stroke="none">
+		<circle cx="92" cy="12" r="1.6"></circle>
+		<circle cx="104" cy="14" r="1.6"></circle>
+		<circle cx="112" cy="19" r="1.6"></circle>
+		<circle cx="96" cy="20" r="1.6"></circle>
+		<circle cx="106" cy="24" r="1.6"></circle>
+		<circle cx="91" cy="28" r="1.6"></circle>
+		<circle cx="113" cy="30" r="1.6"></circle>
+		<circle cx="99" cy="31" r="1.6"></circle>
+		<circle cx="107" cy="37" r="1.6"></circle>
+		<circle cx="94" cy="38" r="1.6"></circle>
+	</g>
+</svg>

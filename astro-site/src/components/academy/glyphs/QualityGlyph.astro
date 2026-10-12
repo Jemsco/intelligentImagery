@@ -1,0 +1,31 @@
+---
+/**
+ * Quality glyph — a cut gemstone: a short crown up top, widest at the girdle,
+ * then a long taper to a point at the bottom (a prism/gem for the quality and
+ * colour of light). Redrawn from the mockup's rhombus so it is clearly longer
+ * below the girdle than above. Draws with `currentColor`.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 120"
+	role="img"
+	aria-label="A cut gemstone with a short crown on top tapering to a long point at the bottom"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linejoin="round"
+>
+	<title>Quality</title>
+	<path d="M44 22 L76 22 L98 46 L60 106 L22 46 Z"></path>
+	<line x1="22" y1="46" x2="98" y2="46"></line>
+	<line x1="44" y1="22" x2="60" y2="46"></line>
+	<line x1="76" y1="22" x2="60" y2="46"></line>
+	<line x1="60" y1="22" x2="60" y2="46"></line>
+	<line x1="60" y1="46" x2="60" y2="106"></line>
+</svg>

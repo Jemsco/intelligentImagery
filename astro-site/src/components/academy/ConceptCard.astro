@@ -1,0 +1,120 @@
+---
+/**
+ * ConceptCard — a tappable card, in one of two modes:
+ *   - modal (default): carries `data-open-dialog`, so the page's dialog script
+ *     (any `[data-open-dialog]` → matching `dialog.info-dialog`) opens the lesson.
+ *   - disclosure: pass `controls` instead of `dialogId` and the card toggles an
+ *     inline panel (`[data-toggle-panel]` + aria-expanded/aria-controls). A page
+ *     using this mode must wire a toggle script to show/hide the panel.
+ *
+ * Either way it is a real <button> — keyboard-activatable for free. The concept
+ * glyph is passed in as the default slot (see components/academy/glyphs/).
+ */
+interface Props {
+	/** id of the <dialog> this card opens (modal mode). */
+	dialogId?: string;
+	/** id of an inline panel this card toggles open/closed (disclosure mode). */
+	controls?: string;
+	/** Card heading, e.g. "ISO". */
+	title: string;
+	/** One-line teaser under the title. */
+	teaser: string;
+}
+const { dialogId, controls, title, teaser } = Astro.props;
+// Glyph is optional — a card can be text-only (no default slot content).
+const hasGlyph = Astro.slots.has("default");
+// Disclosure mode when `controls` is set; otherwise it opens a dialog.
+const isToggle = !!controls;
+---
+
+<button
+	type="button"
+	class="concept-card"
+	data-open-dialog={dialogId}
+	data-toggle-panel={controls}
+	aria-controls={controls}
+	aria-expanded={isToggle ? "false" : undefined}
+>
+	{hasGlyph && (
+		<span class="concept-card__glyph">
+			<slot />
+		</span>
+	)}
+	<span class="concept-card__title">{title}</span>
+	<span class="concept-card__teaser">{teaser}</span>
+	{isToggle && <span class="concept-card__caret" aria-hidden="true">▾</span>}
+</button>
+
+<style>
+	.concept-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.6rem;
+		width: 100%;
+		padding: 1.25rem 1rem;
+		background: var(--surface, #fff);
+		border: 1px solid #dde1e5;
+		border-radius: 10px;
+		box-shadow: 0 1px 2px rgba(33, 37, 41, 0.04);
+		color: var(--ink);
+		font-family: inherit;
+		text-align: center;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			box-shadow 0.15s ease,
+			transform 0.15s ease;
+	}
+	.concept-card:hover,
+	.concept-card:focus-visible {
+		border-color: var(--link);
+		box-shadow: 0 4px 14px rgba(33, 37, 41, 0.1);
+		transform: translateY(-2px);
+		outline: none;
+	}
+	.concept-card:focus-visible {
+		outline: 2px solid var(--link);
+		outline-offset: 2px;
+	}
+
+	.concept-card__glyph {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		color: var(--link);
+	}
+	/* The glyph SVGs carry class="glyph". */
+	.concept-card__glyph :global(.glyph) {
+		width: 100%;
+		max-width: 160px;
+		height: auto;
+	}
+
+	.concept-card__title {
+		font-family: var(--font-serif);
+		font-size: 1.35rem;
+		font-weight: 600;
+	}
+	.concept-card__teaser {
+		font-size: 0.95rem;
+		color: #5b636b;
+		line-height: 1.4;
+	}
+
+	/* Disclosure caret — only present on toggle cards (Step 3 "Direction"). */
+	.concept-card__caret {
+		margin-top: 0.1rem;
+		font-size: 1.1rem;
+		line-height: 1;
+		color: #8a929a;
+		transition: transform 0.15s ease;
+	}
+	.concept-card[aria-expanded="true"] .concept-card__caret {
+		transform: rotate(180deg);
+	}
+	.concept-card[aria-expanded="true"] {
+		border-color: var(--link);
+	}
+</style>

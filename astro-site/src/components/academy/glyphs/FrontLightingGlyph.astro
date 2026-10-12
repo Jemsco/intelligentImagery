@@ -1,0 +1,26 @@
+---
+/** Front lighting — a lit subject with light arriving from the front (below). */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="A lit subject with light rays rising toward it from the front"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2.5"
+	stroke-linecap="round"
+>
+	<title>Front lighting</title>
+	<!-- subject, evenly lit -->
+	<circle cx="24" cy="19" r="10"></circle>
+	<!-- light from the front (viewer side) -->
+	<line x1="14" y1="43" x2="16" y2="37"></line>
+	<line x1="24" y1="45" x2="24" y2="38"></line>
+	<line x1="34" y1="43" x2="32" y2="37"></line>
+</svg>

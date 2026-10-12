@@ -1,0 +1,23 @@
+---
+/** Bracketing — three offset frames (the same shot at several exposures). */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="Three overlapping frames, one shot captured at several exposures"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2.5"
+	stroke-linejoin="round"
+>
+	<title>Bracketing</title>
+	<rect x="7" y="7" width="26" height="26" rx="2"></rect>
+	<rect x="11" y="11" width="26" height="26" rx="2"></rect>
+	<rect x="15" y="15" width="26" height="26" rx="2"></rect>
+</svg>

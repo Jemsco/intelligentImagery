@@ -2,10 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image, getImage } from "astro:assets";
 import JayStJohnsBay from "../assets/JayStJohnsBay.jpg";
-import jaybrownsfalls from "../assets/jaybrownsfalls.jpg";
-import jayupstate from "../assets/jayupstate.jpg";
-import jayovergators from "../assets/jayovergators.jpg";
-import jaycolorado from "../assets/jaycolorado.jpg";
+import selflakeportrait from "../assets/selflakeportrait.jpg";
 
 // Absolute portrait URL for the Person structured data (JSON-LD needs a
 // fully-qualified image URL, same as Open Graph).
@@ -48,80 +45,128 @@ const personLd = {
   jsonLd={personLd}
 >
   <section class="wrapper">
-    <h1 class="page-title">Jay's Biography</h1>
-
     <article class="bio">
-      <Image
-        class="img-left"
-        src={JayStJohnsBay}
-        alt="Jay Brass standing at St. Johns Bay, wearing a photographer's vest with a camera bag slung across his chest."
-      />
-      <Image
-        class="img-right"
-        src={jaybrownsfalls}
-        alt="Jay Brass photographing beside Browns Falls, his camera mounted on a tripod near the rushing water."
-      />
-      <p class="text">
-        Jay Brass has loved the outdoors and photography since he was a
-        young boy growing up in the foothills of the Adirondacks. In
-        fact, much of his young life was spent hiking, kayaking and
-        camping all over the Adirondack Park.{" "}
+      <h1 class="page-title">About Jay Brass</h1>
+
+      <div class="hero">
+        <Image
+          class="hero-img"
+          src={JayStJohnsBay}
+          alt="Jay Brass at St. John's Bay in Newfoundland, wearing a photographer's vest with a camera bag across his chest."
+          widths={[480, 720, 1080]}
+          sizes="(max-width: 780px) 92vw, 720px"
+        />
+      </div>
+
+      <p class="lead">
+        Engineer by day and sometimes by night, photographer all the time.
       </p>
 
-      <p class="text">
-        Back in the day, Jay was a fan of George Eastman and it earned
-        him the nickname "The Kodak Kid", a name he continues to use
-        today.
+      <p>
+        Jay Brass has loved the outdoors and photography since he was a young boy
+        growing up in the foothills of the Adirondacks. Much of his childhood was
+        spent hiking, kayaking and camping throughout the Adirondack Park. An early
+        admirer of George Eastman, Jay earned the nickname “The Kodak Kid”, a name
+        he still occasionally uses today.
       </p>
 
-      <Image
-        class="img-left"
-        src={jayupstate}
-        alt="Jay Brass holding a camera fitted with a long telephoto lens in a green field upstate."
-      />
-      <p class="text">
-        He learned the finer points of photography in college -
-        developing film by hand, creating prints from negatives and
-        hanging them to dry. This earned him a Bachelors' degree in
-        photography in 1990, and he soon began to find opportunities to
-        enter juried shows and have his work printed in various
-        publications. Jay worked at photo developing shops to support
-        his habit, and witnessed firsthand the arrival of the digital
-        age.
+      <p>
+        Jay earned a Bachelor’s degree in Photography and worked in portrait
+        studios, managed photo labs and even went door to door as a portrait
+        photographer to support his habit. He soon found opportunities to enter art
+        shows and juried exhibitions and have his work printed in various
+        publications.
       </p>
 
-      <Image
-        class="img-left"
-        src={jayovergators}
-        alt="Jay Brass crossing a rope-and-plank footbridge over a river, carrying his camera gear, with alligators resting below."
-      />
-      <p class="text">
-        This was an important crossroad in his life. Would he maintain
-        the truism of using film, or cross to the dark side and embrace
-        digital renderings. To quote the rock band Rush, "If you choose
-        not to decide, you still have made a choice." As for his
-        decision, Jay primarily uses digital equipment today, but he
-        maintains all of his original 35mm equipment and the ability to
-        use it. As guitar players collect guitars, Jay has a collection
-        of cameras, from Olympus, to Minolta, and Nikon, but his
-        favorite has to be his medium format twin lens reflex
-        Rolleiflex. It is the camera he used for his thesis, and it
-        holds an esteemed position within his collection. Jay holds a
-        Masters degree in Engineering, and when he is not doing
-        photography, he works as a software engineer by day and
-        sometimes by night.{" "}
+      <p>
+        Photography also brought Jay some close friendships. While managing a photo
+        lab in New York City, he met an older Marine who regularly brought his film
+        to Jay to have his pictures developed. The two often met in Central Park to
+        take pictures, with cream cheese and jelly sandwiches in tow. Years later,
+        Jay was the only one outside of the immediate family who attended the
+        funeral.
       </p>
 
-      <Image
-        class="img-left"
-        src={jaycolorado}
-        alt="Jay Brass on horseback, camera in hand, riding a trail through the pines in Colorado."
-      />
-      <p class="text">
-        He enjoys hiking, biking and horsebackriding on the trails of
-        Long Island, and spending time with his family. In any free time
-        he has left, he enjoys writing about himself in the third
-        person.
+      <p>
+        He still has a collection of cameras from different eras, although
+        “collection” may be giving it too much credit. Most of them were simply
+        cameras he actually used. They represent the evolution of his photography
+        from film to digital and mirrorless.
+      </p>
+
+      <p>
+        After college and the photo-lab years, life became more practical, and
+        photography gradually moved into the background. Work, family and other
+        responsibilities took priority. It wasn't until someone made an offhand
+        comment that Jay should have a better camera than the one he was using that
+        he stopped to realize how much he had been missing.
+      </p>
+
+      <p>
+        Photography had changed a lot and getting back into it felt like catching
+        the wave all over again. He joined a rotating artists' group on Long Island,
+        displaying photographs in libraries, town offices, tax offices and other
+        venues willing to give artists some wall space. Every month brought a new
+        location, and Jay's framed prints traveled from building to building in
+        large plastic tubs. A few even sold.
+      </p>
+
+      <p>
+        Jay's professional life eventually took another turn, leading to a Master’s
+        degree in Engineering and a career in technology. That technical background
+        has never been particularly far from his photography. Cameras, lenses,
+        light, exposure, image processing and the technology behind modern
+        photography all appeal to the same part of his brain that enjoys
+        engineering.
+      </p>
+
+      <p>But photography is more than technology.</p>
+
+      <p>
+        It is observation. Patience. Light. Timing. Composition. And sometimes
+        standing in one place considerably longer than the people you're with think
+        is reasonable.
+      </p>
+
+      <blockquote class="quote">
+        <p>“I want to look at life in the available light.”</p>
+        <cite>— Rush, Available Light</cite>
+      </blockquote>
+
+      <p>Photography seems to work that way.</p>
+
+      <p>
+        There is always another kind of light to understand, another subject to
+        photograph, another technique to explore, and another photograph that
+        doesn't quite turn out the way you imagined.
+      </p>
+
+      <p>That's what Intelligent Imagery is about.</p>
+
+      <p>
+        It isn't about having the most expensive camera, knowing every technical
+        specification or following a prescribed formula for making photographs. It's
+        about learning to see what is actually in front of you, understanding the
+        light, making deliberate choices and using the tools available to turn an
+        idea into an image.
+      </p>
+
+      <p class="callout">Learn to see. Master the light. Capture your world.</p>
+
+      <div class="portrait">
+        <Image
+          class="portrait-img"
+          src={selflakeportrait}
+          alt="A self-portrait of Jay Brass by a lake."
+          widths={[420, 840]}
+          sizes="(max-width: 480px) 92vw, 420px"
+        />
+      </div>
+
+      <p>
+        And, after all these years, Jay is still taking pictures. He also enjoys
+        hiking, biking and horseback riding and spending time with his family. In any
+        free time he has left, he enjoys writing about himself in the third person.
       </p>
     </article>
   </section>
@@ -129,44 +174,83 @@ const personLd = {
 
 <style>
   .wrapper {
-    padding: 0.5em 4em;
+    padding: 1em 1.5em 3em;
   }
 
+  .bio {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    line-height: 1.7;
+  }
   .page-title {
     text-align: center;
   }
 
-  .bio {
-    font-size: 1em;
-    margin-top: 2em;
-    min-height: 60vh;
+  /* Prominent lead image. */
+  .hero {
+    margin: 1rem 0 1.5rem;
+    text-align: center;
+  }
+  .hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
 
-  .text {
-    margin-left: 15px;
-    margin-right: 25px;
+  .lead {
+    margin: 0 0 2rem;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.3em;
+    line-height: 1.4;
   }
 
-  .img-left {
-    float: left;
-    margin: 5px;
+  .bio p {
+    margin: 1.1em 0;
   }
 
-  .img-right {
-    float: right;
-    margin: 5px;
+  .quote {
+    margin: 2.25rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 4px solid var(--link);
+    font-style: italic;
+    font-size: 1.3em;
+    line-height: 1.4;
+  }
+  .quote p {
+    margin: 0 0 0.4rem;
+  }
+  .quote cite {
+    font-style: normal;
+    font-size: 0.72em;
+    color: #5b636b;
   }
 
-  /* Clear the floats so the closing content isn't overlapped */
-  .bio::after {
-    content: "";
-    display: block;
-    clear: both;
+  .callout {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.25em;
+    color: var(--link);
+    margin: 2.25rem 0;
   }
 
-  @media (max-width: 600px) {
+  /* Closing portrait near the bottom — centered, moderate width (it's a tall
+     portrait, so it isn't stretched to the full column). */
+  .portrait {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  .portrait-img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 640px) {
     .wrapper {
-      padding: 0.5em 1em;
+      padding: 1em 1em 2.5em;
     }
   }
 </style>

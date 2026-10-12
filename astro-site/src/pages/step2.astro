@@ -1,11 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import StepNav from "../components/StepNav.astro";
+import ConceptCard from "../components/academy/ConceptCard.astro";
+import FocusGlyph from "../components/academy/glyphs/FocusGlyph.astro";
+import MeteringGlyph from "../components/academy/glyphs/MeteringGlyph.astro";
+import WhenToFocusGlyph from "../components/academy/glyphs/WhenToFocusGlyph.astro";
+import FocusAreaGlyph from "../components/academy/glyphs/FocusAreaGlyph.astro";
+import WhiteBalanceGlyph from "../components/academy/glyphs/WhiteBalanceGlyph.astro";
+import ExposureCompGlyph from "../components/academy/glyphs/ExposureCompGlyph.astro";
+import BracketingGlyph from "../components/academy/glyphs/BracketingGlyph.astro";
+import HistogramGlyph from "../components/academy/glyphs/HistogramGlyph.astro";
 ---
 
 <BaseLayout
 	title="Step 2: About Your Camera"
-	description="Understanding your camera — settings, the histogram, and how to use them."
+	description="Understanding your camera — focus and metering, plus white balance, exposure compensation, bracketing, and the histogram."
 >
 	<article class="step-article">
 		<h1 class="page-title">ABOUT YOUR CAMERA...</h1>
@@ -14,11 +23,37 @@ import StepNav from "../components/StepNav.astro";
 
 		<p class="spaced">
 			This step will "Focus" on focusing. Where and when to focus, how to focus
-			and recompose your image, what focus area and meetering mode to use.
-			Paired with this are discussions on white balance, exposure compensation,
+			and recompose your image, what focus area and metering mode to use. Paired
+			with this are discussions on white balance, exposure compensation,
 			bracketing and something called a histogram. Lets discuss focusing first.
-			Your camera will likely have the following options for the focusing mode:
 		</p>
+
+		<p class="deck-hint">Tap a card to explore it.</p>
+
+		<div class="concept-deck">
+			<ConceptCard
+				dialogId="focus-dialog"
+				title="Focus"
+				teaser="Where, when, and how your camera locks on."
+			>
+				<FocusGlyph />
+			</ConceptCard>
+
+			<ConceptCard
+				dialogId="metering-dialog"
+				title="Metering"
+				teaser="How your camera reads light to set exposure."
+			>
+				<MeteringGlyph />
+			</ConceptCard>
+		</div>
+
+		<StepNav prev={{ href: "/step1" }} next={{ href: "/step3" }} />
+	</article>
+
+	<!-- ===== FOCUS (parent) ===== -->
+	<dialog id="focus-dialog" class="info-dialog">
+		<h2>Focus</h2>
 
 		<p>
 			Your camera will likely have the following options for the focusing mode:
@@ -33,7 +68,7 @@ import StepNav from "../components/StepNav.astro";
 			keep refocusing on the subject as the subject moves. Cameras use contrast
 			to find the subject. If you are trying to photograph a subject that blends
 			with the background, your camera will struggle to find the focus and you
-			could end up with blurry or out of fucus images. Single focus will work
+			could end up with blurry or out of focus images. Single focus will work
 			well with subjects that don't move, like portraits or still life. Single
 			focus will only focus one time until the shutter is pressed again. Manual
 			focus, as the name implies, is all manual. In Manual mode the camera will
@@ -44,7 +79,29 @@ import StepNav from "../components/StepNav.astro";
 			the right area to focus on. For this, manual focus will help.
 		</p>
 
-		<h2>When and Where To Focus</h2>
+		<div class="nested-deck">
+			<ConceptCard
+				dialogId="when-to-focus-dialog"
+				title="When to Focus"
+				teaser="Lock focus, recompose — and when to wait."
+			>
+				<WhenToFocusGlyph />
+			</ConceptCard>
+			<ConceptCard
+				dialogId="focus-area-dialog"
+				title="Focus Area"
+				teaser="Single point, dynamic, or auto."
+			>
+				<FocusAreaGlyph />
+			</ConceptCard>
+		</div>
+
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
+
+	<!-- When to Focus (child of Focus) -->
+	<dialog id="when-to-focus-dialog" class="info-dialog">
+		<h2>When to Focus</h2>
 		<p>
 			For many, the where is easy. Point the camera at your friend and click the
 			button. The camera focuses on your friend and you end up with a picture or
@@ -52,14 +109,12 @@ import StepNav from "../components/StepNav.astro";
 			which is also used to lock the focus. Cell phones too have an option for
 			this.
 		</p>
-
 		<p class="spaced">
 			For cameras: To lock the focus and exposure point, press and hold the AE/AF
 			button while pressing the shutter button halfway down to focus. Once the
 			camera has locked on to a subject the focus and exposure settings are
 			locked on that part of the scene.
 		</p>
-
 		<p class="italic">
 			For cell phones: To lock the focus and exposure point, simply tap and hold
 			on that part of the screen for a few seconds. When you see AE/AF Lock in a
@@ -67,7 +122,6 @@ import StepNav from "../components/StepNav.astro";
 			is activated, the focus and exposure settings are locked on that part of
 			the scene.
 		</p>
-
 		<p>
 			For both cell phones and cameras, change where you are pointing the camera
 			and then take the picture. The camera will remember where you focused using
@@ -79,9 +133,7 @@ import StepNav from "../components/StepNav.astro";
 			initially will be properly exposed and there will be space in the image to
 			show what was in the background.
 		</p>
-
-		<h2>When to focus</h2>
-		<p>
+		<p class="spaced">
 			There are times when you do not want to focus especially with today's
 			autofocus systems. They can be unreliable when it comes to images where
 			there is not a distinct separation of the subject and the background. A
@@ -94,67 +146,102 @@ import StepNav from "../components/StepNav.astro";
 			complete stranger. You will want to wait until you have a clear line of
 			sight and use focus lock (AE/AF) to take the picture.
 		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
+	<!-- Focus Area (child of Focus) -->
+	<dialog id="focus-area-dialog" class="info-dialog">
 		<h2>Focus Area</h2>
 		<p>
 			This is the area in the view finder that your camera will use to find the
 			focus. You can choose to have the camera use the entire area in the view
 			finder to focus and let it decide what the subject is or you can set a point
-			to force the camera to focus on one part of the image.{" "}
+			to force the camera to focus on one part of the image.
 		</p>
-
 		<p class="italic">
 			For cell phones, simply tap on the screen where you want the camera to
 			focus and the camera will use that to also set the exposure.
 		</p>
-
 		<p>Different focus areas can include:</p>
 		<p class="center-bold">Single Point - Dynamic Area - Auto Area</p>
-
-		<p>
-			Which mode you choose will vary depending on your subject and environment.{" "}
-		</p>
-
+		<p>Which mode you choose will vary depending on your subject and environment.</p>
 		<p class="spaced">
 			In Single point, you select the area of the image that the camera uses to
 			focus on. This is good for stationary subjects.
 		</p>
-
 		<p class="spaced">
 			In Dynamic Area, you select the area of the image to focus on, but if the
 			subject leaves that area, the camera will use information from the rest of
 			the area focus. This works well for subjects that move unpredictably.
 		</p>
-
 		<p class="spaced">
 			In Auto Area, the camera does everything by itself. This is the default
 			mode for cell phones. Some cameras may have other focus modes as well.
 		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
-		<h2>Meetering</h2>
+	<!-- ===== METERING (parent) ===== -->
+	<dialog id="metering-dialog" class="info-dialog">
+		<h2>Metering</h2>
 		<p>
 			Today's cameras have a few different options for finding the correct
-			exposure. In the past, the meetering was largely taking the entire scene
+			exposure. In the past, the metering was largely taking the entire scene
 			into account. Today, cameras can predominately focus on certain areas of
 			the scene. Check your camera for the options available, but many will offer
 			the following:
 		</p>
-		<p class="center-bold">Matrix Mode - Center Weighted - Spot Meetering</p>
-
+		<p class="center-bold">Matrix Mode - Center Weighted - Spot Metering</p>
 		<p>
 			Matrix Mode will pull exposure information from many areas of the scene.
-			This is general use meetering.
+			This is general use metering.
 		</p>
 		<p>
-			Center weighted meetering will give more preference to what is in the
-			center of the scene while still accepting values from the other areas.
+			Center weighted metering will give more preference to what is in the center
+			of the scene while still accepting values from the other areas.
 		</p>
 		<p>
-			Spot meetering will only use information from the very center of the scene.
-			Choosing a bright or dark item to focus on when using spot meetering will
+			Spot metering will only use information from the very center of the scene.
+			Choosing a bright or dark item to focus on when using spot metering will
 			give very different results.
 		</p>
 
+		<div class="nested-deck">
+			<ConceptCard
+				dialogId="white-balance-dialog"
+				title="White Balance"
+				teaser="Make whites look white under any light."
+			>
+				<WhiteBalanceGlyph />
+			</ConceptCard>
+			<ConceptCard
+				dialogId="exposure-comp-dialog"
+				title="Exposure Compensation"
+				teaser="Nudge the exposure brighter or darker."
+			>
+				<ExposureCompGlyph />
+			</ConceptCard>
+			<ConceptCard
+				dialogId="bracketing-dialog"
+				title="Bracketing"
+				teaser="One scene, several exposures."
+			>
+				<BracketingGlyph />
+			</ConceptCard>
+			<ConceptCard
+				dialogId="histogram-dialog"
+				title="Histogram"
+				teaser="Read your tones at a glance."
+			>
+				<HistogramGlyph />
+			</ConceptCard>
+		</div>
+
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
+
+	<!-- White Balance (child of Metering) -->
+	<dialog id="white-balance-dialog" class="info-dialog">
 		<h2>White Balance</h2>
 		<p>
 			White balance is used to adjust colors to match the color of the light
@@ -173,7 +260,11 @@ import StepNav from "../components/StepNav.astro";
 			source. You can also choose to introduce a deliberate red or blue cast to
 			see the effects.
 		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
+	<!-- Exposure Compensation (child of Metering) -->
+	<dialog id="exposure-comp-dialog" class="info-dialog">
 		<h2>Exposure Compensation</h2>
 		<p>
 			Exposure compensation is used to alter exposure from the value selected by
@@ -183,7 +274,11 @@ import StepNav from "../components/StepNav.astro";
 			tap on the screen and when you see the sunburst symbol, use your finger to
 			swipe up or down to lighten or darken the image.
 		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
+	<!-- Bracketing (child of Metering) -->
+	<dialog id="bracketing-dialog" class="info-dialog">
 		<h2>Bracketing</h2>
 		<p>
 			In short, bracketing is taking the same photo more than once using
@@ -198,7 +293,11 @@ import StepNav from "../components/StepNav.astro";
 			(depending on which part you're looking to expose properly) and one a bit
 			darker.
 		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
+	<!-- Histogram (child of Metering) -->
+	<dialog id="histogram-dialog" class="info-dialog">
 		<h2>Histogram</h2>
 		<p>
 			A histogram is a graphical representation of the tonal values of your image.
@@ -211,8 +310,7 @@ import StepNav from "../components/StepNav.astro";
 			(in cameras with Electronic Viewfinders), after you take the shot, and
 			during post-processing as well.
 		</p>
-
-		<h2>How to Read Your Histogram</h2>
+		<h3>How to Read Your Histogram</h3>
 		<p>
 			It's easy: the blacks are on the left, the whites are on the right, all the
 			mid-tones are in between. The most important thing to know about the
@@ -232,16 +330,11 @@ import StepNav from "../components/StepNav.astro";
 			information. Having solid blacks and bright tones (provided they are not
 			blown out) is not necessarily a bad thing.
 		</p>
-
-		<StepNav prev={{ href: "/step1" }} next={{ href: "/step3" }} />
-	</article>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 </BaseLayout>
 
 <style>
-	/* Body copy — carried over from the old `Text` styled-component
-	   (font-size: 1.15em). The old markup used a `styled.text` component,
-	   which renders an invalid <text> (SVG) element; every one of those is a
-	   plain <p> here. */
 	.step-article {
 		font-size: 1em;
 		margin-top: 2em;
@@ -251,31 +344,106 @@ import StepNav from "../components/StepNav.astro";
 		font-size: 1.15em;
 	}
 
-	/* Text1: extra top spacing between paragraphs. */
-	.step-article p.spaced {
-		margin-top: 20px;
+	.deck-hint {
+		text-align: center;
+		color: #5b636b;
+		font-size: 1em;
+		margin-top: 1.5em;
 	}
 
-	/* Section sub-headings (were bold paragraphs; now semantic <h2>). */
-	.step-article h2 {
-		font-weight: bold;
-		font-size: 1.25em;
-		margin-top: 20px;
-		margin-bottom: 0;
+	/* The two parent cards (Focus, Metering) — side by side, stacking on phones. */
+	.concept-deck {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+		max-width: 34rem;
+		margin: 0.5rem auto 2.5rem;
+	}
+	@media (max-width: 560px) {
+		.concept-deck {
+			grid-template-columns: 1fr;
+			max-width: 22rem;
+		}
 	}
 
-	/* TextBold inside a centered Div — the emphasized option lists. */
+	/* Nested child-card decks inside a parent modal. auto-fit lets the 2-card
+	   Focus deck and the 4-card Metering deck both wrap sensibly. */
+	.nested-deck {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+		gap: 0.75rem;
+		margin: 1.5rem 0 0.5rem;
+	}
+
+	/* Centered option lists (were bold paragraphs; now semantic). */
 	.step-article p.center-bold {
 		font-weight: bold;
-		font-size: 1em;
 		text-align: center;
-		margin-bottom: 20px;
 	}
 
-	/* Italic: the red cell-phone callouts. */
-	.step-article p.italic {
+	/* Dialog copy. */
+	.info-dialog p.spaced {
+		margin-top: 1.25em;
+	}
+	.info-dialog p.center-bold {
+		font-weight: bold;
+		text-align: center;
+	}
+	/* Italic red cell-phone callouts. */
+	.info-dialog p.italic {
 		font-style: italic;
 		color: #e00000;
-		font-size: 1em;
+	}
+
+	.info-dialog {
+		max-width: min(75ch, 90vw);
+		max-height: 85vh;
+		overflow: auto;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		padding: 1.5rem;
+		line-height: 1.6;
+	}
+	.info-dialog::backdrop {
+		background: rgba(0, 0, 0, 0.5);
+	}
+	.info-dialog h2 {
+		margin-top: 0;
+	}
+	.info-dialog h3 {
+		margin-bottom: 0.25rem;
+	}
+	.dialog-close {
+		margin-top: 1rem;
+		padding: 0.5rem 1.1rem;
+		border: none;
+		border-radius: 6px;
+		background: var(--nav-bg);
+		color: #fff;
+		font-size: 1rem;
+		cursor: pointer;
 	}
 </style>
+
+<script>
+	// Open the matching <dialog> from its trigger button. The parent cards live
+	// on the page; the child cards live inside a parent dialog. Opening a child
+	// with showModal() while the parent stays open stacks it on top, so closing
+	// the child reveals the parent still open underneath.
+	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const id = btn.getAttribute("data-open-dialog");
+			const dlg = id ? document.getElementById(id) : null;
+			if (dlg instanceof HTMLDialogElement) dlg.showModal();
+		});
+	});
+
+	// Close buttons, plus click-on-backdrop to dismiss (native <dialog> already
+	// handles Esc and focus trapping for us).
+	document.querySelectorAll<HTMLDialogElement>("dialog.info-dialog").forEach((dlg) => {
+		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close());
+		dlg.addEventListener("click", (e) => {
+			if (e.target === dlg) dlg.close();
+		});
+	});
+</script>

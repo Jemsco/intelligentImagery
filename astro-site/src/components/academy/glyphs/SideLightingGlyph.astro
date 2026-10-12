@@ -1,0 +1,28 @@
+---
+/** Side lighting — a sphere lit from one side, shaded on the far side. */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="A light source on the left and a sphere shaded on its far side"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2.5"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+>
+	<title>Side lighting</title>
+	<!-- light source on the left -->
+	<line x1="7" y1="24" x2="2" y2="24"></line>
+	<line x1="9" y1="17" x2="5" y2="14"></line>
+	<line x1="9" y1="31" x2="5" y2="34"></line>
+	<!-- subject sphere, shaded on the far (right) side -->
+	<circle cx="30" cy="24" r="12"></circle>
+	<path d="M30 12 A12 12 0 0 1 30 36 Z" fill="currentColor" stroke="none"></path>
+</svg>

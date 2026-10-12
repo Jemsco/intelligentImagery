@@ -1,0 +1,33 @@
+---
+/**
+ * Focus glyph — eight tapered blades radiating around a central point.
+ *
+ * Reads as a focus "burst" converging on the point the lens locks onto. One
+ * blade is drawn pointing inward (narrow tip toward centre) and rotated into
+ * eight positions. Draws with `currentColor`. From the Step 2 mockup.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 120"
+	role="img"
+	aria-label="Eight tapered blades radiating around a central focus point"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linejoin="round"
+>
+	<title>Focus</title>
+	{
+		angles.map((a) => (
+			<path d="M60 46 L49 12 L71 12 Z" transform={`rotate(${a} 60 60)`} />
+		))
+	}
+	<circle cx="60" cy="60" r="3.5" fill="currentColor" stroke="none"></circle>
+</svg>
