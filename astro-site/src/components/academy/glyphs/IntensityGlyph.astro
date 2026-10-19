@@ -1,0 +1,26 @@
+---
+/**
+ * Intensity glyph — an eye: an almond outline with a circular iris that fills
+ * it. "How much light do you have, and can you see it?" From the Step 3
+ * mockup (eye). Draws with `currentColor`.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 80"
+	role="img"
+	aria-label="An eye: an almond outline with a circular iris"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+	stroke-linejoin="round"
+>
+	<title>Intensity</title>
+	<path d="M8 40 Q60 4 112 40 Q60 76 8 40 Z"></path>
+	<circle cx="60" cy="40" r="18"></circle>
+</svg>

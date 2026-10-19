@@ -1,0 +1,27 @@
+---
+/**
+ * Aperture glyph — three circles, each smaller than the last.
+ *
+ * Reads left-to-right as the aperture stopping down: the opening (and the
+ * light it admits) shrinks step by step. Draws with `currentColor`.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 48"
+	role="img"
+	aria-label="Three circles decreasing in size, showing the aperture stopping down"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2"
+>
+	<title>Aperture stopping down</title>
+	<circle cx="20" cy="24" r="18"></circle>
+	<circle cx="62" cy="24" r="12"></circle>
+	<circle cx="98" cy="24" r="6.5"></circle>
+</svg>

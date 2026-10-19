@@ -1,0 +1,26 @@
+---
+/** When to Focus — an autofocus reticle (corner brackets + locked point). */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 48 48"
+	role="img"
+	aria-label="A focus reticle with corner brackets around a central point"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="2.5"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+>
+	<title>When to focus</title>
+	<path d="M9 15 V9 H15"></path>
+	<path d="M33 9 H39 V15"></path>
+	<path d="M39 33 V39 H33"></path>
+	<path d="M15 39 H9 V33"></path>
+	<circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"></circle>
+</svg>

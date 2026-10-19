@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import StepNav from "../components/StepNav.astro";
+import ConceptCard from "../components/academy/ConceptCard.astro";
+import IsoGlyph from "../components/academy/glyphs/IsoGlyph.astro";
+import ApertureGlyph from "../components/academy/glyphs/ApertureGlyph.astro";
+import ShutterGlyph from "../components/academy/glyphs/ShutterGlyph.astro";
 import { Image } from "astro:assets";
 import exposureTriangle from "../assets/TheExposureTriangle.png";
 import kodakCanister from "../assets/kodakcanister.png";
@@ -48,7 +52,50 @@ const ASA_TEXT =
 			areas.
 		</p>
 
+		<p class="deck-hint">Tap a card to explore each element.</p>
+
+		<div class="concept-deck">
+			<ConceptCard
+				dialogId="iso-dialog"
+				title="ISO"
+				teaser="Sensitivity to light — and the grain that comes with it."
+			>
+				<IsoGlyph />
+			</ConceptCard>
+
+			<ConceptCard
+				dialogId="aperture-dialog"
+				title="Aperture"
+				teaser="The size of the opening that lets light in."
+			>
+				<ApertureGlyph />
+			</ConceptCard>
+
+			<ConceptCard
+				dialogId="shutter-dialog"
+				title="Shutter Speed"
+				teaser="How long the shutter stays open."
+			>
+				<ShutterGlyph />
+			</ConceptCard>
+		</div>
+
+		<p class="center quiz-link">
+			Take the quiz:
+			<a
+				href="https://jaysphotoquiz1.s3.us-east-2.amazonaws.com/index.html"
+				target="_blank"
+				rel="noopener noreferrer">Photo Quiz</a
+			>
+		</p>
+
+		<StepNav next={{ href: "/step2" }} />
+	</article>
+
+	<!-- ISO lesson -->
+	<dialog id="iso-dialog" class="info-dialog">
 		<h2>ISO <span class="subnote">(sensitivity to light)</span></h2>
+
 		<Image
 			class="img-canister"
 			src={kodakCanister}
@@ -94,10 +141,10 @@ const ASA_TEXT =
 		</p>
 
 		<div class="modal-buttons">
-			<button type="button" class="modal-btn" data-open-dialog="iso-dialog">
+			<button type="button" class="modal-btn" data-open-dialog="iso-detail-dialog">
 				ISO IN DIGITAL CAMERAS
 			</button>
-			<button type="button" class="modal-btn" data-open-dialog="asa-dialog">
+			<button type="button" class="modal-btn" data-open-dialog="asa-detail-dialog">
 				ASA IN FILM CAMERAS
 			</button>
 		</div>
@@ -119,6 +166,11 @@ const ASA_TEXT =
 			exposure takes practice.
 		</p>
 
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
+
+	<!-- Aperture lesson -->
+	<dialog id="aperture-dialog" class="info-dialog">
 		<h2>Aperture</h2>
 		<p>
 			Aperture refers to the size of the circular hole in the lens that lets in
@@ -169,6 +221,11 @@ const ASA_TEXT =
 			very bright or very dim and cannot be controlled.
 		</p>
 
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
+
+	<!-- Shutter speed lesson -->
+	<dialog id="shutter-dialog" class="info-dialog">
 		<h2>Shutter Speed</h2>
 		<p>
 			Shutter speed refers to the speed that the shutter opens and closes
@@ -194,25 +251,17 @@ const ASA_TEXT =
 			cameras are capable of shutter speeds that are as fast as 1/4000 or faster.
 		</p>
 
-		<p>
-			Take the quiz:{" "}
-			<a
-				href="https://jaysphotoquiz1.s3.us-east-2.amazonaws.com/index.html"
-				target="_blank"
-				rel="noopener noreferrer">Photo Quiz</a
-			>
-		</p>
+		<button type="button" class="dialog-close">Close</button>
+	</dialog>
 
-		<StepNav next={{ href: "/step2" }} />
-	</article>
-
-	<dialog id="iso-dialog" class="info-dialog">
+	<!-- Deeper explainers, opened from inside the ISO lesson -->
+	<dialog id="iso-detail-dialog" class="info-dialog">
 		<h2>ISO in Digital Cameras</h2>
 		<p>{ISO_TEXT}</p>
 		<button type="button" class="dialog-close">Close</button>
 	</dialog>
 
-	<dialog id="asa-dialog" class="info-dialog">
+	<dialog id="asa-detail-dialog" class="info-dialog">
 		<h2>ASA in Film Cameras</h2>
 		<p>{ASA_TEXT}</p>
 		<button type="button" class="dialog-close">Close</button>
@@ -244,29 +293,55 @@ const ASA_TEXT =
 		font-size: 0.95em;
 	}
 
-	.img-triangle,
+	.deck-hint {
+		text-align: center;
+		color: #5b636b;
+		font-size: 0.95em;
+		margin-top: 1.5em;
+	}
+
+	/* The three exposure-element cards. Three across on wider screens,
+	   stacking to a single column on phones. */
+	.concept-deck {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+		margin: 0.5rem 10px 2rem;
+	}
+	@media (max-width: 720px) {
+		.concept-deck {
+			grid-template-columns: 1fr;
+			max-width: 22rem;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	.quiz-link {
+		margin-top: 1.5em;
+	}
+
+	.img-triangle {
+		max-width: 100%;
+		height: auto;
+	}
+	@media (min-width: 650px) {
+		.img-triangle {
+			max-width: 60%;
+		}
+	}
+
+	/* Images inside the lesson dialogs. */
 	.img-iso,
 	.img-fstops {
 		max-width: 100%;
 		height: auto;
 	}
-	@media (min-width: 650px) {
-		.img-triangle,
-		.img-iso,
-		.img-fstops {
-			max-width: 75%;
-		}
-	}
 	.img-canister {
 		float: right;
-		max-width: 25%;
+		max-width: 30%;
 		height: auto;
-		margin: 5px;
-	}
-	@media (min-width: 650px) {
-		.img-canister {
-			max-width: 12%;
-		}
+		margin: 0 0 5px 10px;
 	}
 
 	/* Buttons that open the ISO / ASA explainer dialogs. */
@@ -294,6 +369,8 @@ const ASA_TEXT =
 
 	.info-dialog {
 		max-width: min(75ch, 90vw);
+		max-height: 85vh;
+		overflow: auto;
 		border: 1px solid #ccc;
 		border-radius: 6px;
 		padding: 1.5rem;
@@ -304,6 +381,9 @@ const ASA_TEXT =
 	}
 	.info-dialog h2 {
 		margin-top: 0;
+	}
+	.info-dialog p {
+		margin: 1em 0;
 	}
 	.dialog-close {
 		margin-top: 1rem;
@@ -318,8 +398,9 @@ const ASA_TEXT =
 </style>
 
 <script>
-	// Open the matching <dialog> from its trigger button.
-	document.querySelectorAll<HTMLButtonElement>("[data-open-dialog]").forEach((btn) => {
+	// Open the matching <dialog> from its trigger button. Works for the concept
+	// cards and for the deeper ISO/ASA buttons nested inside the ISO dialog.
+	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
 		btn.addEventListener("click", () => {
 			const id = btn.getAttribute("data-open-dialog");
 			const dlg = id ? document.getElementById(id) : null;

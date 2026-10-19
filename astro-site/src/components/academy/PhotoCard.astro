@@ -1,0 +1,81 @@
+---
+/**
+ * PhotoCard — a vertical card with its title on top and a photo below, which
+ * opens a same-page lesson dialog. Like ConceptCard it is a real <button>
+ * carrying `data-open-dialog` (driven by the page's dialog script), but it
+ * shows a cropped photo thumbnail instead of an SVG glyph. Used by Step 4.
+ */
+import { Image } from "astro:assets";
+
+interface Props {
+	/** id of the <dialog> this card opens. */
+	dialogId: string;
+	/** Card heading. */
+	title: string;
+	/** Thumbnail photo. */
+	src: ImageMetadata;
+	/** Alt text for the thumbnail. */
+	alt: string;
+}
+const { dialogId, title, src, alt } = Astro.props;
+---
+
+<button type="button" class="photo-card" data-open-dialog={dialogId}>
+	<span class="photo-card__title">{title}</span>
+	<span class="photo-card__media">
+		<Image src={src} alt={alt} widths={[320, 640]} sizes="(max-width: 600px) 90vw, 320px" />
+	</span>
+</button>
+
+<style>
+	.photo-card {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 0;
+		background: var(--surface, #fff);
+		border: 1px solid #dde1e5;
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow: 0 1px 2px rgba(33, 37, 41, 0.04);
+		color: var(--ink);
+		font-family: inherit;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			box-shadow 0.15s ease,
+			transform 0.15s ease;
+	}
+	.photo-card:hover,
+	.photo-card:focus-visible {
+		border-color: var(--link);
+		box-shadow: 0 4px 14px rgba(33, 37, 41, 0.1);
+		transform: translateY(-2px);
+		outline: none;
+	}
+	.photo-card:focus-visible {
+		outline: 2px solid var(--link);
+		outline-offset: 2px;
+	}
+
+	.photo-card__title {
+		padding: 0.7rem 0.8rem;
+		font-family: var(--font-serif);
+		font-size: 1.05rem;
+		font-weight: 600;
+		text-align: center;
+		line-height: 1.25;
+	}
+	.photo-card__media {
+		display: block;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		background: #eee;
+	}
+	.photo-card__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+</style>

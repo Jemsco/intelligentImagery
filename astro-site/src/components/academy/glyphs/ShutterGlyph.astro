@@ -1,0 +1,28 @@
+---
+/**
+ * Shutter-speed glyph — equal-height bars of shrinking width.
+ *
+ * Every bar is the same height (the frame is unchanged); the width is the
+ * length of time the shutter stays open. Wide bar = slow shutter, long
+ * exposure; narrow bar = fast shutter, brief exposure. Draws with
+ * `currentColor`.
+ */
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={["glyph", className]}
+	viewBox="0 0 120 48"
+	role="img"
+	aria-label="Bars of equal height but shrinking width, showing the shutter open for less time"
+	fill="currentColor"
+>
+	<title>Faster shutter, shorter exposure</title>
+	<rect x="3" y="5" width="34" height="38" rx="2"></rect>
+	<rect x="45" y="5" width="22" height="38" rx="2"></rect>
+	<rect x="75" y="5" width="12" height="38" rx="2"></rect>
+	<rect x="95" y="5" width="6" height="38" rx="2"></rect>
+</svg>
