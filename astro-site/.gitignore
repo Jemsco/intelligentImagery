@@ -23,8 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-#assets will be stored in S3
-astro-site/src/assets/
+# Legacy website assets stored in S3
 mywebsite/src/assets/
 
 # Astro generated files and dependencies
