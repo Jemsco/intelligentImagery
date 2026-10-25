@@ -1,0 +1,1 @@
+﻿Images removed to shrink the zip. Restore from the old site's mywebsite/src/assets (identical, MD5-verified). See README-RESTORE.txt at the zip root.
