@@ -1,15 +1,79 @@
+
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Embed from "../components/Embed.astro";
+import { sanityClient } from "../lib/sanity";
+
+const galleries = await sanityClient.fetch(`
+  *[_type == "gallery"] | order(title asc) {
+    title,
+    description,
+    "photographs": photographs[]->{
+      title,
+      location,
+      altText,
+      "imageUrl": image.asset->url
+    }
+  }
+`);
 ---
 
 <BaseLayout
-	title="Gallery"
-	description="The Intelligent Imagery gallery — landscape and nature photography prints by Jay Brass."
+  title="Gallery"
+  description="The Intelligent Imagery gallery — landscape and nature photography by Jay Brass."
 >
-	<h1 class="page-title">Gallery</h1>
-	<Embed
-		src="https://kodakid.wixsite.com/intelligentimageries"
-		title="Intelligent Imagery photo gallery"
-	/>
+  <h1 class="page-title">Gallery</h1>
+
+  {galleries.map((gallery) => (
+    <section class="gallery-section">
+      <h2>{gallery.title}</h2>
+
+      {gallery.description && <p>{gallery.description}</p>}
+
+      <div class="photo-grid">
+        {gallery.photographs?.map((photo) => (
+          <figure>
+            <img
+              src={photo.imageUrl}
+              alt={photo.altText}
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>{photo.title}</strong>
+              {photo.location && <span>{photo.location}</span>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <style>
+    .gallery-section {
+      margin: 2rem auto;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5rem;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
 </BaseLayout>

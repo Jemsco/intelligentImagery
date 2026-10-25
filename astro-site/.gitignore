@@ -26,3 +26,24 @@ pnpm-debug.log*
 #assets will be stored in S3
 astro-site/src/assets/
 mywebsite/src/assets/
+
+# Astro generated files and dependencies
+astro-site/node_modules/
+astro-site/dist/
+astro-site/.astro/
+
+# Sanity Studio generated files and dependencies
+astro-site/studio-intelligentimagery/node_modules/
+astro-site/studio-intelligentimagery/dist/
+astro-site/studio-intelligentimagery/.sanity/
+astro-site/studio-intelligentimagery/.git-backup/
+
+# Local environment files and secrets
+.env
+.env.*
+!.env.example
+astro-site/.env
+astro-site/.env.*
+astro-site/studio-intelligentimagery/.env
+astro-site/studio-intelligentimagery/.env.*
+
