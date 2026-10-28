@@ -25,7 +25,9 @@ description,
 title,
 location,
 altText,
-"imageUrl": image.asset->url
+"imageUrl": image.asset->url,
+"width": image.asset->metadata.dimensions.width,
+"height": image.asset->metadata.dimensions.height
 }
 }
 `,
@@ -37,8 +39,37 @@ Astro.response.status = 404 ;
 }
 
 const pageDescription =
-gallery?.description ||
-"Photography by Jay Brass.";
+gallery?.description || "Photography by Jay Brass.";
+
+function splitIntoColumns(items, count) {
+const columns = Array.from({ length: count }, () => []) ;
+
+items.forEach((item, index) => {
+let columnIndex                  ;
+
+if (count === 3) {
+// Desktop: place the fourth image in column 2.
+const desktopOrder = [0, 1, 2, 1, 0, 2]                 ;
+columnIndex = desktopOrder[index % desktopOrder.length] ;
+} else if (count === 2) {
+// Tablet: alternate columns.
+columnIndex = index % 2                                 ;
+} else {
+// Mobile: keep the original order.
+columnIndex = 0                                         ;
+}
+
+columns[columnIndex].push(item) ;
+})                              ;
+
+return columns ;
+}
+
+const photographs = gallery?.photographs ?? [] ;
+
+const desktopColumns = splitIntoColumns(photographs, 3) ;
+const tabletColumns = splitIntoColumns(photographs, 2)  ;
+const mobileColumns = splitIntoColumns(photographs, 1)  ;
 ---
 
 <BaseLayout
@@ -59,22 +90,77 @@ description={pageDescription}
 {gallery.description && <p>{gallery.description}</p>}
 </header>
 
-{gallery.photographs?.length ? (
-<div class="photo-grid">
-{gallery.photographs.map((photo) => (
+{photographs.length > 0 ? (
+<>
+<!-- Desktop: three explicit columns -->
+<div class="masonry masonry--desktop">
+{desktopColumns.map((column) => (
+<div class="masonry__col">
+{column.map((photo) => (
 <figure>
 <img
 src={photo.imageUrl}
 alt={photo.altText || photo.title || ""}
 loading="lazy"
 />
+{(photo.title || photo.location) && (
 <figcaption>
 {photo.title && <strong>{photo.title}</strong>}
 {photo.location && <span>{photo.location}</span>}
 </figcaption>
+)}
 </figure>
 ))}
 </div>
+))}
+</div>
+
+<!-- Tablet: two explicit columns -->
+<div class="masonry masonry--tablet">
+{tabletColumns.map((column) => (
+<div class="masonry__col">
+{column.map((photo) => (
+<figure>
+<img
+src={photo.imageUrl}
+alt={photo.altText || photo.title || ""}
+loading="lazy"
+/>
+{(photo.title || photo.location) && (
+<figcaption>
+{photo.title && <strong>{photo.title}</strong>}
+{photo.location && <span>{photo.location}</span>}
+</figcaption>
+)}
+</figure>
+))}
+</div>
+))}
+</div>
+
+<!-- Mobile: one column in original photo order -->
+<div class="masonry masonry--mobile">
+{mobileColumns.map((column) => (
+<div class="masonry__col">
+{column.map((photo) => (
+<figure>
+<img
+src={photo.imageUrl}
+alt={photo.altText || photo.title || ""}
+loading="lazy"
+/>
+{(photo.title || photo.location) && (
+<figcaption>
+{photo.title && <strong>{photo.title}</strong>}
+{photo.location && <span>{photo.location}</span>}
+</figcaption>
+)}
+</figure>
+))}
+</div>
+))}
+</div>
+</>
 ) : (
 <p>Photographs for this gallery will be added soon.</p>
 )}
@@ -119,36 +205,83 @@ max-width: 700px    ;
 line-height: 1.6    ;
 }
 
-.photo-grid {
-display: grid                  ;
-grid-template-columns: repeat(
-auto-fit,
-minmax(min(100%, 280px), 1fr)
-)                              ;
-gap: 1.5rem                    ;
+.masonry {
+display: flex           ;
+align-items: flex-start ;
+gap: 30px               ;
 }
 
-figure {
-margin: 0 ;
+.masonry__col {
+display: grid   ;
+flex: 1         ;
+min-width: 0    ;
+gap: 30px       ;
 }
 
-figure img {
+.masonry figure {
+min-width: 0      ;
+margin: 0         ;
+}
+
+.masonry img {
 display: block    ;
 width: 100%       ;
 height: auto      ;
 border: 1px solid #ddd;
 }
 
-figcaption {
+.masonry figcaption {
 display: flex          ;
 flex-direction: column ;
 gap: 0.25rem           ;
 margin-top: 0.5rem     ;
 font-size: 0.9rem      ;
+line-height: 1.45      ;
+}
+
+.masonry--tablet,
+.masonry--mobile {
+display: none      ;
 }
 
 .back-link {
 margin-top: 2.5rem ;
+}
+
+@media (max-width: 900px) {
+.masonry--desktop {
+display: none               ;
+}
+
+.masonry--tablet {
+display: flex      ;
+}
+
+.masonry {
+gap: 20px  ;
+}
+
+.masonry__col {
+gap: 24px       ;
+}
+}
+
+@media (max-width: 520px) {
+.masonry--tablet {
+display: none               ;
+}
+
+.masonry--mobile {
+display: flex      ;
+}
+
+.masonry {
+gap: 0     ;
+}
+
+.masonry__col {
+gap: 28px       ;
+}
 }
 </style>
 </BaseLayout>
