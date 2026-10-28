@@ -1,0 +1,154 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { sanityClient } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+const galleries = await sanityClient.fetch(`
+*[_type == "gallery" && defined(slug.current)] {
+"slug": slug.current
+}
+`)                                               ;
+
+return galleries.map((gallery) => ({
+params: { slug: gallery.slug },
+}))                                  ;
+}
+
+const { slug } = Astro.params ;
+
+const gallery = await sanityClient.fetch(
+`
+*[_type == "gallery" && slug.current == $slug][0] {
+title,
+description,
+"photographs": photographs[]-> {
+title,
+location,
+altText,
+"imageUrl": image.asset->url
+}
+}
+`,
+{ slug }
+)                                                   ;
+
+if (!gallery) {
+Astro.response.status = 404 ;
+}
+
+const pageDescription =
+gallery?.description ||
+"Photography by Jay Brass.";
+---
+
+<BaseLayout
+title={gallery ? `${gallery.title} | Gallery` : "Gallery Not Found"}
+description={pageDescription}
+>
+<main class="gallery-detail">
+{gallery ? (
+<>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+<a href="/gallery/">Gallery</a>
+<span aria-hidden="true"> / </span>
+<span aria-current="page">{gallery.title}</span>
+</nav>
+
+<header class="gallery-header">
+<h1>{gallery.title}</h1>
+{gallery.description && <p>{gallery.description}</p>}
+</header>
+
+{gallery.photographs?.length ? (
+<div class="photo-grid">
+{gallery.photographs.map((photo) => (
+<figure>
+<img
+src={photo.imageUrl}
+alt={photo.altText || photo.title || ""}
+loading="lazy"
+/>
+<figcaption>
+{photo.title && <strong>{photo.title}</strong>}
+{photo.location && <span>{photo.location}</span>}
+</figcaption>
+</figure>
+))}
+</div>
+) : (
+<p>Photographs for this gallery will be added soon.</p>
+)}
+
+<p class="back-link">
+<a href="/gallery/">← Back to all galleries</a>
+</p>
+</>
+) : (
+<>
+<h1>Gallery not found</h1>
+<p>This gallery may have moved or no longer exists.</p>
+<a href="/gallery/">Return to Gallery</a>
+</>
+)}
+</main>
+
+<style>
+.gallery-detail {
+width: min(1200px, 92%) ;
+margin: 0 auto          ;
+padding: 2rem 0 4rem    ;
+}
+
+.breadcrumb {
+margin-bottom: 1.5rem ;
+font-size: 0.9rem     ;
+}
+
+.breadcrumb a,
+.back-link a {
+color: inherit             ;
+text-underline-offset: 3px ;
+}
+
+.gallery-header {
+margin-bottom: 2rem ;
+}
+
+.gallery-header p {
+max-width: 700px    ;
+line-height: 1.6    ;
+}
+
+.photo-grid {
+display: grid                  ;
+grid-template-columns: repeat(
+auto-fit,
+minmax(min(100%, 280px), 1fr)
+)                              ;
+gap: 1.5rem                    ;
+}
+
+figure {
+margin: 0 ;
+}
+
+figure img {
+display: block    ;
+width: 100%       ;
+height: auto      ;
+border: 1px solid #ddd;
+}
+
+figcaption {
+display: flex          ;
+flex-direction: column ;
+gap: 0.25rem           ;
+margin-top: 0.5rem     ;
+font-size: 0.9rem      ;
+}
+
+.back-link {
+margin-top: 2.5rem ;
+}
+</style>
+</BaseLayout>
