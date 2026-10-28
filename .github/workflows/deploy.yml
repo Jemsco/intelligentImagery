@@ -2,6 +2,9 @@
 name: Deploy Intelligent Imagery
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
   repository_dispatch:
     types: [sanity-publish]
