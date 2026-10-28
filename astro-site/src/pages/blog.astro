@@ -1,127 +1,491 @@
-
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { sanityClient } from "../lib/sanity";
+import ArticleCard from "../components/ArticleCard.astro";
 
 const articles = await sanityClient.fetch(`
-  *[_type == "article" && defined(slug.current)]
-  | order(publishedAt desc) {
-    title,
-    "slug": slug.current,
-    excerpt,
-    publishedAt,
-    featuredImage {
-      alt,
-      "url": asset->url
-    }
-  }
-`);
+*[_type == "article" && defined(slug.current)]
+| order(publishedAt desc) {
+title,
+"slug": slug.current,
+excerpt,
+publishedAt,
+featuredImage {
+alt,
+"url": asset->url
+}
+}
+`)                                             ;
 
-const formattedDate = (date) =>
-  date
-    ? new Date(date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "UTC",
-      })
-    : "";
+const defaultImage = "/images/blog-default.jpg";
+// The introductory article always has its own position.
+const introductionSlug = "more-than-a-photograph";
+
+const introductionArticle = articles.find(
+(article) => article.slug === introductionSlug
+)                                              ;
+
+// All other articles, already sorted newest first by Sanity.
+const remainingArticles = articles.filter(
+(article) => article.slug !== introductionSlug
+)                                                             ;
+
+// The newest article becomes the featured article.
+//const latestArticle = remainingArticles[0]        ;
+
+// Everything after the latest article goes into the grid.
+//const previousArticles = remainingArticles.slice(1)                                                                                               ;
+// Temporary sample content for local layout testing.
+const placeholderArticles = [
+{
+title: "Finding the Light in a Landscape",
+slug: "placeholder-landscape",
+excerpt:
+"How light, weather, and timing can transform an ordinary landscape into a photograph worth keeping.",
+publishedAt: "2000-01-03T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+{
+title: "A Closer Look at Wildlife Photography",
+slug: "placeholder-wildlife",
+excerpt:
+"Patience, observation, and a little preparation can make a meaningful difference when photographing wildlife.",
+publishedAt: "2000-01-02T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+{
+title: "Lessons From Behind the Camera",
+slug: "placeholder-lessons",
+excerpt:
+"A few thoughts on composition, equipment, and the decisions that shape a photograph.",
+publishedAt: "2000-01-01T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+{
+title: "A Closer Look at Wildlife Photography2",
+slug: "placeholder-wildlife",
+excerpt:
+"Patience, observation, and a little preparation can make a meaningful difference when photographing wildlife.citylife, seal life life in the sky",
+publishedAt: "2000-01-02T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+{
+title: "Lessons From Behind the Camera2",
+slug: "placeholder-lessons",
+excerpt:
+"A few thoughts on composition, equipment, and the decisions that shape a photograph.and some extra text",
+publishedAt: "2000-01-01T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+{
+title: "Lessons",
+slug: "placeholder-lessons",
+excerpt:
+"A few thoughts ",
+publishedAt: "2000-01-01T12:00:00Z",
+featuredImage: {
+alt: "",
+url: defaultImage,
+},
+},
+]                                                                                                                                                   ;
+// Add sample content only during local development.
+const displayArticles = import.meta.env.DEV
+? [...remainingArticles, ...placeholderArticles]
+: remainingArticles                                                                                                                                 ;
+
+// The first article is featured                  ; the rest go into the grid.
+const latestArticle = displayArticles[0]          ;
+const previousArticles = displayArticles.slice(1) ;
+
+function distributeArticles(articles, columnCount) {
+const columns = Array.from(
+{ length: columnCount },
+() => []
+)                                                    ;
+
+articles.forEach((article, index) => {
+columns[index % columnCount].push(article) ;
+})                                         ;
+
+return columns ;
+}
+
+const desktopColumns = distributeArticles(previousArticles, 3) ;
+const tabletColumns = distributeArticles(previousArticles, 2)  ;
+const mobileColumns = distributeArticles(previousArticles, 1)  ;
+
 ---
 
 <BaseLayout
-  title="Blog"
-  description="Photography, places, technology, and other thoughts from Intelligent Imagery."
+title="Blog | Intelligent Imagery"
+description="Photography advice, techniques, equipment, projects, and lessons learned along the way."
 >
-  <h1 class="page-title">Blog</h1>
+<main class="blog-page">
+<header class="blog-header">
+<div class="blog-hero">
+<img
+src="/images/blog-hero.jpg"
+alt=""
+fetchpriority="high"
+/>
+</div>
 
-  {articles.length === 0 ? (
-    <p class="empty-message">
-      Articles are coming soon. Please check back later.
-    </p>
-  ) : (
-    <div class="article-list">
-      {articles.map((article) => (
-        <article class="article-card">
-          {article.featuredImage?.url && (
-            <a href={`/blog/${article.slug}/`} class="article-image-link">
-              <img
-                src={article.featuredImage.url}
-                alt={article.featuredImage.alt || ""}
-                loading="lazy"
-              />
-            </a>
-          )}
+<div class="blog-intro">
+<h1>Photography, Without the Guesswork.</h1>
+<p>
+Advice, techniques, equipment, projects, and lessons learned
+along the way.
+</p>
+		 <a href="/blog/more-than-a-photograph/" class="blog-origin">
+How It All Started <span aria-hidden="true">→</span>
+</a>
+</div>
+</header>
 
-          <div class="article-content">
-            <h2>
-              <a href={`/blog/${article.slug}/`}>{article.title}</a>
-            </h2>
+{latestArticle && (
+<section class="latest-article" aria-labelledby="latest-heading">
+<h2 id="latest-heading" class="section-heading">Latest Article</h2>
 
-            {article.publishedAt && (
-              <p class="article-date">
-                <time datetime={article.publishedAt}>
-                  {formattedDate(article.publishedAt)}
-                </time>
-              </p>
-            )}
+<article class="featured-article">
+<a
+href={`/blog/${latestArticle.slug}/`}
+class:list={[
+"featured-thumbnail",
+!latestArticle.featuredImage?.url && "article-thumbnail--fallback",
+]}
+aria-label={`Read ${latestArticle.title}`}
+>
+<img
+src={latestArticle.featuredImage?.url || defaultImage}
+alt={
+latestArticle.featuredImage?.url
+? latestArticle.featuredImage.alt || ""
+: ""
+}
+loading="lazy"
+/>
+</a>
 
-            {article.excerpt && <p>{article.excerpt}</p>}
+<div class="featured-content">
+<p class="article-category">PHOTOGRAPHY</p>
 
-            <a href={`/blog/${article.slug}/`} class="read-more">
-              Read article →
-            </a>
-          </div>
-        </article>
-      ))}
-    </div>
-  )}
+<h3>
+<a href={`/blog/${latestArticle.slug}/`}>
+{latestArticle.title}
+</a>
+</h3>
 
-  <style>
-    .article-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-    }
+{latestArticle.excerpt && (
+<p class="article-excerpt">{latestArticle.excerpt}</p>
+)}
 
-    .article-card {
-      min-width: 0;
-    }
+<a
+href={`/blog/${latestArticle.slug}/`}
+class="read-more"
+aria-label={`Read the full article: ${latestArticle.title}`}
+>
+Read article <span aria-hidden="true">→</span>
+</a>
+</div>
+</article>
+</section>
+)}
 
-    .article-image-link img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+{previousArticles.length > 0 && (
+<section class="previous-articles" aria-labelledby="previous-heading">
+<h2 id="previous-heading" class="section-heading">Previous Articles</h2>
 
-    .article-content h2 {
-      margin: 1rem 0 0.5rem;
-      font-size: 1.5rem;
-    }
+<div class="masonry masonry--desktop">
+{desktopColumns.map((column) => (
+<div class="masonry__col">
+{column.map((article) => (
+<ArticleCard article={article} defaultImage={defaultImage} />
+))}
+</div>
+))}
+</div>
 
-    .article-content h2 a {
-      color: inherit;
-      text-decoration: none;
-    }
+<div class="masonry masonry--tablet">
+{tabletColumns.map((column) => (
+<div class="masonry__col">
+{column.map((article) => (
+<ArticleCard article={article} defaultImage={defaultImage} />
+))}
+</div>
+))}
+</div>
 
-    .article-content h2 a:hover,
-    .read-more:hover {
-      text-decoration: underline;
-    }
+<div class="masonry masonry--mobile">
+{mobileColumns.map((column) => (
+<div class="masonry__col">
+{column.map((article) => (
+<ArticleCard article={article} defaultImage={defaultImage} />
+))}
+</div>
+))}
+</div>
 
-    .article-date {
-      color: #666;
-      font-size: 0.9rem;
-      margin: 0.5rem 0;
-    }
+</section>
+)}
 
-    .read-more {
-      font-weight: 600;
-    }
+</main>
 
-    .empty-message {
-      text-align: center;
-      margin: 3rem 0;
-    }
-  </style>
+<style>
+/* Page layout */
+.blog-page {
+width: min(100% - 2rem, 1100px) ;
+margin-inline: auto             ;
+}
+
+.blog-header {
+margin-bottom: 3rem ;
+}
+
+/* Hero */
+.blog-hero {
+width: 100%          ;
+aspect-ratio: 16 / 9 ;
+overflow: hidden     ;
+background:          #171717;
+}
+
+.blog-hero img {
+display: block    ;
+width: 100%       ;
+height: 100%      ;
+object-fit: cover ;
+}
+
+/* Introduction */
+.blog-intro {
+padding: 2rem 0 1.5rem ;
+}
+
+.blog-intro h1 {
+margin: 0 0 0.75rem                  ;
+font-size: clamp(2rem, 4vw, 3.25rem) ;
+line-height: 1.15                    ;
+letter-spacing: -0.035em             ;
+}
+
+.blog-intro > p {
+max-width: 650px   ;
+margin: 0          ;
+color:             #b8b8b8;
+font-size: 1.05rem ;
+line-height: 1.7   ;
+}
+
+.blog-origin {
+display: inline-block ;
+margin-top: 1.25rem   ;
+color: inherit        ;
+font-size: 1.2rem     ;
+font-weight: 600      ;
+text-decoration: none ;
+}
+
+.blog-origin:hover {
+text-decoration: underline ;
+text-underline-offset: 4px ;
+}
+
+.blog-origin:focus-visible {
+outline: 2px solid           #c5af91;
+outline-offset: 4px          ;
+}
+
+/* Section headings */
+.section-heading {
+margin: 0 0 1.5rem                    ;
+font-size: clamp(1.5rem, 2.5vw, 2rem) ;
+line-height: 1.25                     ;
+}
+
+/* Latest article */
+.latest-article {
+margin: 0 0 3.5rem   ;
+}
+
+.featured-article {
+display: grid                               ;
+grid-template-columns: 200px minmax(0, 1fr) ;
+align-items: start                          ;
+gap: 1.5rem                                 ;
+padding-bottom: 2rem                        ;
+border-bottom: 1px solid                    #383838;
+}
+
+.featured-thumbnail {
+display: block        ;
+aspect-ratio: 4 / 3   ;
+overflow: hidden      ;
+background:           #242424;
+}
+
+.featured-thumbnail img {
+display: block            ;
+width: 100%               ;
+height: 100%              ;
+object-fit: cover         ;
+}
+
+.featured-thumbnail.article-thumbnail--fallback img {
+opacity: 0.5                                          ;
+}
+
+.featured-content {
+min-width: 0        ;
+}
+
+.featured-content h3 {
+margin: 0 0 0.75rem                    ;
+font-size: clamp(1.5rem, 3vw, 2.25rem) ;
+line-height: 1.25                      ;
+}
+
+.featured-content h3 a {
+color: inherit           ;
+text-decoration: none    ;
+}
+
+.featured-content h3 a:hover {
+text-decoration: underline     ;
+text-underline-offset: 4px     ;
+}
+
+.article-category {
+margin: 0 0 0.5rem    ;
+color:                #c5af91;
+font-size: 0.75rem    ;
+font-weight: 600      ;
+letter-spacing: 0.1em ;
+}
+
+.article-excerpt {
+margin: 0 0 0.9rem ;
+color:             #b8b8b8;
+line-height: 1.7   ;
+}
+
+.read-more {
+display: inline-block ;
+color: inherit        ;
+font-size: 0.9rem     ;
+font-weight: 600      ;
+text-decoration: none ;
+}
+
+.read-more:hover {
+text-decoration: underline ;
+text-underline-offset: 4px ;
+}
+
+.featured-thumbnail:focus-visible,
+.featured-content a:focus-visible {
+outline: 2px solid                  #c5af91;
+outline-offset: 4px                 ;
+}
+
+/* Previous articles: masonry columns */
+.masonry {
+display: flex                            ;
+align-items: flex-start                  ;
+gap: 1.5rem                              ;
+margin-bottom: 3rem                      ;
+}
+
+.masonry__col {
+flex: 1              ;
+min-width: 0         ;
+display: grid        ;
+align-content: start ;
+gap: 2.5rem          ;
+}
+
+.masonry--tablet,
+.masonry--mobile {
+display: none      ;
+}
+
+/* Empty state */
+.empty-message {
+margin: 3rem 0     ;
+text-align: center ;
+}
+
+/* Tablet */
+@media (max-width: 800px) {
+.featured-article {
+gap: 1.25rem                ;
+}
+
+.masonry--desktop {
+display: none       ;
+}
+
+.masonry--tablet {
+display: flex      ;
+}
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+.blog-page {
+width: min(100% - 1.5rem, 1100px) ;
+}
+
+.blog-header {
+margin-bottom: 1.5rem ;
+}
+
+.blog-hero {
+aspect-ratio: 16 / 9 ;
+}
+
+.blog-intro {
+padding: 1.5rem 0 ;
+}
+
+.featured-article {
+grid-template-columns: 1fr ;
+gap: 1.25rem               ;
+}
+
+.featured-thumbnail {
+width: 100%           ;
+max-width: 200px      ;
+}
+
+.article-excerpt {
+font-size: 0.9rem  ;
+line-height: 1.55  ;
+}
+
+.masonry--tablet {
+display: none      ;
+}
+
+.masonry--mobile {
+display: flex      ;
+}
+}
+</style>
+
 </BaseLayout>
