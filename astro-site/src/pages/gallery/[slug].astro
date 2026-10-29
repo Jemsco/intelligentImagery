@@ -25,6 +25,7 @@ description,
 title,
 location,
 altText,
+"slug": slug.current,
 "imageUrl": image.asset->url,
 "width": image.asset->metadata.dimensions.width,
 "height": image.asset->metadata.dimensions.height
@@ -97,6 +98,10 @@ description={pageDescription}
 {desktopColumns.map((column) => (
 <div class="masonry__col">
 {column.map((photo) => (
+<a
+href={`/gallery/${slug}/${photo.slug}/`}
+class="photo-link"
+>
 <figure>
 <img
 src={photo.imageUrl}
@@ -110,6 +115,7 @@ loading="lazy"
 </figcaption>
 )}
 </figure>
+</a>
 ))}
 </div>
 ))}

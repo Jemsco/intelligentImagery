@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { sanityClient } from "../../../lib/sanity";
+
+export async function getStaticPaths() {
+const galleries = await sanityClient.fetch(`
+*[_type == "gallery" && defined(slug.current)] {
+"gallerySlug": slug.current,
+"photoSlugs": photographs[]->slug.current
+}
+`)                                               ;
+
+return galleries.flatMap((gallery) =>
+(gallery.photoSlugs ?? [])
+.filter(Boolean)
+.map((photoSlug) => ({
+params: {
+slug: gallery.gallerySlug,
+photoSlug,
+},
+}))
+)                                     ;
+}
+
+const { slug, photoSlug } = Astro.params ;
+
+const gallery = await sanityClient.fetch(
+`
+*[_type == "gallery" && slug.current == $gallerySlug][0] {
+title,
+"gallerySlug": slug.current,
+"photographs": photographs[]-> {
+title,
+"slug": slug.current,
+location,
+altText,
+description,
+"imageUrl": image.asset->url
+}
+}
+`,
+{
+gallerySlug: slug,
+}
+)                                                          ;
+
+const photo = gallery?.photographs?.find(
+(item) => item.slug === photoSlug
+)                                         ;
+
+if (!photo?.imageUrl) {
+Astro.response.status = 404 ;
+}
+
+const pageTitle = photo?.title || "Photograph";
+const pageDescription =
+photo?.description ||
+photo?.altText ||
+`${pageTitle} — photography by Jay Brass.`    ;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+<main class="photo-detail">
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+<a href="/gallery/">Gallery</a>
+<span aria-hidden="true"> / </span>
+<a href={`/gallery/${slug}/`}>
+{gallery?.title || "Gallery"}
+</a>
+<span aria-hidden="true"> / </span>
+<span aria-current="page">{pageTitle}</span>
+</nav>
+
+{photo?.imageUrl && (
+<article>
+<h1>{pageTitle}</h1>
+
+{photo.location && (
+<p class="photo-location">{photo.location}</p>
+)}
+
+<figure>
+<img
+src={photo.imageUrl}
+alt={photo.altText || photo.title || ""}
+/>
+{photo.description && (
+<figcaption>{photo.description}</figcaption>
+)}
+</figure>
+
+<p class="back-link">
+<a href={`/gallery/${slug}/`}>
+Back to {gallery?.title || "gallery"}
+</a>
+</p>
+</article>
+)}
+</main>
+</BaseLayout>
+
+<style>
+.photo-detail {
+max-width: 1100px       ;
+margin: 0 auto          ;
+padding: 2rem 1rem 4rem ;
+}
+
+.breadcrumbs {
+margin-bottom: 2rem ;
+font-size: 0.9rem   ;
+}
+
+.photo-detail h1 {
+margin-bottom: 0.5rem ;
+}
+
+.photo-location {
+margin-top: 0     ;
+color:            #666;
+}
+
+figure {
+margin: 2rem 0 ;
+}
+
+figure img {
+display: block    ;
+max-width: 100%   ;
+width: auto       ;
+height: auto      ;
+margin: 0 auto    ;
+border: 1px solid #ddd;
+}
+
+figcaption {
+margin-top: 0.75rem ;
+line-height: 1.6    ;
+}
+
+.back-link {
+margin-top: 2rem ;
+}
+
+a:focus-visible {
+outline: 3px solid  #2563eb;
+outline-offset: 4px ;
+}
+</style>
