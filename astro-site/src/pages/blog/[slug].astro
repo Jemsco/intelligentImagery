@@ -1,133 +1,135 @@
-
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { sanityClient } from "../../lib/sanity";
 import { toHTML } from "@portabletext/to-html";
 
 export async function getStaticPaths() {
-  const articles = await sanityClient.fetch(`
-    *[_type == "article" && defined(slug.current)] {
-      "slug": slug.current
-    }
-  `);
+const articles = await sanityClient.fetch(`
+*[_type == "article" && defined(slug.current)] {
+"slug": slug.current
+}
+`)                                               ;
 
-  return articles.map((article) => ({
-    params: { slug: article.slug },
-  }));
+return articles.map((article) => ({
+params: { slug: article.slug },
+}))                                 ;
 }
 
-const { slug } = Astro.params;
+const { slug } = Astro.params ;
 
 const article = await sanityClient.fetch(
-  `
-    *[_type == "article"
-      && slug.current == $slug
-      && defined(publishedAt)
-    ][0] {
-      title,
-      slug,
-      excerpt,
-      publishedAt,
-      seoDescription,
-      featuredImage {
-        alt,
-        "url": asset->url
-      },
-      body
-    }
-  `,
-  { slug }
-);
+`
+*[_type == "article"
+&& slug.current == $slug
+&& defined(publishedAt)
+][0] {
+title,
+slug,
+excerpt,
+publishedAt,
+seoDescription,
+featuredImage {
+alt,
+"url": asset->url
+},
+body
+}
+`,
+{ slug }
+)                                         ;
 
 if (!article) {
-  return Astro.redirect("/blog");
+return Astro.redirect("/blog");
 }
 
 const bodyHtml = article.body?.length
-  ? toHTML(article.body)
-  : "";
+? toHTML(article.body)
+: "";
 
 const formattedDate = article.publishedAt
-  ? new Date(article.publishedAt).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      timeZone: "UTC",
-    })
-  : "";
+? new Date(article.publishedAt).toLocaleDateString("en-US", {
+year: "numeric",
+month: "long",
+day: "numeric",
+timeZone: "UTC",
+})
+: "";
 ---
 
 <BaseLayout
-  title={article.title}
-  description={article.seoDescription || article.excerpt || article.title}
+title={article.title}
+description={article.seoDescription || article.excerpt || article.title}
 >
-  <article class="article">
-    <p class="back-link"><a href="/blog">← Back to Blog</a></p>
+<article class="article">
+<p class="back-link"><a href="/blog">← Back to Blog</a></p>
 
-    <h1 class="page-title">{article.title}</h1>
+<h1 class="page-title">{article.title}</h1>
 
-    {formattedDate && (
-      <p class="article-date">
-        <time datetime={article.publishedAt}>{formattedDate}</time>
-      </p>
-    )}
+{formattedDate && (
+<p class="article-date">
+<time datetime={article.publishedAt}>{formattedDate}</time>
+</p>
+)}
 
-    {article.featuredImage?.url && (
-      <figure class="featured-image">
-        <img
-          src={article.featuredImage.url}
-          alt={article.featuredImage.alt || ""}
-        />
-      </figure>
-    )}
+{article.featuredImage?.url && (
+<figure class="featured-image">
+<img
+src={article.featuredImage.url}
+alt={article.featuredImage.alt || ""}
+/>
+</figure>
+)}
 
-    <div class="article-body" set:html={bodyHtml} />
-  </article>
+<div class="article-body" set:html={bodyHtml} />
+</article>
 
-  <style>
-    .article {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+<style>
+.article {
+max-width: 800px ;
+margin: 0 auto   ;
+}
 
-    .back-link {
-      margin: 1rem 0;
-    }
+.back-link {
+margin: 1rem 0 ;
+}
 
-    .article-date {
-      text-align: center;
-      color: #666;
-      margin: 0 0 2rem;
-    }
+.article-date {
+text-align: center ;
+color:             #666;
+margin: 0 0 2rem   ;
+}
 
-    .featured-image {
-      margin: 2rem 0;
-    }
+.featured-image {
+float: left             ;
+width: 50%              ;
+height: auto            ;
+margin: 0 1.5rem 1rem 0 ;
+}
 
-    .featured-image img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+.featured-image img {
+display: block        ;
+width: 100%           ;
+height: auto          ;
+}
 
-    .article-body {
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
+.article-body {
+line-height: 1.8        ;
+overflow-wrap: anywhere ;
+}
 
-    .article-body :global(img) {
-      max-width: 100%;
-      height: auto;
-    }
+.article-body :global(img) {
+max-width: 100%              ;
+height: auto                 ;
+}
 
-    .article-body :global(figure) {
-      margin: 2rem 0;
-    }
+.article-body :global(figure) {
+margin: 2rem 0                  ;
+}
 
-    .article-body :global(figcaption) {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 0.5rem;
-    }
-  </style>
+.article-body :global(figcaption) {
+font-size: 0.9rem                   ;
+color:                              #666;
+margin-top: 0.5rem                  ;
+}
+</style>
 </BaseLayout>
