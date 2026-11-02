@@ -1,0 +1,260 @@
+<div class="logo-loop">
+<svg viewBox="0 50 1000 400" role="img" aria-labelledby="logo-loop-title logo-loop-desc">
+<title id="logo-loop-title">
+Two colored triangles converge into an overlapping geometric symbol
+</title>
+<desc id="logo-loop-desc">
+A red-green-blue filled triangle and a cyan-yellow-magenta filled
+triangle move toward the center and form a shaded globe wrapped with
+the words Intelligent Imagery, then reverse, looping continuously.
+</desc>
+<defs>
+<linearGradient id="logo-leftGradient" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#00FF00" />
+<stop offset="45%" stop-color="#0000FF" />
+<stop offset="69%" stop-color="#FF0000" />
+</linearGradient>
+<linearGradient id="logo-rightGradient" x1="1" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#FF00FF" />
+<stop offset="49%" stop-color="#00FFFF" />
+<stop offset="60%" stop-color="#FFFF00" />
+</linearGradient>
+<radialGradient id="logo-globeShading" cx="35%" cy="30%" r="70%">
+<stop offset="0%" stop-color="#FFFFFF" />
+<stop offset="55%" stop-color="#FFFFFF" />
+<stop offset="85%" stop-color="#F0F0F0" />
+<stop offset="100%" stop-color="#C8C8C8" />
+</radialGradient>
+<radialGradient id="logo-globeDepth" cx="38%" cy="33%" r="72%">
+<stop offset="60%" stop-color="#000000" stop-opacity="0" />
+<stop offset="100%" stop-color="#1e1e1e" stop-opacity="0.3" />
+</radialGradient>
+</defs>
+
+<g class="triangle-left">
+<polygon points="100,100 500,300 100,500" fill="url(#logo-leftGradient)" />
+</g>
+<g class="triangle-right">
+<polygon points="900,100 500,300 900,500" fill="url(#logo-rightGradient)" />
+</g>
+
+<g class="globe">
+<circle cx="500" cy="300" r="110" fill="url(#logo-globeShading)" />
+<circle cx="500" cy="300" r="110" fill="url(#logo-globeDepth)" />
+<g
+class="word-intelligent"
+id="logo-band-intelligent"
+font-family="Arial, sans-serif"
+font-weight="700"
+font-size="20"
+fill="#1f1f1f"
+text-anchor="middle"
+dominant-baseline="central"
+></g>
+<g
+class="word-imagery"
+id="logo-band-imagery"
+font-family="Arial, sans-serif"
+font-weight="700"
+font-size="20"
+fill="#1f1f1f"
+text-anchor="middle"
+dominant-baseline="central"
+></g>
+</g>
+</svg>
+</div>
+
+<style>
+/* Width is set here                                                                       ; the parent decides where the logo sits. */
+.logo-loop {
+--cycle: 9s                                                                                ;
+width: 100%                                                                                ;
+max-width: 100%                                                                            ;
+}
+.logo-loop svg {
+display: block                                                                             ;
+width: 100%                                                                                ;
+height: auto                                                                               ;
+overflow: visible                                                                          ;
+}
+
+/* ---- Triangles: converge and rotate in, hold, rotate and separate out ---- */
+.triangle-left {
+transform-box: view-box                                                                    ;
+transform-origin: 233px 300px                                                              ;
+will-change: transform                                                                     ;
+opacity: 0.82                                                                              ;
+animation: logo-left-loop var(--cycle) ease-in-out infinite                                ;
+}
+.triangle-right {
+transform-box: view-box                                                                    ;
+transform-origin: 767px 300px                                                              ;
+will-change: transform                                                                     ;
+opacity: 0.82                                                                              ;
+animation: logo-right-loop var(--cycle) ease-in-out infinite                               ;
+}
+@keyframes logo-left-loop {
+0%,
+3% {
+transform: translate(0, 0) rotate(-90deg)                                                  ;
+}
+20%,
+80% {
+transform: translate(267px, 0) rotate(0deg)                                                ;
+}
+96%,
+100% {
+transform: translate(0, 0) rotate(-90deg)                                                  ;
+}
+}
+@keyframes logo-right-loop {
+0%,
+3% {
+transform: translate(0, 0) rotate(-90deg)                                                  ;
+}
+20%,
+80% {
+transform: translate(-267px, 0) rotate(0deg)                                               ;
+}
+96%,
+100% {
+transform: translate(0, 0) rotate(-90deg)                                                  ;
+}
+}
+
+/* ---- Globe: fade in after the triangles meet, fade out before they leave ---- */
+.globe {
+animation: logo-globe-loop var(--cycle) ease-in-out infinite                               ;
+}
+@keyframes logo-globe-loop {
+0%,
+10% {
+opacity: 0                                                                                 ;
+}
+27%,
+79% {
+opacity: 1                                                                                 ;
+}
+87%,
+100% {
+opacity: 0                                                                                 ;
+}
+}
+
+/* ---- Words: slide in from opposite sides, hold, slide back out ---- */
+.word-intelligent {
+animation: logo-word-left-loop var(--cycle) ease-in-out infinite                           ;
+}
+.word-imagery {
+animation: logo-word-right-loop var(--cycle) ease-in-out infinite                          ;
+}
+@keyframes logo-word-left-loop {
+0%,
+27% {
+opacity: 0                                                                                 ;
+transform: translateX(-45px)                                                               ;
+}
+40%,
+66% {
+opacity: 1                                                                                 ;
+transform: translateX(0)                                                                   ;
+}
+75%,
+100% {
+opacity: 0                                                                                 ;
+transform: translateX(-45px)                                                               ;
+}
+}
+@keyframes logo-word-right-loop {
+0%,
+27% {
+opacity: 0                                                                                 ;
+transform: translateX(45px)                                                                ;
+}
+40%,
+66% {
+opacity: 1                                                                                 ;
+transform: translateX(0)                                                                   ;
+}
+75%,
+100% {
+opacity: 0                                                                                 ;
+transform: translateX(45px)                                                                ;
+}
+}
+
+/* Static assembled logo for visitors who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+.triangle-left {
+animation: none                                                                            ;
+transform: translate(267px, 0) rotate(0deg)                                                ;
+}
+.triangle-right {
+animation: none                                                                            ;
+transform: translate(-267px, 0) rotate(0deg)                                               ;
+}
+.globe,
+.word-intelligent,
+.word-imagery {
+animation: none                                                                            ;
+opacity: 1                                                                                 ;
+transform: none                                                                            ;
+}
+@media (max-width: 640px) {
+.logo-loop {
+width: 100%'
+}
+}
+</style>
+
+<script>
+(function () {
+var SVGNS = "http://www.w3.org/2000/svg";
+var cx = 500,
+cy = 300                                                                                   ;
+
+// Wrap one word around the sphere as a horizontal band.
+function wrap(group, word, opts) {
+var r = opts.r,
+yOff = opts.yOff,
+maxDeg = opts.maxDeg                                                                       ;
+var chars = word.split("");
+var n = chars.length                                                                       ;
+for (var i = 0                                                                             ; i < n; i++) {
+var t = n === 1 ? 0.5 : i / (n - 1)                                                        ;
+var deg = -maxDeg + t * (2 * maxDeg)                                                       ;
+var rad = (deg * Math.PI) / 180                                                            ;
+var x = cx + r * Math.sin(rad)                                                             ;
+var y = cy + yOff                                                                          ;
+var sx = Math.cos(rad)                                                                     ;
+var op = Math.max(0.5, Math.pow(Math.cos(rad), 1.25))                                      ;
+var el = document.createElementNS(SVGNS, "text");
+el.setAttribute("x", "0");
+el.setAttribute("y", "0");
+el.setAttribute("opacity", op.toFixed(3))                                                  ;
+el.setAttribute(
+"transform",
+"translate(" + x.toFixed(2) + " " + y.toFixed(2) + ") scale(" + sx.toFixed(3) + " 1)",
+)                                                                                          ;
+el.textContent = chars[i]                                                                  ;
+group.appendChild(el)                                                                      ;
+}
+}
+
+// Look up the bands inside each logo instance, so repeated copies stay independent.
+document.querySelectorAll(".logo-loop").forEach(function (root) {
+wrap(root.querySelector("#logo-band-intelligent"), "INTELLIGENT", {
+r: 98,
+yOff: -14,
+maxDeg: 72,
+})                                                                                         ;
+wrap(root.querySelector("#logo-band-imagery"), "IMAGERY", {
+r: 98,
+yOff: 16,
+maxDeg: 58,
+})                                                                                         ;
+})                                                                                         ;
+})()                                                                                       ;
+
+</script>
