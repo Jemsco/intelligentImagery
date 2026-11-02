@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Intelligent Imagery — Logo Animation Loop</title>
+    <style>
+      :root {
+        color-scheme: light;
+        /* One place to tune the whole loop speed. Every element below shares
+           this duration so the phases stay in sync. */
+        --cycle: 9s;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        font-family: system-ui, sans-serif;
+      }
+      .stage {
+        width: min(100vw, 1200px);
+        padding: 24px;
+      }
+      svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      /* ---- Triangles: converge+rotate in, hold, rotate+separate out ---- */
+      .triangle-left {
+        transform-box: view-box;
+        transform-origin: 233px 300px;
+        will-change: transform;
+        opacity: 0.82;
+        animation: left-loop var(--cycle) ease-in-out infinite;
+      }
+      .triangle-right {
+        transform-box: view-box;
+        transform-origin: 767px 300px;
+        will-change: transform;
+        opacity: 0.82;
+        animation: right-loop var(--cycle) ease-in-out infinite;
+      }
+
+      /* Timeline (percent of --cycle):
+         0–3%   rest (apart, rotated)
+         3–20%  triangles converge
+         18–27% globe fades in
+         27–40% words slide in
+         40–66% full hold
+         66–75% words slide out
+         73–82% globe fades out
+         80–96% triangles separate
+         96–100% rest                                                    */
+      @keyframes left-loop {
+        0%,
+        3% {
+          transform: translate(0, 0) rotate(-90deg);
+        }
+        20%,
+        80% {
+          transform: translate(267px, 0) rotate(0deg);
+        }
+        96%,
+        100% {
+          transform: translate(0, 0) rotate(-90deg);
+        }
+      }
+      @keyframes right-loop {
+        0%,
+        3% {
+          transform: translate(0, 0) rotate(-90deg);
+        }
+        20%,
+        80% {
+          transform: translate(-267px, 0) rotate(0deg);
+        }
+        96%,
+        100% {
+          transform: translate(0, 0) rotate(-90deg);
+        }
+      }
+
+      /* ---- Globe: fade in after triangles meet, fade out before they leave ---- */
+      .globe {
+        animation: globe-loop var(--cycle) ease-in-out infinite;
+      }
+      @keyframes globe-loop {
+        0%,
+        10% {
+          opacity: 0;
+        }
+        27%,
+        79% {
+          opacity: 1;
+        }
+        87%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* ---- Words: slide in from opposite sides, hold, slide back out ----
+         Group opacity multiplies each letter's own per-letter opacity, so
+         fading the group to 0 hides the word while keeping the depth gradient. */
+      .word-intelligent {
+        animation: word-left-loop var(--cycle) ease-in-out infinite;
+      }
+      .word-imagery {
+        animation: word-right-loop var(--cycle) ease-in-out infinite;
+      }
+      @keyframes word-left-loop {
+        0%,
+        27% {
+          opacity: 0;
+          transform: translateX(-45px);
+        }
+        40%,
+        66% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        75%,
+        100% {
+          opacity: 0;
+          transform: translateX(-45px);
+        }
+      }
+      @keyframes word-right-loop {
+        0%,
+        27% {
+          opacity: 0;
+          transform: translateX(45px);
+        }
+        40%,
+        66% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        75%,
+        100% {
+          opacity: 0;
+          transform: translateX(45px);
+        }
+      }
+
+      /* Static assembled logo for users who prefer no motion. */
+      @media (prefers-reduced-motion: reduce) {
+        .triangle-left {
+          animation: none;
+          transform: translate(267px, 0) rotate(0deg);
+        }
+        .triangle-right {
+          animation: none;
+          transform: translate(-267px, 0) rotate(0deg);
+        }
+        .globe,
+        .word-intelligent,
+        .word-imagery {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage" aria-label="Animated Intelligent Imagery logo concept">
+      <svg viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+        <title id="title">
+          Two colored triangles converge into an overlapping geometric symbol
+        </title>
+        <desc id="desc">
+          A red-green-blue filled triangle and a cyan-yellow-magenta filled
+          triangle move toward the center and form a shaded globe wrapped with
+          the words Intelligent Imagery, then reverse — looping continuously.
+        </desc>
+        <defs>
+          <linearGradient id="leftGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#00FF00" />
+            <stop offset="45%" stop-color="#0000FF" />
+            <stop offset="69%" stop-color="#FF0000" />
+          </linearGradient>
+          <linearGradient id="rightGradient" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF00FF" />
+            <stop offset="49%" stop-color="#00FFFF" />
+            <stop offset="60%" stop-color="#FFFF00" />
+          </linearGradient>
+        </defs>
+
+        <!-- The two source triangles remain filled; transparency is applied to the
+       complete shapes so their colors blend naturally where they overlap. -->
+        <g class="triangle-left" opacity="0.82">
+          <polygon points="100,100 500,300 100,500" fill="url(#leftGradient)" />
+        </g>
+        <g class="triangle-right" opacity="0.82">
+          <polygon
+            points="900,100 500,300 900,500"
+            fill="url(#rightGradient)"
+          />
+        </g>
+        <defs>
+          <radialGradient id="globeShading" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="55%" stop-color="#FFFFFF" />
+            <stop offset="85%" stop-color="#F0F0F0" />
+            <stop offset="100%" stop-color="#C8C8C8" />
+          </radialGradient>
+
+          <!-- Directional edge-darkening to read as a sphere, not a flat disc -->
+          <radialGradient id="globeDepth" cx="38%" cy="33%" r="72%">
+            <stop offset="60%" stop-color="#000000" stop-opacity="0" />
+            <stop offset="100%" stop-color="#1e1e1e" stop-opacity="0.3" />
+          </radialGradient>
+        </defs>
+        <g class="globe">
+          <!-- Shaded globe -->
+          <circle cx="500" cy="300" r="110" fill="url(#globeShading)" />
+          <!-- Depth overlay (darkens the lower-right rim) -->
+          <circle cx="500" cy="300" r="110" fill="url(#globeDepth)" />
+
+          <!-- Each word is a horizontal band wrapped around the sphere. The
+               per-letter positions / foreshortening / fade are generated by the
+               script at the end of <body> (see wrap()). -->
+          <g
+            class="word-intelligent"
+            id="bandIntelligent"
+            font-family="Arial, sans-serif"
+            font-weight="700"
+            font-size="20"
+            fill="#1f1f1f"
+            text-anchor="middle"
+            dominant-baseline="central"
+          ></g>
+          <g
+            class="word-imagery"
+            id="bandImagery"
+            font-family="Arial, sans-serif"
+            font-weight="700"
+            font-size="20"
+            fill="#1f1f1f"
+            text-anchor="middle"
+            dominant-baseline="central"
+          ></g>
+        </g>
+      </svg>
+    </main>
+    <script>
+      (function () {
+        var SVGNS = "http://www.w3.org/2000/svg";
+        var cx = 500,
+          cy = 300;
+
+        // Wrap one word around the sphere as a horizontal band.
+        //   r      – horizontal sweep radius (how far letters reach toward the rim)
+        //   yOff   – vertical offset of the band from the globe's center
+        //   maxDeg – half-angle the word spans around the front of the sphere;
+        //            larger = letters wrap further toward the sides and the
+        //            foreshortening/fade near the edges is stronger.
+        function wrap(group, word, opts) {
+          var r = opts.r,
+            yOff = opts.yOff,
+            maxDeg = opts.maxDeg;
+          var chars = word.split("");
+          var n = chars.length;
+          for (var i = 0; i < n; i++) {
+            var t = n === 1 ? 0.5 : i / (n - 1); // 0..1 across the word
+            var deg = -maxDeg + t * (2 * maxDeg);
+            var rad = (deg * Math.PI) / 180;
+            var x = cx + r * Math.sin(rad); // letters bunch toward the edges
+            var y = cy + yOff;
+            var sx = Math.cos(rad); // horizontal foreshortening
+            var op = Math.max(0.5, Math.pow(Math.cos(rad), 1.25)); // recede at edges
+            var el = document.createElementNS(SVGNS, "text");
+            el.setAttribute("x", "0");
+            el.setAttribute("y", "0");
+            el.setAttribute("opacity", op.toFixed(3));
+            el.setAttribute(
+              "transform",
+              "translate(" +
+                x.toFixed(2) +
+                " " +
+                y.toFixed(2) +
+                ") scale(" +
+                sx.toFixed(3) +
+                " 1)",
+            );
+            el.textContent = chars[i];
+            group.appendChild(el);
+          }
+        }
+
+        wrap(document.getElementById("bandIntelligent"), "INTELLIGENT", {
+          r: 98,
+          yOff: -14,
+          maxDeg: 72,
+        });
+        wrap(document.getElementById("bandImagery"), "IMAGERY", {
+          r: 98,
+          yOff: 16,
+          maxDeg: 58,
+        });
+      })();
+    </script>
+  </body>
+</html>
