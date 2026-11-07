@@ -10,13 +10,13 @@ import ROT2 from "../assets/_DSC9072ROT.jpg";
 // Centered Composition & Symmetry — card photo, modal grid-overlay version
 import ROT3 from "../assets/_DSC6779.jpg";
 import ROT4 from "../assets/_DSC6779ROT.jpg";
-// Foreground Interest (lighthouse image removed; waterfall kept)
+// Foreground Interest (lighthouse image removed                                 ; waterfall kept)
 import Foreground2 from "../assets/20190504_10086DSC_5956.jpg";
 // Frame within the Frame
 import FrameinFrame from "../assets/20160417-_DSC4419.jpg";
 // Leading Lines
 import LeadingLines from "../assets/20190322_9005DSC_4880_1.jpg";
-// Fill the Frame (statue image removed; owl kept)
+// Fill the Frame (statue image removed                                          ; owl kept)
 import fillFrame2 from "../assets/DSC_8076.jpg";
 // Isolate the Subject
 import Isolate from "../assets/20170722-_DSC9588.jpg";
@@ -44,7 +44,7 @@ import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
 			The subject of this subject is the subject. Images can depict anything and
 			there is a way to compose them that will be pleasing for others too.
 			Composition is the structure of an image. Even if the exposure is spot on,
-			if the composition is off or unpleasing, your image will be weak. At it's
+			if the composition is off or unpleasing, your image will be weak. At its
 			most basic points, lines, and shapes are the elements of composition.
 			Composition should be deliberate. Elements and lines should be intentionally
 			placed in an image. I'm a big fan of the saying "Plan your work and work
@@ -355,63 +355,63 @@ import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
 
 <style>
 	.wrapper {
-		padding: 0.5em;
+		padding: 0.5em ;
 	}
 
 	.text {
-		font-size: 1.15em;
+		font-size: 1.15em ;
 	}
 
 	.deck-hint {
-		text-align: center;
-		color: #5b636b;
-		font-size: 1em;
-		margin-top: 1.5em;
+		text-align: center ;
+		color:             #5b636b;
+		font-size: 1em     ;
+		margin-top: 1.5em  ;
 	}
 
 	/* Gallery of composition cards. */
 	.card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-		gap: 1rem;
-		margin: 0.75rem 0 2rem;
+		display: grid                                                ;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) ;
+		gap: 1rem                                                    ;
+		margin: 0.75rem 0 2rem                                       ;
 	}
 
 	/* Lesson dialogs. */
 	.info-dialog {
-		max-width: min(72ch, 92vw);
-		max-height: 88vh;
-		overflow: auto;
-		border: 1px solid #ccc;
-		border-radius: 6px;
-		padding: 1.5rem;
-		line-height: 1.6;
+		max-width: min(72ch, 92vw)     ;
+		max-height: 88vh               ;
+		overflow: auto                 ;
+		border: 1px solid              #ccc;
+		border-radius: 6px             ;
+		padding: 1.5rem                ;
+		line-height: 1.6               ;
 	}
 	.info-dialog::backdrop {
-		background: rgba(0, 0, 0, 0.5);
+		background: rgba(0, 0, 0, 0.5) ;
 	}
 	.info-dialog h2 {
-		margin-top: 0;
+		margin-top: 0                  ;
 	}
 	.info-dialog p {
-		font-size: 1.05em;
+		font-size: 1.05em              ;
 	}
 	.modal-img {
-		display: block;
-		width: 100%;
-		height: auto;
-		margin: 0.5rem 0 1rem;
-		border-radius: 4px;
+		display: block                 ;
+		width: 100%                    ;
+		height: auto                   ;
+		margin: 0.5rem 0 1rem          ;
+		border-radius: 4px             ;
 	}
 	.dialog-close {
-		margin-top: 0.5rem;
-		padding: 0.5rem 1.1rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--nav-bg);
-		color: #fff;
-		font-size: 1rem;
-		cursor: pointer;
+		margin-top: 0.5rem             ;
+		padding: 0.5rem 1.1rem         ;
+		border: none                   ;
+		border-radius: 6px             ;
+		background: var(--nav-bg)      ;
+		color:                         #fff;
+		font-size: 1rem                ;
+		cursor: pointer                ;
 	}
 </style>
 
@@ -421,14 +421,14 @@ import Goldenratio2 from "../assets/goldenratiooverlay.jpg";
 	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
 		btn.addEventListener("click", () => {
 			const id = btn.getAttribute("data-open-dialog");
-			const dlg = id ? document.getElementById(id) : null;
-			if (dlg instanceof HTMLDialogElement) dlg.showModal();
-		});
-	});
+			const dlg = id ? document.getElementById(id) : null                                 ;
+			if (dlg instanceof HTMLDialogElement) dlg.showModal()                               ;
+		})                                                                                   ;
+	})                                                                                    ;
 	document.querySelectorAll<HTMLDialogElement>("dialog.info-dialog").forEach((dlg) => {
-		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close());
+		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close())     ;
 		dlg.addEventListener("click", (e) => {
-			if (e.target === dlg) dlg.close();
-		});
-	});
+			if (e.target === dlg) dlg.close()                                                   ;
+		})                                                                                   ;
+	})                                                                                    ;
 </script>
