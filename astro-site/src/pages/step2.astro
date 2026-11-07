@@ -25,7 +25,7 @@ import HistogramGlyph from "../components/academy/glyphs/HistogramGlyph.astro";
 			This step will "Focus" on focusing. Where and when to focus, how to focus
 			and recompose your image, what focus area and metering mode to use. Paired
 			with this are discussions on white balance, exposure compensation,
-			bracketing and something called a histogram. Lets discuss focusing first.
+			bracketing and something called a histogram. Let's discuss focusing first.
 		</p>
 
 		<p class="deck-hint">Tap a card to explore it.</p>
@@ -336,114 +336,114 @@ import HistogramGlyph from "../components/academy/glyphs/HistogramGlyph.astro";
 
 <style>
 	.step-article {
-		font-size: 1em;
-		margin-top: 2em;
-		min-height: 60vh;
+		font-size: 1em    ;
+		margin-top: 2em   ;
+		min-height: 60vh  ;
 	}
 	.step-article p {
-		font-size: 1.15em;
+		font-size: 1.15em ;
 	}
 
 	.deck-hint {
-		text-align: center;
-		color: #5b636b;
-		font-size: 1em;
-		margin-top: 1.5em;
+		text-align: center ;
+		color:             #5b636b;
+		font-size: 1em     ;
+		margin-top: 1.5em  ;
 	}
 
 	/* The two parent cards (Focus, Metering) — side by side, stacking on phones. */
 	.concept-deck {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		max-width: 34rem;
-		margin: 0.5rem auto 2.5rem;
+		display: grid                                                                     ;
+		grid-template-columns: repeat(2, 1fr)                                             ;
+		gap: 1.25rem                                                                      ;
+		max-width: 34rem                                                                  ;
+		margin: 0.5rem auto 2.5rem                                                        ;
 	}
 	@media (max-width: 560px) {
 		.concept-deck {
-			grid-template-columns: 1fr;
-			max-width: 22rem;
+			grid-template-columns: 1fr                                                       ;
+			max-width: 22rem                                                                 ;
 		}
 	}
 
 	/* Nested child-card decks inside a parent modal. auto-fit lets the 2-card
-	   Focus deck and the 4-card Metering deck both wrap sensibly. */
+	 Focus deck and the 4-card Metering deck both wrap sensibly. */
 	.nested-deck {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-		gap: 0.75rem;
-		margin: 1.5rem 0 0.5rem;
+		display: grid                                                             ;
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))               ;
+		gap: 0.75rem                                                              ;
+		margin: 1.5rem 0 0.5rem                                                   ;
 	}
 
-	/* Centered option lists (were bold paragraphs; now semantic). */
+	/* Centered option lists (were bold paragraphs ; now semantic). */
 	.step-article p.center-bold {
-		font-weight: bold;
-		text-align: center;
+		font-weight: bold                             ;
+		text-align: center                            ;
 	}
 
 	/* Dialog copy. */
 	.info-dialog p.spaced {
-		margin-top: 1.25em;
+		margin-top: 1.25em                   ;
 	}
 	.info-dialog p.center-bold {
-		font-weight: bold;
-		text-align: center;
+		font-weight: bold                    ;
+		text-align: center                   ;
 	}
 	/* Italic red cell-phone callouts. */
 	.info-dialog p.italic {
-		font-style: italic;
-		color: #e00000;
+		font-style: italic                   ;
+		color:                               #e00000;
 	}
 
 	.info-dialog {
-		max-width: min(75ch, 90vw);
-		max-height: 85vh;
-		overflow: auto;
-		border: 1px solid #ccc;
-		border-radius: 6px;
-		padding: 1.5rem;
-		line-height: 1.6;
+		max-width: min(75ch, 90vw)     ;
+		max-height: 85vh               ;
+		overflow: auto                 ;
+		border: 1px solid              #ccc;
+		border-radius: 6px             ;
+		padding: 1.5rem                ;
+		line-height: 1.6               ;
 	}
 	.info-dialog::backdrop {
-		background: rgba(0, 0, 0, 0.5);
+		background: rgba(0, 0, 0, 0.5) ;
 	}
 	.info-dialog h2 {
-		margin-top: 0;
+		margin-top: 0                  ;
 	}
 	.info-dialog h3 {
-		margin-bottom: 0.25rem;
+		margin-bottom: 0.25rem         ;
 	}
 	.dialog-close {
-		margin-top: 1rem;
-		padding: 0.5rem 1.1rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--nav-bg);
-		color: #fff;
-		font-size: 1rem;
-		cursor: pointer;
+		margin-top: 1rem               ;
+		padding: 0.5rem 1.1rem         ;
+		border: none                   ;
+		border-radius: 6px             ;
+		background: var(--nav-bg)      ;
+		color:                         #fff;
+		font-size: 1rem                ;
+		cursor: pointer                ;
 	}
 </style>
 
 <script>
 	// Open the matching <dialog> from its trigger button. The parent cards live
-	// on the page; the child cards live inside a parent dialog. Opening a child
+	// on the page                                                                  ; the child cards live inside a parent dialog. Opening a child
 	// with showModal() while the parent stays open stacks it on top, so closing
 	// the child reveals the parent still open underneath.
 	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
 		btn.addEventListener("click", () => {
 			const id = btn.getAttribute("data-open-dialog");
-			const dlg = id ? document.getElementById(id) : null;
-			if (dlg instanceof HTMLDialogElement) dlg.showModal();
-		});
-	});
+			const dlg = id ? document.getElementById(id) : null                           ;
+			if (dlg instanceof HTMLDialogElement) dlg.showModal()                         ;
+		})                                                                             ;
+	})                                                                              ;
 
 	// Close buttons, plus click-on-backdrop to dismiss (native <dialog> already
 	// handles Esc and focus trapping for us).
 	document.querySelectorAll<HTMLDialogElement>("dialog.info-dialog").forEach((dlg) => {
-		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close());
+		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close())     ;
 		dlg.addEventListener("click", (e) => {
-			if (e.target === dlg) dlg.close();
-		});
-	});
+			if (e.target === dlg) dlg.close()                                                   ;
+		})                                                                                   ;
+	})                                                                                    ;
 </script>
