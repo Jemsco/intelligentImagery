@@ -12,7 +12,7 @@ import isoScale from "../assets/ISOscale1.jpg";
 import fStops from "../assets/fStops.png";
 
 // Popup copy carried over verbatim from the old utils/constants/ModalContent.js
-// (was rendered with react-modal; now shown in a native <dialog>).
+// (was rendered with react-modal                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ; now shown in a native <dialog>).
 const ISO_TEXT =
 	"When light from an image falls on a camera sensor it is collected by a matrix of small potential wells called pixels. In each pixel there will be a light sensitive element which can sense how many photons have arrived at that particular location. The image is divided into these small discrete pixels. The information from these photosites is collected, organized, and transferred to a monitor to be displayed. As the charge output from each location is proportional to the intensity of light falling onto it, it becomes possible to reproduce the scene as the photographer originally saw it. ISO settings have a direct influence on the amplifier before the analogue-to-digital converter (ADC): high ISO numbers give more amplification, while low ISO numbers give less amplification. The camera sensor itself always maintains the same degree of sensitivity; only the level of amplification changes. Analog-to-digital conversion is an electronic process in which a continuously variable (analog) signal is changed, without altering its essential content, into a multi-level (digital) signal.";
 const ASA_TEXT =
@@ -189,7 +189,7 @@ const ASA_TEXT =
 		<p class="center">1/2 1/2.8 1/4 1/5.6 1/8 1/11 1/16 1/22</p>
 		<p>
 			It should make more sense now that if you have 1/2 of something you have
-			more than if you have 1/8 th of something. So If you use an aperture of 2
+			more than if you have 1/8th of something. So If you use an aperture of 2
 			(1/2) you are letting in more light because the hole is bigger than an
 			aperture of 8 (1/8). In the field, you may often hear others refer to these
 			as F numbers. (f2 or f5.6) You can think of the F as referring to the word
@@ -242,7 +242,7 @@ const ASA_TEXT =
 			blur are hummingbird wings or leaves on trees on a windy day for outdoors
 			and fast moving pets or concerts for indoors. Shutter speed numbers are
 			measured in seconds and can and often are in fractions. You will hear
-			others refer to these as fractions in the field. 1 250th (pronounced one
+			others refer to these as fractions in the field. 1/250th (pronounced one
 			two fiftieth) for example. Starting at 1 second it should be easy to move to
 			slower shutter speeds of 2, 3, or 4 seconds. Speeding up the shutter is
 			where we encounter fractions. From 1 second we go to 1/2 1/3 1/4 1/8 1/15
@@ -270,130 +270,130 @@ const ASA_TEXT =
 
 <style>
 	.step {
-		padding: 0.5em;
-		font-size: 1.15em;
+		padding: 0.5em                                                        ;
+		font-size: 1.15em                                                     ;
 	}
 	.step p {
-		margin: 1em 15px;
+		margin: 1em 15px                                                      ;
 	}
 	.center {
-		text-align: center;
+		text-align: center                                                    ;
 	}
 	.bold {
-		font-weight: bold;
+		font-weight: bold                                                     ;
 	}
 	.subnote {
-		font-weight: normal;
-		font-size: 0.7em;
+		font-weight: normal                                                   ;
+		font-size: 0.7em                                                      ;
 	}
 	/* Red mobile-device callout, from the old Italic styled-component. */
 	.note {
-		font-style: italic;
-		color: #e00000;
-		font-size: 0.95em;
+		font-style: italic                                                    ;
+		color:                                                                #e00000;
+		font-size: 0.95em                                                     ;
 	}
 
 	.deck-hint {
-		text-align: center;
-		color: #5b636b;
-		font-size: 0.95em;
-		margin-top: 1.5em;
+		text-align: center ;
+		color:             #5b636b;
+		font-size: 0.95em  ;
+		margin-top: 1.5em  ;
 	}
 
 	/* The three exposure-element cards. Three across on wider screens,
-	   stacking to a single column on phones. */
+	 stacking to a single column on phones. */
 	.concept-deck {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-		margin: 0.5rem 10px 2rem;
+		display: grid                                                      ;
+		grid-template-columns: repeat(3, 1fr)                              ;
+		gap: 1rem                                                          ;
+		margin: 0.5rem 10px 2rem                                           ;
 	}
 	@media (max-width: 720px) {
 		.concept-deck {
-			grid-template-columns: 1fr;
-			max-width: 22rem;
-			margin-left: auto;
-			margin-right: auto;
+			grid-template-columns: 1fr                                        ;
+			max-width: 22rem                                                  ;
+			margin-left: auto                                                 ;
+			margin-right: auto                                                ;
 		}
 	}
 
 	.quiz-link {
-		margin-top: 1.5em;
+		margin-top: 1.5em ;
 	}
 
 	.img-triangle {
-		max-width: 100%;
-		height: auto;
+		max-width: 100%            ;
+		height: auto               ;
 	}
 	@media (min-width: 650px) {
 		.img-triangle {
-			max-width: 60%;
+			max-width: 60%            ;
 		}
 	}
 
 	/* Images inside the lesson dialogs. */
 	.img-iso,
 	.img-fstops {
-		max-width: 100%;
-		height: auto;
+		max-width: 100%                        ;
+		height: auto                           ;
 	}
 	.img-canister {
-		float: right;
-		max-width: 30%;
-		height: auto;
-		margin: 0 0 5px 10px;
+		float: right                           ;
+		max-width: 30%                         ;
+		height: auto                           ;
+		margin: 0 0 5px 10px                   ;
 	}
 
 	/* Buttons that open the ISO / ASA explainer dialogs. */
 	.modal-buttons {
-		display: flex;
-		justify-content: space-evenly;
-		flex-wrap: wrap;
-		gap: 1rem;
-		margin: 1.5em 10px;
+		display: flex                                           ;
+		justify-content: space-evenly                           ;
+		flex-wrap: wrap                                         ;
+		gap: 1rem                                               ;
+		margin: 1.5em 10px                                      ;
 	}
 	.modal-btn {
-		background: transparent;
-		border: 1px solid #0905f5;
-		color: #0905f5;
-		border-radius: 6px;
-		padding: 0.5rem 0.9rem;
-		font-size: 1rem;
-		cursor: pointer;
+		background: transparent                                 ;
+		border: 1px solid                                       #0905f5;
+		color:                                                  #0905f5;
+		border-radius: 6px                                      ;
+		padding: 0.5rem 0.9rem                                  ;
+		font-size: 1rem                                         ;
+		cursor: pointer                                         ;
 	}
 	.modal-btn:hover,
 	.modal-btn:focus-visible {
-		background: #0905f5;
-		color: #fff;
+		background:                                             #0905f5;
+		color:                                                  #fff;
 	}
 
 	.info-dialog {
-		max-width: min(75ch, 90vw);
-		max-height: 85vh;
-		overflow: auto;
-		border: 1px solid #ccc;
-		border-radius: 6px;
-		padding: 1.5rem;
-		line-height: 1.6;
+		max-width: min(75ch, 90vw)     ;
+		max-height: 85vh               ;
+		overflow: auto                 ;
+		border: 1px solid              #ccc;
+		border-radius: 6px             ;
+		padding: 1.5rem                ;
+		line-height: 1.6               ;
 	}
 	.info-dialog::backdrop {
-		background: rgba(0, 0, 0, 0.5);
+		background: rgba(0, 0, 0, 0.5) ;
 	}
 	.info-dialog h2 {
-		margin-top: 0;
+		margin-top: 0                  ;
 	}
 	.info-dialog p {
-		margin: 1em 0;
+		margin: 1em 0                  ;
 	}
 	.dialog-close {
-		margin-top: 1rem;
-		padding: 0.5rem 1.1rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--nav-bg);
-		color: #fff;
-		font-size: 1rem;
-		cursor: pointer;
+		margin-top: 1rem               ;
+		padding: 0.5rem 1.1rem         ;
+		border: none                   ;
+		border-radius: 6px             ;
+		background: var(--nav-bg)      ;
+		color:                         #fff;
+		font-size: 1rem                ;
+		cursor: pointer                ;
 	}
 </style>
 
@@ -403,17 +403,17 @@ const ASA_TEXT =
 	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
 		btn.addEventListener("click", () => {
 			const id = btn.getAttribute("data-open-dialog");
-			const dlg = id ? document.getElementById(id) : null;
-			if (dlg instanceof HTMLDialogElement) dlg.showModal();
-		});
-	});
+			const dlg = id ? document.getElementById(id) : null                           ;
+			if (dlg instanceof HTMLDialogElement) dlg.showModal()                         ;
+		})                                                                             ;
+	})                                                                              ;
 
 	// Close buttons, plus click-on-backdrop to dismiss (native <dialog> already
 	// handles the Esc key and focus trapping for us).
 	document.querySelectorAll<HTMLDialogElement>("dialog.info-dialog").forEach((dlg) => {
-		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close());
+		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close())     ;
 		dlg.addEventListener("click", (e) => {
-			if (e.target === dlg) dlg.close();
-		});
-	});
+			if (e.target === dlg) dlg.close()                                                   ;
+		})                                                                                   ;
+	})                                                                                    ;
 </script>

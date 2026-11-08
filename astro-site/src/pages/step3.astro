@@ -40,11 +40,13 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 			painting on a canvas, images are painted by capturing light on film or a
 			digital sensor. Simply put, no light, no image. Dark objects absorb more
 			light and reflect less to the camera, so they look dark. Bright objects
-			reflect more light and look brighter. The difference between the two is
-			considered the dynamic range. Ansel Adams put these darks and lights into
-			zones. He considered 10 zones for each scene. For most photography, zone 3
-			or III to zone 7 or VII are of most concern. Anything darker or lighter than
-			items in those zones will come out looking all black or all white. Colors
+			reflect more light and look brighter. The difference between these highlights
+			and shadows is known as the dynamic range. Ansel Adams famously mapped these
+			tonal values into 11 distinct exposure zones, spanning from Zone 0 for
+			absolute black up to Zone X for pure white. For practical everyday photography,
+			Zones III through VII are the most critical                                       ; these middle zones capture the
+			vital textures and details of a scene, whereas anything falling outside of
+			them risks clipping into solid black or pure white. Colors
 			too can be placed in these zones but colors are defined by wavelengths and
 			frequencies of the light.
 		</p>
@@ -105,24 +107,23 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 			you in the shade or a covered area? There are options that can be used to
 			overcome the intensity of the available light. Too much light and you will
 			need to change your aperture or shutter speed or lower your ISO setting. a
-			smaller aperture (bigger number f11 or f16) or a faster shutter speed will
+			smaller aperture (bigger number f/11 or f/16) or a faster shutter speed will
 			let in less light and a lower ISO will be less sensitive to light. There
 			might be times when you will adjust all 3 and you will still have too much
 			light for the image you want to make. There are filters that you can add to
 			the end of your lens that can decrease the amount of light. Discussion on
-			filters is beyond this steps scope. The opposite of too much light is a scene
+			filters is beyond this step's scope. The opposite of too much light is a scene
 			where there isn't enough. These often require a tripod to allow the shutter
 			to be open for a longer period of time than can be held steady by your hand.
 			You can add light to the scene using artificial light such as a flash unit or
-			a reflecting panel. You can also control the light's intensity by controlling
-			the distance of the light source from the subject. Light falls off at the
-			square of the distance. Meaning moving twice as far away from the light, or
-			doubling the distance between you and the light will result in 1/4 as much
-			light. This is known as the inverse-square law. If you double the distance
-			again so that you are 4 times as far away from the light, you will have
-			1/16th the amount of light. Of course the opposite of this is true too. If
-			you cut the distance between the camera and the light by half, you will have
-			4 times more light.
+			a reflecting panel. You can control light intensity by adjusting the distance
+			between the light source and your subject. Because light falls off at the
+			square of the distance, a principle known as the inverse-square law, doubling that
+			distance cuts the available light to just 1/4 of its original power. Double that
+			distance again to stand four times farther away, and the light drops to a mere
+			1/16th. Fortunately, the math works in your favor when you move closer: cutting the
+			distance between the light and your subject in half multiplies the light
+			intensity by four.
 		</p>
 		<button type="button" class="dialog-close">Close</button>
 	</dialog>
@@ -176,7 +177,7 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 			Good for transparent objects or to outline a subject think silhouettes.
 		</p>
 		<div class="dialog-figs">
-		
+
 			<Image
 				src={Backlit3}
 				alt="Silhouette of the Dugald Stewart Monument on Calton Hill with the sun bursting through an arch"
@@ -184,9 +185,7 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 		</div>
 		<p>
 			The Dugald Stewart Monument on Calton Hill in Edinburgh Scotland is in
-			silhouette with the sun bursting through an arch. The snowy owl is also
-			backlit, taken in the early morning but uses ambient light to fill in the
-			foreground.
+			silhouette with the sun bursting through an arch.
 		</p>
 		<button type="button" class="dialog-close">Close</button>
 	</dialog>
@@ -220,7 +219,7 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 			image to occupy.
 		</p>
 		<div class="dialog-figs">
-			
+
 			<Image
 				src={SideLit2}
 				alt="Child running around a fountain with a shadow cast to the left by a side light source"
@@ -255,9 +254,9 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 		<h3>The color of light</h3>
 		<p>
 			Different light sources emit different colors. This is called color
-			temperature, which is measured in Kelvins. Higher tempertures will give a
+			temperature, which is measured in Kelvins. Higher temperatures will give a
 			warmer tone or a golden hue to your image while lower kelvin numbers, lower
-			tempertures in light not in air, will result in cooler or more blue colored
+			temperatures in light not in air, will result in cooler or more blue colored
 			images. This may or may not be desireable and changing the white balance
 			setting in your camera can compensate for these different color temperatures
 			or colors of light. It's also fun to change the white balance settings to be
@@ -290,115 +289,115 @@ import SideLit2 from "../assets/20180324_2412_DSC0133.jpg";
 
 <style>
 .pie-heading {
-	font-size: 2.5rem;
-	font-weight: bold;
-	text-align: center;
+	font-size: 2.5rem    ;
+	font-weight: bold    ;
+	text-align: center   ;
 }
 	.step-article {
-		font-size: 1em;
-		margin-top: 2em;
-		min-height: 60vh;
+		font-size: 1em      ;
+		margin-top: 2em     ;
+		min-height: 60vh    ;
 	}
 	.body-text {
-		font-size: 1.15em;
+		font-size: 1.15em   ;
 	}
 	.spaced {
-		margin-top: 20px;
+		margin-top: 20px    ;
 	}
 	.step-article h2 {
-		font-size: 1.25em;
-		clear: both;
-		margin-top: 20px;
+		font-size: 1.25em   ;
+		clear: both         ;
+		margin-top: 20px    ;
 	}
 	.centered {
-		text-align: center;
-		margin-bottom: 20px;
+		text-align: center  ;
+		margin-bottom: 20px ;
 	}
 
 	/* The three property cards (Intensity, Direction, Quality). */
 	.concept-deck {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-		gap: 1.25rem;
-		max-width: 48rem;
-		margin: 0.5rem auto 1.25rem;
+		display: grid                                                  ;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))    ;
+		gap: 1.25rem                                                   ;
+		max-width: 48rem                                               ;
+		margin: 0.5rem auto 1.25rem                                    ;
 	}
 
 	/* Nested child-card deck inside the Direction dialog. */
 	.nested-deck {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-		gap: 0.75rem;
-		margin: 1.5rem 0 0.5rem;
+		display: grid                                               ;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) ;
+		gap: 0.75rem                                                ;
+		margin: 1.5rem 0 0.5rem                                     ;
 	}
 
 	/* Lesson dialogs. */
 	.info-dialog {
-		max-width: min(72ch, 90vw);
-		max-height: 85vh;
-		overflow: auto;
-		border: 1px solid #ccc;
-		border-radius: 6px;
-		padding: 1.5rem;
-		line-height: 1.6;
+		max-width: min(72ch, 90vw)     ;
+		max-height: 85vh               ;
+		overflow: auto                 ;
+		border: 1px solid              #ccc;
+		border-radius: 6px             ;
+		padding: 1.5rem                ;
+		line-height: 1.6               ;
 	}
 	.info-dialog::backdrop {
-		background: rgba(0, 0, 0, 0.5);
+		background: rgba(0, 0, 0, 0.5) ;
 	}
 	.info-dialog h2 {
-		margin-top: 0;
+		margin-top: 0                  ;
 	}
 	.info-dialog h3 {
-		margin-bottom: 0.25rem;
+		margin-bottom: 0.25rem         ;
 	}
 	.info-dialog p {
-		font-size: 1.05em;
+		font-size: 1.05em              ;
 	}
 
 	/* Photos inside a lesson dialog: unfloated, centered, capped. */
 	.dialog-figs {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.75rem;
-		margin: 1rem 0;
+		display: flex                                                    ;
+		flex-wrap: wrap                                                  ;
+		justify-content: center                                          ;
+		gap: 0.75rem                                                     ;
+		margin: 1rem 0                                                   ;
 	}
 	.dialog-figs :global(img) {
-		flex: 1 1 220px;
-		max-width: 100%;
-		height: auto;
-		border-radius: 4px;
+		flex: 1 1 220px                                                  ;
+		max-width: 100%                                                  ;
+		height: auto                                                     ;
+		border-radius: 4px                                               ;
 	}
 
 	.dialog-close {
-		margin-top: 1rem;
-		padding: 0.5rem 1.1rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--nav-bg);
-		color: #fff;
-		font-size: 1rem;
-		cursor: pointer;
+		margin-top: 1rem          ;
+		padding: 0.5rem 1.1rem    ;
+		border: none              ;
+		border-radius: 6px        ;
+		background: var(--nav-bg) ;
+		color:                    #fff;
+		font-size: 1rem           ;
+		cursor: pointer           ;
 	}
 </style>
 
 <script>
 	// Open the matching <dialog> from any trigger button. A child card inside the
 	// Direction dialog opens with showModal() while the parent stays open, stacking
-	// on top; closing the child returns to the Direction dialog (as in Steps 1 & 2).
+	// on top                                                                        ; closing the child returns to the Direction dialog (as in Steps 1 & 2).
 	document.querySelectorAll<HTMLElement>("[data-open-dialog]").forEach((btn) => {
 		btn.addEventListener("click", () => {
 			const id = btn.getAttribute("data-open-dialog");
-			const dlg = id ? document.getElementById(id) : null;
-			if (dlg instanceof HTMLDialogElement) dlg.showModal();
-		});
-	});
+			const dlg = id ? document.getElementById(id) : null                            ;
+			if (dlg instanceof HTMLDialogElement) dlg.showModal()                          ;
+		})                                                                              ;
+	})                                                                               ;
 
 	// Close buttons + click-on-backdrop (native <dialog> handles Esc / focus trap).
 	document.querySelectorAll<HTMLDialogElement>("dialog.info-dialog").forEach((dlg) => {
-		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close());
+		dlg.querySelector(".dialog-close")?.addEventListener("click", () => dlg.close())     ;
 		dlg.addEventListener("click", (e) => {
-			if (e.target === dlg) dlg.close();
-		});
-	});
+			if (e.target === dlg) dlg.close()                                                   ;
+		})                                                                                   ;
+	})                                                                                    ;
 </script>

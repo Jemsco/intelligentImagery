@@ -23,150 +23,151 @@ const nameTest = /[A-Za-z]{1}[A-Za-z]/;
 const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
 export default function ContactForm() {
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-	const [nameError, setNameError] = useState("");
-	const [emailError, setEmailError] = useState("");
-	const [messageError, setMessageError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [messageError, setMessageError] = useState("");
 
-	const [status, setStatus] = useState("Submit");
-	const [statusMessage, setStatusMessage] = useState("");
+  const [status, setStatus] = useState("Submit");
+  const [statusMessage, setStatusMessage] = useState("");
 
-	// Validate everything and reflect results in state. Returns overall validity
-	// synchronously so the submit handler doesn't depend on a state update.
-	const validate = () => {
-		const nameOk = nameTest.test(name);
-		const emailOk = emailTest.test(email);
-		const messageOk = message.trim().length > 0;
+  // Validate everything and reflect results in state. Returns overall validity
+  // synchronously so the submit handler doesn't depend on a state update.
+  const validate = () => {
+    const nameOk = nameTest.test(name);
+    const emailOk = emailTest.test(email);
+    const messageOk = message.trim().length > 0;
 
-		setNameError(nameOk ? "" : "Please enter a name.");
-		setEmailError(emailOk ? "" : "Please enter a valid email address.");
-		setMessageError(messageOk ? "" : "Please enter your message.");
+    setNameError(nameOk ? "" : "Please enter a name.");
+    setEmailError(emailOk ? "" : "Please enter a valid email address.");
+    setMessageError(messageOk ? "" : "Please enter your message.");
 
-		return nameOk && emailOk && messageOk;
-	};
+    return nameOk && emailOk && messageOk;
+  };
 
-	const handleNameBlur = () =>
-		setNameError(nameTest.test(name) ? "" : "Please enter a name.");
+  const handleNameBlur = () =>
+    setNameError(nameTest.test(name) ? "" : "Please enter a name.");
 
-	const handleEmailBlur = () =>
-		setEmailError(
-			emailTest.test(email) ? "" : "Please enter a valid email address."
-		);
+  const handleEmailBlur = () =>
+    setEmailError(
+      emailTest.test(email) ? "" : "Please enter a valid email address.",
+    );
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-		if (!validate()) {
-			setStatusMessage("Please correct the errors above.");
-			return;
-		}
-		setStatusMessage("");
-		setStatus("Sending…");
+    if (!validate()) {
+      setStatusMessage("Please correct the errors above.");
+      return;
+    }
+    setStatusMessage("");
+    setStatus("Sending…");
 
-		try {
-			const response = await fetch(ENDPOINT, {
-				method: "POST",
-				headers: { "Content-Type": "application/json;charset=utf-8" },
-				body: JSON.stringify({ name, email, desc: message }),
-			});
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json;charset=utf-8" },
+        body: JSON.stringify({ name, email, desc: message }),
+      });
 
-			setStatus("Submit");
-			if (response.ok) {
-				setStatusMessage("Thank you! Your message was sent successfully.");
-				setName("");
-				setEmail("");
-				setMessage("");
-			} else {
-				setStatusMessage(
-					"Sorry, something went wrong sending your message. Please try again."
-				);
-			}
-		} catch {
-			setStatus("Submit");
-			setStatusMessage(
-				"Network error — please check your connection and try again."
-			);
-		}
-	};
+      setStatus("Submit");
+      if (response.ok) {
+        setStatusMessage("Thank you! Your message was sent successfully.");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setStatusMessage(
+          "Sorry, something went wrong sending your message. Please try again.",
+        );
+      }
+    } catch {
+      setStatus("Submit");
+      setStatusMessage(
+        "Network error — please check your connection and try again.",
+      );
+    }
+  };
 
-	return (
-		<form className="cf-form" onSubmit={handleSubmit} noValidate>
-			<p className="cf-lead">Let&apos;s talk</p>
+  return (
+    <form className="cf-form" onSubmit={handleSubmit} noValidate>
+      <p className="cf-lead">Let&apos;s talk</p>
 
-			<div className="cf-field">
-				<input
-					className={`cf-input${nameError ? " cf-input--error" : ""}`}
-					type="text"
-					name="name"
-					id="cf-name"
-					placeholder=" "
-					autoComplete="name"
-					value={name}
-					aria-invalid={nameError ? "true" : undefined}
-					aria-describedby="cf-name-error"
-					onBlur={handleNameBlur}
-					onChange={(e) => setName(e.target.value)}
-				/>
-				<label className="cf-label" htmlFor="cf-name">
-					Name
-				</label>
-				<span className="cf-error" id="cf-name-error" aria-live="polite">
-					{nameError}
-				</span>
-			</div>
+      <div className="cf-field">
+        <input
+          className={`cf-input${nameError ? " cf-input--error" : ""}`}
+          type="text"
+          name="name"
+          id="cf-name"
+          placeholder=" "
+          autoComplete="name"
+          value={name}
+          aria-invalid={nameError ? "true" : undefined}
+          aria-describedby="cf-name-error"
+          onBlur={handleNameBlur}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <label className="cf-label" htmlFor="cf-name">
+          Name
+        </label>
+        <span className="cf-error" id="cf-name-error" aria-live="polite">
+          {nameError}
+        </span>
+      </div>
 
-			<div className="cf-field">
-				<input
-					className={`cf-input${emailError ? " cf-input--error" : ""}`}
-					type="email"
-					name="email"
-					id="cf-email"
-					placeholder=" "
-					autoComplete="email"
-					value={email}
-					aria-invalid={emailError ? "true" : undefined}
-					aria-describedby="cf-email-error"
-					onBlur={handleEmailBlur}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-				<label className="cf-label" htmlFor="cf-email">
-					Email
-				</label>
-				<span className="cf-error" id="cf-email-error" aria-live="polite">
-					{emailError}
-				</span>
-			</div>
+      <div className="cf-field">
+        <input
+          className={`cf-input${emailError ? " cf-input--error" : ""}`}
+          type="email"
+          name="email"
+          id="cf-email"
+          placeholder=" "
+          autoComplete="email"
+          value={email}
+          aria-invalid={emailError ? "true" : undefined}
+          aria-describedby="cf-email-error"
+          onBlur={handleEmailBlur}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="cf-label" htmlFor="cf-email">
+          Email
+        </label>
+        <span className="cf-error" id="cf-email-error" aria-live="polite">
+          {emailError}
+        </span>
+      </div>
 
-			<div className="cf-field">
-				<textarea
-					className={`cf-textarea${messageError ? " cf-input--error" : ""}`}
-					id="cf-message"
-					name="message"
-					rows="4"
-					placeholder="Enter your message"
-					value={message}
-					aria-invalid={messageError ? "true" : undefined}
-					aria-describedby="cf-message-error"
-					onChange={(e) => setMessage(e.target.value)}
-				/>
-				<label className="cf-label cf-label--static" htmlFor="cf-message">
-					Message
-				</label>
-				<span className="cf-error" id="cf-message-error" aria-live="polite">
-					{messageError}
-				</span>
-			</div>
+      <div className="cf-field">
+        <label className="cf-label cf-label--static" htmlFor="cf-message">
+          Message
+        </label>
+        <textarea
+          className={`cf-textarea${messageError ? " cf-input--error" : ""}`}
+          id="cf-message"
+          name="message"
+          rows="4"
+          placeholder="Enter your message"
+          value={message}
+          aria-invalid={messageError ? "true" : undefined}
+          aria-describedby="cf-message-error"
+          onChange={(e) => setMessage(e.target.value)}
+        />
 
-			<button className="cf-button" type="submit">
-				{status}
-			</button>
+        <span className="cf-error" id="cf-message-error" aria-live="polite">
+          {messageError}
+        </span>
+      </div>
 
-			<p className="cf-status" role="status" aria-live="polite">
-				{statusMessage}
-			</p>
-		</form>
-	);
+      <button className="cf-button" type="submit">
+        {status}
+      </button>
+
+      <p className="cf-status" role="status" aria-live="polite">
+        {statusMessage}
+      </p>
+    </form>
+  );
 }
