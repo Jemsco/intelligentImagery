@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LogoLoop from "../components/LogoLoop.astro";
+---
+
+<BaseLayout
+	title="Intelligent Imagery"
+	description="Photography education, nature and landscape photography by Jay Brass, and step-by-step guides for creating stronger images."
+>
+	<section class="home">
+	<h1 class="page-title">
+			<span>Lost in the frame?</span>
+		</h1>
+		<p class="home-intro">
+
+We couldn't find the page you're looking for.
+
+Perhaps the page moved, the address was entered incorrectly, or the photograph you're looking for has wandered off.
+
+Where would you like to go?
+</p>
+<p>
+<ul class="feature">
+<li><a href="/">Return to the homepage</a></li>
+<li><a href="/gallery/">Explore the galleries</a></li>
+<li><a href="/blog/">Read the blog</a></li>
+</ul>
+</p>
+<p class="home-intro">
+Sometimes getting lost is part of the journey. Finding your way back shouldn't be.	</p>
+<div class="logo-slot">
+<LogoLoop />
+</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.home {
+		max-width: 1200px ;
+		margin: 0 auto    ;
+		padding: 1rem     ;
+	}
+
+	.page-title {
+		margin: 1rem auto                   ;
+		text-align: center                  ;
+		font-size: clamp(2rem, 5vw, 3.5rem) ;
+		line-height: 1.15                   ;
+	}
+
+	.page-title span {
+		display: block    ;
+	}
+
+	.page-title em {
+		font-weight: 600 ;
+	}
+
+	.home-intro {
+		max-width: 850px                      ;
+		margin: 1.5rem auto 2rem              ;
+		text-align: center                    ;
+		font-size: clamp(1.1rem, 2vw, 1.3rem) ;
+		line-height: 1.6                      ;
+	}
+
+	.hero {
+		margin: 2rem 0 3rem ;
+		text-align: center  ;
+	}
+
+	.feature {
+display: flex                           ;
+flex-direction: column                  ;
+align-items: center                     ;
+gap: 1rem                               ;
+margin: 2rem auto                       ;
+padding: 0                              ;
+list-style: none                        ;
+text-align: center                      ;
+font-size: clamp(1.3rem, 2.5vw, 1.6rem) ;
+line-height: 1.5                        ;
+}
+
+.feature-content {
+	flex: 1 1 58%                            ;
+	min-width: 0                             ;
+	font-size: clamp(1.05rem, 1.5vw, 1.2rem) ;
+	line-height: 1.7                         ;
+}
+
+	.feature-content p {
+		margin: 0 0 1.25rem ;
+	}
+
+	.feature-content p:last-child {
+		margin-bottom: 0               ;
+	}
+
+	.feature-content a {
+		font-weight: inherit ;
+	}
+
+	@media (max-width: 600px) {
+	.page-title {
+		font-size: clamp(1.8rem, 8vw, 2.6rem) ;
+	}
+
+	.feature {
+		flex-direction: column ;
+		gap: 1.5rem            ;
+	}
+
+	.feature-content {
+		width: 100%              ;
+		text-align: left         ;
+	}
+.feature:hover {
+text-decoration: underline ;
+text-underline-offset: 4px ;
+}
+}
+.logo-slot {
+display: flex              ;
+justify-content: center    ;
+width: 70%                 ;
+max-width: 520px           ;
+margin: 2rem auto 0        ;
+}
+
+@media (max-width: 640px) {
+.logo-slot {
+width: 90%                  ;
+margin: 2rem auto 0         ;
+}
+}
+</style>
