@@ -9,9 +9,9 @@ import stairs from "../assets/stairs.jpg";
 const [owlImg, stairsImg] = await Promise.all([
 	getImage({ src: snowyowl, width: 1200, format: "jpg" }),
 	getImage({ src: stairs, width: 1200, format: "jpg" }),
-]);
+])                                                                                                                                          ;
 
-const abs = (src: string) => new URL(src, Astro.site).href;
+const abs = (src: string) => new URL(src, Astro.site).href                                                                                  ;
 
 const galleryLd = {
 	"@context": "https://schema.org",
@@ -33,7 +33,7 @@ const galleryLd = {
 				"A curving staircase at Watkins Glen State Park, viewed from below.",
 		},
 	],
-};
+}                                                                                                                                           ;
 ---
 
 <BaseLayout
@@ -44,7 +44,7 @@ const galleryLd = {
 	<section class="home">
 		<h1 class="page-title">
 			<span>Learn to see. Master the light.</span>
-			<span>Capture <em>your</em> world.</span>
+			<span> Capture <em>your</em> world.</span>
 		</h1>
 
 		<p class="home-intro">
@@ -96,119 +96,119 @@ const galleryLd = {
 
 <style>
 	.home {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 1rem;
+		max-width: 1200px                                                                                                                         ;
+		margin: 0 auto                                                                                                                            ;
+		padding: 1rem                                                                                                                             ;
 	}
 
 	.page-title {
-		margin: 1rem auto;
-		text-align: center;
-		font-size: clamp(2rem, 5vw, 3.5rem);
-		line-height: 1.15;
+		margin: 1rem auto                                                                                                                         ;
+		text-align: center                                                                                                                        ;
+		font-size: clamp(2rem, 5vw, 3.5rem)                                                                                                       ;
+		line-height: 1.15                                                                                                                         ;
 	}
 
 	.page-title span {
-		display: block;
+		display: block                                                                                                                            ;
 	}
 
 	.page-title em {
-		font-weight: 600;
+		font-weight: 600                                                                                                                          ;
 	}
 
 	.home-intro {
-		max-width: 850px;
-		margin: 1.5rem auto 2rem;
-		text-align: center;
-		font-size: clamp(1.1rem, 2vw, 1.3rem);
-		line-height: 1.6;
+		max-width: 850px                                                                                                                          ;
+		margin: 1.5rem auto 2rem                                                                                                                  ;
+		text-align: center                                                                                                                        ;
+		font-size: clamp(1.1rem, 2vw, 1.3rem)                                                                                                     ;
+		line-height: 1.6                                                                                                                          ;
 	}
 
 	.hero {
-		margin: 2rem 0 3rem;
-		text-align: center;
+		margin: 2rem 0 3rem                                                                                                                       ;
+		text-align: center                                                                                                                        ;
 	}
 
 	.hero-img {
-		display: inline-block;
-		width: min(75%, 900px);
-		height: auto;
+		display: inline-block                                                                                                                     ;
+		width: min(75%, 900px)                                                                                                                    ;
+		height: auto                                                                                                                              ;
 	}
 
 	.feature {
-		display: grid;
-		grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
-		align-items: center;
-		gap: clamp(2rem, 5vw, 4rem);
-		margin: 2rem auto;
+		display: grid                                                                                                                             ;
+		grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr)                                                                          ;
+		align-items: center                                                                                                                       ;
+		gap: clamp(2rem, 5vw, 4rem)                                                                                                               ;
+		margin: 2rem auto                                                                                                                         ;
 	}
 
 	.feature {
-	display: flex;
-	align-items: center;
-	gap: clamp(1.5rem, 4vw, 3.5rem);
-	max-width: 1100px;
-	margin: 2rem auto;
+	display: flex                                                                                                                              ;
+	align-items: center                                                                                                                        ;
+	gap: clamp(1.5rem, 4vw, 3.5rem)                                                                                                            ;
+	max-width: 1100px                                                                                                                          ;
+	margin: 2rem auto                                                                                                                          ;
 }
 
 .feature-image {
-	flex: 0 1 42%;
-	min-width: 0;
-	text-align: center;
+	flex: 0 1 42%                                                                                                                              ;
+	min-width: 0                                                                                                                               ;
+	text-align: center                                                                                                                         ;
 }
 
 .stairs-img {
-	display: block;
-	width: 100%;
-	max-width: 475px;
-	height: auto;
-	margin: 0 auto;
+	display: block                                                                                                                             ;
+	width: 100%                                                                                                                                ;
+	max-width: 475px                                                                                                                           ;
+	height: auto                                                                                                                               ;
+	margin: 0 auto                                                                                                                             ;
 }
 
 .feature-content {
-	flex: 1 1 58%;
-	min-width: 0;
-	font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-	line-height: 1.7;
+	flex: 1 1 58%                                                                                                                              ;
+	min-width: 0                                                                                                                               ;
+	font-size: clamp(1.05rem, 1.5vw, 1.2rem)                                                                                                   ;
+	line-height: 1.7                                                                                                                           ;
 }
 
 	.feature-content p {
-		margin: 0 0 1.25rem;
+		margin: 0 0 1.25rem                                                                                                                       ;
 	}
 
 	.feature-content p:last-child {
-		margin-bottom: 0;
+		margin-bottom: 0                                                                                                                          ;
 	}
 
 	.feature-content a {
-		font-weight: inherit;
+		font-weight: inherit                                                                                                                      ;
 	}
 
 	@media (max-width: 600px) {
 	.page-title {
-		font-size: clamp(1.8rem, 8vw, 2.6rem);
+		font-size: clamp(1.8rem, 8vw, 2.6rem)                                                                                                     ;
 	}
 
 	.hero-img {
-		width: 100%;
+		width: 100%                                                                                                                               ;
 	}
 
 	.feature {
-		flex-direction: column;
-		gap: 1.5rem;
+		flex-direction: column                                                                                                                    ;
+		gap: 1.5rem                                                                                                                               ;
 	}
 
 	.feature-image {
-		width: 100%;
+		width: 100%                                                                                                                               ;
 	}
 
 	.stairs-img {
-		max-width: 425px;
+		max-width: 425px                                                                                                                          ;
 	}
 
 	.feature-content {
-		width: 100%;
-		text-align: left;
+		width: 100%                                                                                                                               ;
+		text-align: left                                                                                                                          ;
 	}
 }
 </style>
