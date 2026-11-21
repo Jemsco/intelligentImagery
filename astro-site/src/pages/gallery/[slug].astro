@@ -8,11 +8,11 @@ const galleries = await sanityClient.fetch(`
 *[_type == "gallery" && defined(slug.current)] {
 "slug": slug.current
 }
-`)                                               ;
+`)                                               ;
 
 return galleries.map((gallery) => ({
 params: { slug: gallery.slug },
-}))                                   ;
+}))                                  ;
 }
 
 const { slug } = Astro.params ;
@@ -34,7 +34,7 @@ altText,
 }
 `,
 { slug }
-)                                                   ;
+)                                                   ;
 
 if (!gallery) {
 Astro.response.status = 404 ;
@@ -47,22 +47,22 @@ function splitIntoColumns(items, count) {
 const columns = Array.from({ length: count }, () => []) ;
 
 items.forEach((item, index) => {
-let columnIndex                   ;
+let columnIndex                  ;
 
 if (count === 3) {
 // Desktop: place the fourth image in column 2.
-const desktopOrder = [0, 1, 2, 1, 0, 2]                             ;
-columnIndex = desktopOrder[index % desktopOrder.length]                     ;
+const desktopOrder = [0, 1, 2, 1, 0, 2]                 ;
+columnIndex = desktopOrder[index % desktopOrder.length] ;
 } else if (count === 2) {
 // Tablet: alternate columns.
-columnIndex = index % 2                                     ;
+columnIndex = index % 2                                 ;
 } else {
 // Mobile: keep the original order.
-columnIndex = 0                                         ;
+columnIndex = 0                                         ;
 }
 
-columns[columnIndex].push(item)                 ;
-})                               ;
+columns[columnIndex].push(item) ;
+})                              ;
 
 return columns ;
 }
@@ -79,11 +79,11 @@ height: photo.height ?? 1067,
 alt: photo.altText || photo.title || "",
 title: photo.title || "",
 location: photo.location || "",
-}))                                               ;
+}))                                               ;
 
-const desktopColumns = splitIntoColumns(photographs, 3)   ;
-const tabletColumns = splitIntoColumns(photographs, 2)   ;
-const mobileColumns = splitIntoColumns(photographs, 1)   ;
+const desktopColumns = splitIntoColumns(photographs, 3) ;
+const tabletColumns = splitIntoColumns(photographs, 2)  ;
+const mobileColumns = splitIntoColumns(photographs, 1)  ;
 ---
 
 <BaseLayout
@@ -220,20 +220,20 @@ set:html={JSON.stringify(modalPhotos)}
 
 <style>
 .gallery-detail {
-width: min(1200px, 92%)       ;
-margin: 0 auto           ;
-padding: 2rem 0 4rem        ;
+width: min(1200px, 92%) ;
+margin: 0 auto          ;
+padding: 2rem 0 4rem    ;
 }
 
 .breadcrumb {
-margin-bottom: 1.5rem   ;
-font-size: 0.9rem     ;
+margin-bottom: 1.5rem ;
+font-size: 0.9rem     ;
 }
 
 .breadcrumb a,
 .back-link a {
-color: inherit             ;
-text-underline-offset: 3px       ;
+color: inherit             ;
+text-underline-offset: 3px ;
 }
 
 .gallery-header {
@@ -241,47 +241,47 @@ margin-bottom: 2rem ;
 }
 
 .gallery-header p {
-max-width: 700px     ;
-line-height: 1.6     ;
+max-width: 700px    ;
+line-height: 1.6    ;
 }
 
 .masonry {
-display: flex             ;
-align-items: flex-start        ;
-gap: 30px               ;
+display: flex           ;
+align-items: flex-start ;
+gap: 30px               ;
 }
 
 .masonry__col {
-display: grid      ;
-flex: 1         ;
-min-width: 0      ;
-gap: 30px        ;
+display: grid   ;
+flex: 1         ;
+min-width: 0    ;
+gap: 30px       ;
 }
 
 .masonry figure {
-min-width: 0       ;
-margin: 0         ;
+min-width: 0      ;
+margin: 0         ;
 }
 
 .masonry img {
-display: block      ;
-width: 100%        ;
-height: auto       ;
-border: 1px solid     #ddd;
+display: block    ;
+width: 100%       ;
+height: auto      ;
+border: 1px solid #ddd;
 }
 
 .masonry figcaption {
-display: flex           ;
-flex-direction: column       ;
-gap: 0.25rem            ;
-margin-top: 0.5rem         ;
-font-size: 0.9rem         ;
-line-height: 1.45         ;
+display: flex          ;
+flex-direction: column ;
+gap: 0.25rem           ;
+margin-top: 0.5rem     ;
+font-size: 0.9rem      ;
+line-height: 1.45      ;
 }
 
 .masonry--tablet,
 .masonry--mobile {
-display: none       ;
+display: none      ;
 }
 
 .back-link {
@@ -290,68 +290,68 @@ margin-top: 2.5rem ;
 
 @media (max-width: 900px) {
 .masonry--desktop {
-display: none               ;
+display: none               ;
 }
 
 .masonry--tablet {
-display: flex       ;
+display: flex      ;
 }
 
 .masonry {
-gap: 20px   ;
+gap: 20px  ;
 }
 
 .masonry__col {
-gap: 24px       ;
+gap: 24px       ;
 }
 }
 
 @media (max-width: 520px) {
 .masonry--tablet {
-display: none               ;
+display: none               ;
 }
 
 .masonry--mobile {
-display: flex       ;
+display: flex      ;
 }
 
 .masonry {
-gap: 0     ;
+gap: 0     ;
 }
 
 .masonry__col {
-gap: 28px       ;
+gap: 28px       ;
 }
 }
 
 /* ===== Lightbox ===== */
 .photo-link {
-cursor: zoom-in            ;
+cursor: zoom-in ;
 }
 
 /* Caption shown at the bottom of the PhotoSwipe viewer. */
 .pswp__custom-caption {
-position: absolute                                      ;
-left: 0                                            ;
-right: 0                                           ;
-bottom: 16px                                         ;
-display: flex                                         ;
-flex-direction: column                                    ;
-gap: 0.15rem                                         ;
-padding: 0 1rem                                        ;
-text-align: center                                      ;
-color:                                                      #fff               ;
-font-size: 0.95rem                                      ;
-line-height: 1.4                                       ;
-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6)                   ;
+position: absolute        ;
+left: 0                   ;
+right: 0                  ;
+bottom: 16px              ;
+display: flex             ;
+flex-direction: column    ;
+gap: 0.15rem              ;
+padding: 0 1rem           ;
+text-align: center        ;
+color: #fff               ;
+font-size: 0.95rem        ;
+line-height: 1.4          ;
+text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .pswp__custom-caption:empty {
-display: none                 ;
+display: none ;
 }
 
 .pswp__custom-caption span {
-opacity: 0.8                 ;
+opacity: 0.8 ;
 }
 </style>
 
@@ -363,19 +363,19 @@ opacity: 0.8                 ;
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 
 interface ModalPhoto {
-slug: string           ;
-imageUrl: string       ;
-width: number          ;
-height: number         ;
-alt: string            ;
-title: string          ;
-location: string       ;
+slug: string;
+imageUrl: string;
+width: number;
+height: number;
+alt: string;
+title: string;
+location: string;
 }
 
 const dataEl = document.getElementById("gallery-photos");
 
 if (dataEl?.textContent) {
-const photos: ModalPhoto[] = JSON.parse(dataEl.textContent) ;
+const photos: ModalPhoto[] = JSON.parse(dataEl.textContent);
 
 const lightbox = new PhotoSwipeLightbox({
 dataSource: photos.map((p) => ({
@@ -388,7 +388,7 @@ alt: p.alt,
 pswpModule: () => import("photoswipe"),
 bgOpacity: 0.95,
 loop: true,
-})                                                               ;
+});
 
 // Title / location caption pinned below each photo.
 lightbox.on("uiRegister", () => {
@@ -398,26 +398,26 @@ className: "pswp__custom-caption",
 appendTo: "root",
 onInit: (el, pswp) => {
 const update = () => {
-const photo = photos[pswp.currIndex]                 ;
-el.replaceChildren()                                 ;
+const photo = photos[pswp.currIndex];
+el.replaceChildren();
 if (photo?.title) {
 const strong = document.createElement("strong");
-strong.textContent = photo.title                     ;
-el.appendChild(strong)                               ;
+strong.textContent = photo.title;
+el.appendChild(strong);
 }
 if (photo?.location) {
 const span = document.createElement("span");
-span.textContent = photo.location                    ;
-el.appendChild(span)                                 ;
+span.textContent = photo.location;
+el.appendChild(span);
 }
-}                                                    ;
-pswp.on("change", update)                            ;
-update()                                             ;
+};
+pswp.on("change", update);
+update();
 },
-})                                                   ;
-})                                                   ;
+});
+});
 
-lightbox.init() ;
+lightbox.init();
 
 // Open the lightbox from a grid photo link.
 document
@@ -426,15 +426,15 @@ document
 link.addEventListener("click", (e) => {
 // Let modified / middle clicks fall through to the real page.
 if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
-return                                                                    ;
+return;
 }
 const slug = link.getAttribute("data-photo-slug");
-const index = photos.findIndex((p) => p.slug === slug)                    ;
-if (index === -1) return                                                  ;
-e.preventDefault()                                                        ;
-lightbox.loadAndOpen(index)                                               ;
-})                                                                        ;
-})                                                                        ;
+const index = photos.findIndex((p) => p.slug === slug);
+if (index === -1) return;
+e.preventDefault();
+lightbox.loadAndOpen(index);
+});
+});
 }
 </script>
 </BaseLayout>
