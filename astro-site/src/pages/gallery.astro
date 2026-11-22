@@ -1,145 +1,67 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CollectionGrid from "../components/CollectionGrid.astro";
 import { sanityClient } from "../lib/sanity";
 
+// Top-level galleries only. A gallery referenced as another gallery's parent
+// is a "category" and links to its own page listing child galleries; the
+// cover falls back to the first photo, or a child's first photo.
 const galleries = await sanityClient.fetch(`
-*[_type == "gallery" && defined(slug.current)] | order(title asc) {
-title,
-description,
-"slug": slug.current,
-"coverImage": photographs[0]->image.asset->url,
-"coverAlt": photographs[0]->altText
+*[_type == "gallery" && !defined(parent) && defined(slug.current)] | order(title asc) {
+  title,
+  description,
+  "slug": slug.current,
+  "isCategory": count(*[_type == "gallery" && parent._ref == ^._id]) > 0,
+  "coverImage": coalesce(
+    coverImage.asset->url,
+    photographs[0]->image.asset->url,
+    (*[_type == "gallery" && parent._ref == ^._id] | order(title asc)[0].photographs[0]->image.asset->url)
+  ),
+  "coverAlt": coalesce(photographs[0]->altText, title)
 }
-`)                                                                  ;
+`);
+
+const items = galleries.map((gallery) => ({
+  title: gallery.title,
+  description: gallery.description,
+  href: `/gallery/${gallery.slug}/`,
+  coverImage: gallery.coverImage,
+  coverAlt: gallery.coverAlt,
+  cta: gallery.isCategory ? "Explore category →" : "Explore gallery →",
+}));
 ---
 
 <BaseLayout
-title="Gallery"
-description="Explore wildlife, landscapes, and places photographed by Jay Brass."
+  title="Gallery"
+  description="Explore wildlife, landscapes, and places photographed by Jay Brass."
 >
-<main class="gallery-page">
-<header class="gallery-header">
-<h1>Gallery</h1>
-<p>
-Explore wildlife, landscapes, and places through photography.
-</p>
-</header>
+  <main class="gallery-page">
+    <header class="gallery-header">
+      <h1>Gallery</h1>
+      <p>Explore wildlife, landscapes, and places through photography.</p>
+    </header>
 
-<div class="collection-grid">
-{galleries.map((gallery) => (
-<a
-class="collection-card"
-href={`/gallery/${gallery.slug}/`}
->
-{gallery.coverImage && (
-<img
-src={gallery.coverImage}
-alt={gallery.coverAlt || gallery.title}
-loading="lazy"
-/>
-)}
+    <CollectionGrid items={items} />
+  </main>
 
-<div class="collection-info">
-<h2>{gallery.title}</h2>
-{gallery.description && (
-<p>{gallery.description}</p>
-)}
-<span class="collection-link">Explore gallery →</span>
-</div>
-</a>
-))}
-</div>
-</main>
+  <style>
+    .gallery-page {
+      width: min(1200px, 92%);
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
 
-<style>
-.gallery-page {
-width: min(1200px, 92%) ;
-margin: 0 auto          ;
-padding: 2rem 0 4rem    ;
-}
+    .gallery-header {
+      margin-bottom: 2rem;
+    }
 
-.gallery-header {
-margin-bottom: 2rem ;
-}
+    .gallery-header h1 {
+      margin-bottom: 0.5rem;
+    }
 
-.gallery-header h1 {
-margin-bottom: 0.5rem ;
-}
-
-.gallery-header p {
-max-width: 650px    ;
-line-height: 1.6    ;
-}
-
-.collection-grid {
-display: grid                                    ;
-grid-template-columns: repeat(3, minmax(0, 1fr)) ;
-gap: 1.5rem                                      ;
-}
-
-.collection-card {
-display: flex                     ;
-flex-direction: column            ;
-min-width: 0                      ;
-color: inherit                    ;
-text-decoration: none             ;
-border: 1px solid                 #ddd;
-border-radius: 4px                ;
-overflow: hidden                  ;
-transition: box-shadow 180ms ease ;
-}
-
-.collection-card:hover {
-box-shadow: 0 4px 16px rgb(0 0 0 / 12%) ;
-}
-
-.collection-card:focus-visible {
-outline: 3px solid currentColor  ;
-outline-offset: 4px              ;
-}
-
-.collection-card img {
-display: block         ;
-width: 100%            ;
-aspect-ratio: 4 / 3    ;
-object-fit: cover      ;
-}
-
-.collection-info {
-display: flex                ;
-flex: 1                      ;
-flex-direction: column       ;
-align-items: flex-start      ;
-padding: 1rem 1.1rem 1.25rem ;
-}
-
-.collection-info h2 {
-margin: 0 0 0.5rem    ;
-font-size: 1.35rem    ;
-}
-
-.collection-info p {
-margin: 0 0 1rem     ;
-line-height: 1.5     ;
-}
-
-.collection-link {
-margin-top: auto     ;
-padding-top: 0.25rem ;
-font-size: 0.95rem   ;
-font-weight: 600     ;
-}
-
-@media (max-width: 800px) {
-.collection-grid {
-grid-template-columns: repeat(2, minmax(0, 1fr)) ;
-}
-}
-
-@media (max-width: 520px) {
-.collection-grid {
-grid-template-columns: 1fr  ;
-}
-}
-</style>
+    .gallery-header p {
+      max-width: 650px;
+      line-height: 1.6;
+    }
+  </style>
 </BaseLayout>

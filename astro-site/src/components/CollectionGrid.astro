@@ -1,0 +1,111 @@
+---
+// A responsive grid of collection cards, shared by the gallery index and
+// the category pages. Each item links to a gallery or category.
+interface CollectionItem {
+  title: string;
+  description?: string;
+  href: string;
+  coverImage?: string;
+  coverAlt?: string;
+  cta?: string;
+}
+
+interface Props {
+  items: CollectionItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="collection-grid">
+  {items.map((item) => (
+    <a class="collection-card" href={item.href}>
+      {item.coverImage && (
+        <img
+          src={item.coverImage}
+          alt={item.coverAlt || item.title}
+          loading="lazy"
+        />
+      )}
+
+      <div class="collection-info">
+        <h2>{item.title}</h2>
+        {item.description && <p>{item.description}</p>}
+        <span class="collection-link">{item.cta || "Explore gallery →"}</span>
+      </div>
+    </a>
+  ))}
+</div>
+
+<style>
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .collection-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 180ms ease;
+  }
+
+  .collection-card:hover {
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  }
+
+  .collection-card:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  .collection-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .collection-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.1rem 1.25rem;
+  }
+
+  .collection-info h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.35rem;
+  }
+
+  .collection-info p {
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  .collection-link {
+    margin-top: auto;
+    padding-top: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 800px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .collection-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

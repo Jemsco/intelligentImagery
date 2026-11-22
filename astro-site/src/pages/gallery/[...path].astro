@@ -1,0 +1,321 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CollectionGrid from "../../components/CollectionGrid.astro";
+import PhotoMasonry from "../../components/PhotoMasonry.astro";
+import PhotoDetail from "../../components/PhotoDetail.astro";
+import { sanityClient } from "../../lib/sanity";
+
+// One catch-all route owns everything under /gallery/ except the index:
+//   category page   /gallery/<cat>/              -> lists child galleries
+//   leaf gallery    /gallery/<slug>/             -> masonry + lightbox
+//   nested gallery  /gallery/<cat>/<slug>/       -> masonry + lightbox
+//   photo           /gallery/<...gallery>/<photo>/
+// The view is chosen by the `type` prop set in getStaticPaths. Only one
+// level of nesting is supported; deeper children are ignored.
+export async function getStaticPaths() {
+  const galleries = await sanityClient.fetch(`
+*[_type == "gallery" && defined(slug.current)] {
+  "slug": slug.current,
+  "parentSlug": parent->slug.current,
+  "photoSlugs": photographs[]->slug.current
+}
+`);
+
+  // slug -> its own parentSlug (null for top-level). Lets us tell a valid
+  // one-level child from a grandchild (whose parent is itself a child).
+  const parentSlugBySlug = new Map(
+    galleries.map((g) => [g.slug, g.parentSlug ?? null])
+  );
+  const isTopLevel = (parentSlug) =>
+    parentSlugBySlug.has(parentSlug) && parentSlugBySlug.get(parentSlug) == null;
+
+  // Top-level galleries that have at least one valid one-level child.
+  const childrenByParent = new Map();
+  for (const g of galleries) {
+    if (g.parentSlug && isTopLevel(g.parentSlug)) {
+      const list = childrenByParent.get(g.parentSlug) ?? [];
+      list.push(g);
+      childrenByParent.set(g.parentSlug, list);
+    }
+  }
+
+  const paths = [];
+
+  for (const g of galleries) {
+    const photoSlugs = (g.photoSlugs ?? []).filter(Boolean);
+
+    if (!g.parentSlug) {
+      // Top-level: a category if it has children, otherwise a leaf gallery.
+      if (childrenByParent.has(g.slug)) {
+        paths.push({
+          params: { path: g.slug },
+          props: { type: "category", slug: g.slug },
+        });
+      } else {
+        paths.push({
+          params: { path: g.slug },
+          props: { type: "gallery", slug: g.slug, parentSlug: null },
+        });
+        for (const photoSlug of photoSlugs) {
+          paths.push({
+            params: { path: `${g.slug}/${photoSlug}` },
+            props: { type: "photo", slug: g.slug, parentSlug: null, photoSlug },
+          });
+        }
+      }
+    } else if (isTopLevel(g.parentSlug)) {
+      // Valid one-level child (always a leaf). Grandchildren are skipped.
+      const base = `${g.parentSlug}/${g.slug}`;
+      paths.push({
+        params: { path: base },
+        props: { type: "gallery", slug: g.slug, parentSlug: g.parentSlug },
+      });
+      for (const photoSlug of photoSlugs) {
+        paths.push({
+          params: { path: `${base}/${photoSlug}` },
+          props: {
+            type: "photo",
+            slug: g.slug,
+            parentSlug: g.parentSlug,
+            photoSlug,
+          },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { type, slug, parentSlug, photoSlug } = Astro.props;
+
+// Selects the right gallery even if two galleries share a slug, by also
+// matching the parent (or the absence of one).
+const galleryFilter = `slug.current == $slug && (
+  ($parentSlug == null && !defined(parent)) ||
+  parent->slug.current == $parentSlug
+)`;
+const galleryParams = { slug, parentSlug: parentSlug ?? null };
+
+const galleryPath = parentSlug
+  ? `/gallery/${parentSlug}/${slug}/`
+  : `/gallery/${slug}/`;
+
+const DEFAULT_DESCRIPTION = "Photography by Jay Brass.";
+
+let category = null;
+let children = [];
+let gallery = null;
+let photo = null;
+
+if (type === "category") {
+  category = await sanityClient.fetch(
+    `*[_type == "gallery" && slug.current == $slug && !defined(parent)][0]{ title, description }`,
+    { slug }
+  );
+  children = await sanityClient.fetch(
+    `*[_type == "gallery" && parent->slug.current == $slug && defined(slug.current)] | order(title asc){
+      title,
+      description,
+      "slug": slug.current,
+      "coverImage": coalesce(coverImage.asset->url, photographs[0]->image.asset->url),
+      "coverAlt": coalesce(photographs[0]->altText, title)
+    }`,
+    { slug }
+  );
+} else if (type === "gallery") {
+  gallery = await sanityClient.fetch(
+    `*[_type == "gallery" && ${galleryFilter}][0]{
+      title,
+      description,
+      "parentTitle": parent->title,
+      "parentSlug": parent->slug.current,
+      "photographs": photographs[]->{
+        title,
+        location,
+        altText,
+        "slug": slug.current,
+        "imageUrl": image.asset->url,
+        "width": image.asset->metadata.dimensions.width,
+        "height": image.asset->metadata.dimensions.height
+      }
+    }`,
+    galleryParams
+  );
+} else if (type === "photo") {
+  gallery = await sanityClient.fetch(
+    `*[_type == "gallery" && ${galleryFilter}][0]{
+      title,
+      "parentTitle": parent->title,
+      "parentSlug": parent->slug.current,
+      "photographs": photographs[]->{
+        title,
+        "slug": slug.current,
+        location,
+        altText,
+        description,
+        "imageUrl": image.asset->url
+      }
+    }`,
+    galleryParams
+  );
+  photo = gallery?.photographs?.find((item) => item.slug === photoSlug) ?? null;
+}
+
+const notFound =
+  (type === "category" && !category) ||
+  (type === "gallery" && !gallery) ||
+  (type === "photo" && !photo?.imageUrl);
+
+if (notFound) {
+  Astro.response.status = 404;
+}
+
+// Child cards for a category page.
+const childItems = children.map((child) => ({
+  title: child.title,
+  description: child.description,
+  href: `/gallery/${slug}/${child.slug}/`,
+  coverImage: child.coverImage,
+  coverAlt: child.coverAlt,
+  cta: "Explore gallery →",
+}));
+
+const photographs = gallery?.photographs ?? [];
+
+// Page metadata per view.
+let pageTitle = "Gallery Not Found";
+let pageDescription = DEFAULT_DESCRIPTION;
+if (type === "category" && category) {
+  pageTitle = `${category.title} | Gallery`;
+  pageDescription = category.description || DEFAULT_DESCRIPTION;
+} else if (type === "gallery" && gallery) {
+  pageTitle = `${gallery.title} | Gallery`;
+  pageDescription = gallery.description || DEFAULT_DESCRIPTION;
+} else if (type === "photo" && photo) {
+  pageTitle = photo.title || "Photograph";
+  pageDescription =
+    photo.description ||
+    photo.altText ||
+    `${pageTitle} — photography by Jay Brass.`;
+}
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  {type === "photo" && photo ? (
+    <PhotoDetail
+      title={photo.title || "Photograph"}
+      location={photo.location}
+      altText={photo.altText}
+      description={photo.description}
+      imageUrl={photo.imageUrl}
+      galleryTitle={gallery?.title || "Gallery"}
+      galleryHref={galleryPath}
+      category={
+        gallery?.parentSlug
+          ? { title: gallery.parentTitle || "Category", href: `/gallery/${gallery.parentSlug}/` }
+          : undefined
+      }
+    />
+  ) : (
+    <main class="gallery-detail">
+      {notFound ? (
+        <>
+          <h1>Gallery not found</h1>
+          <p>This page may have moved or no longer exists.</p>
+          <a href="/gallery/">Return to Gallery</a>
+        </>
+      ) : type === "category" ? (
+        <>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/gallery/">Gallery</a>
+            <span aria-hidden="true"> / </span>
+            <span aria-current="page">{category.title}</span>
+          </nav>
+
+          <header class="gallery-header">
+            <h1>{category.title}</h1>
+            {category.description && <p>{category.description}</p>}
+          </header>
+
+          {childItems.length > 0 ? (
+            <CollectionGrid items={childItems} />
+          ) : (
+            <p>Galleries in this category will be added soon.</p>
+          )}
+
+          <p class="back-link">
+            <a href="/gallery/">← Back to all galleries</a>
+          </p>
+        </>
+      ) : (
+        <>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/gallery/">Gallery</a>
+            <span aria-hidden="true"> / </span>
+            {gallery.parentSlug && (
+              <>
+                <a href={`/gallery/${gallery.parentSlug}/`}>
+                  {gallery.parentTitle || "Category"}
+                </a>
+                <span aria-hidden="true"> / </span>
+              </>
+            )}
+            <span aria-current="page">{gallery.title}</span>
+          </nav>
+
+          <header class="gallery-header">
+            <h1>{gallery.title}</h1>
+            {gallery.description && <p>{gallery.description}</p>}
+          </header>
+
+          {photographs.length > 0 ? (
+            <PhotoMasonry photographs={photographs} baseHref={galleryPath} />
+          ) : (
+            <p>Photographs for this gallery will be added soon.</p>
+          )}
+
+          <p class="back-link">
+            {gallery.parentSlug ? (
+              <a href={`/gallery/${gallery.parentSlug}/`}>← Back to {gallery.parentTitle || "category"}</a>
+            ) : (
+              <a href="/gallery/">← Back to all galleries</a>
+            )}
+          </p>
+        </>
+      )}
+    </main>
+  )}
+</BaseLayout>
+
+<style>
+  .gallery-detail {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+  }
+
+  .breadcrumb {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumb a,
+  .back-link a {
+    color: inherit;
+    text-underline-offset: 3px;
+  }
+
+  .gallery-header {
+    margin-bottom: 2rem;
+  }
+
+  .gallery-header p {
+    max-width: 700px;
+    line-height: 1.6;
+  }
+
+  .back-link {
+    margin-top: 2.5rem;
+  }
+</style>
